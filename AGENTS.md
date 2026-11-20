@@ -17,6 +17,7 @@ It is in the planning phase: no Android source has been synced and nothing is bu
 - What to do next: [docs/ROADMAP.md](docs/ROADMAP.md)
 - How changes are tested: [docs/TESTING.md](docs/TESTING.md)
 - How releases are signed and shipped: [docs/RELEASING.md](docs/RELEASING.md)
+- Other FoxieOS repositories, including the separate hardware project: [docs/DESIGN.md](docs/DESIGN.md#related-repositories)
 
 Every step in these docs is a plain shell or file step, so any agent can follow it.
 Don't add a step that only one agent's own tools can perform.
@@ -53,7 +54,8 @@ Don't add a step that only one agent's own tools can perform.
 
 ## Stop and ask when…
 
-- a roadmap decision (D1–D8) is needed and not yet recorded;
+- a roadmap decision (D1–D9) is needed and not yet recorded;
+- a change here needs a matching change in another FoxieOS repository, such as `foxieos-hardware`: propose one pull request in each, linking the other;
 - a step would flash, unlock, lock or wipe a physical device;
 - a step touches release keys or the signing host, or would publish something (an OTA upload, a domain, a new repository, an announcement);
 - a ⚠ command behaves differently from the docs (report what happened, and don't improvise on device-level steps);

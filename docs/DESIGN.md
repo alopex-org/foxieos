@@ -13,6 +13,7 @@ It does **not**:
 
 - support "any phone": devices are added one at a time, under the charter in [DEVICES.md](DEVICES.md);
 - match GrapheneOS's hardening outside Pixels;
+- design or make hardware: a separate project researches that ([Related repositories](#related-repositories));
 - ship Google apps, or make banking and other apps that depend on Play Integrity work.
   It never spoofs Play Integrity.
 
@@ -143,7 +144,10 @@ Decided 2026-11-20 (decision D3).
 
 ## Related repositories
 
-None yet.
+- [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware): research into getting a phone or similar device made for an Android-based operating system.
+  It is a separate project and doesn't follow FoxieOS's device criteria.
+  Whether FoxieOS supports a device from it, and on what terms, is roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
+
 Later FoxieOS repositories (the manifest in task T5, and forks of upstream repositories) will live in the same GitHub organization.
 
 ## Operations (planned)

@@ -11,6 +11,7 @@ See CONTRIBUTING.md for each item.
 - [ ] Changes to LineageOS or AOSP repositories are listed in `docs/PATCHES.md`.
 - [ ] No key material, secrets, or personal or machine-specific details.
 - [ ] Needs a person's review (signing, Updater/OTA, manifest, kernel, SELinux, permissions or framework)? Say so here.
+- [ ] Needs a matching change in another FoxieOS repository? Link its pull request here.
 
 ## Tests
 

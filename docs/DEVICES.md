@@ -24,6 +24,8 @@ A device is added only if **all** of these hold (the reasoning is in [FEASIBILIT
 - Its manufacturer still ships firmware and security updates.
 - A FoxieOS maintainer owns one.
 
+A device from the separate hardware project is decided by roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project), not by these criteria alone.
+
 ## Device charter
 
 Every supported device must meet this charter, adapted from LineageOS's device support requirements:
