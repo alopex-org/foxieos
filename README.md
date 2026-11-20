@@ -40,6 +40,7 @@ The other docs:
 - `release/`: signing, verification and update-metadata scripts (planned).
 - `ota-server/`: the generator for the update server's files (planned).
 - `.github/`: code owners, issue forms and the pull-request template.
+- `.pre-commit-config.yaml`: the checks that run on every commit ([CONTRIBUTING.md](CONTRIBUTING.md#before-you-start)).
 
 Each planned folder's README names the roadmap task that fills it.
 The Android source tree needs about 400 GB and is kept outside this repository.

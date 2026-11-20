@@ -50,6 +50,11 @@ A security hotfix may shorten L8 to 24 hours on testing and 48 hours on beta, wi
   - a check that commit messages follow `scope: description`.
 - **Passes when** there are no findings.
 - **Budget:** under 2 minutes.
+- **In place:** the pre-commit hooks in `.pre-commit-config.yaml`, set up as described in [CONTRIBUTING.md](../CONTRIBUTING.md#keys-secrets-and-personal-details).
+  - `gitleaks` v8.30.1 scans the staged changes.
+  - Two hooks block key files (the "Key material" patterns in `.gitignore`) and `*.local.md` notes by name; a content scan can't recognise a binary key such as a `.pk8`.
+- **Planned:** the other checks above, and L0 in CI (task T6).
+  The gitleaks hook only scans staged changes, so CI scans a pull request's commits with `gitleaks git --log-opts="<base>..<head>"` ([gitleaks README][gitleaks-readme]).
 
 ### L1 build
 
@@ -239,6 +244,7 @@ Without them, you can't build incremental updates or run these tests.
 - LineageOS: [emulator page][lineage-emulator], [build page for shiba][lineage-shiba-build], [AndroidProducts.mk][lineage-products], [lineage_cf_phone_x86_64.mk][lineage-cf-mk], [device support requirements][lineage-charter].
 - Google: [android-cuttlefish on GitHub][cf-github].
 - GrapheneOS: [build guide][graphene-build] (emulator, CTS, channels).
+- Tools: [gitleaks README][gitleaks-readme], with the [hooks it provides for pre-commit][gitleaks-hooks].
 
 [aosp-ab]: https://source.android.com/docs/core/ota/ab
 [aosp-ota-tools]: https://source.android.com/docs/core/ota/tools
@@ -248,6 +254,8 @@ Without them, you can't build incremental updates or run these tests.
 [cf-start]: https://source.android.com/docs/devices/cuttlefish/get-started
 [cts]: https://source.android.com/docs/compatibility/cts
 [cts-downloads]: https://source.android.com/docs/compatibility/cts/downloads
+[gitleaks-hooks]: https://github.com/gitleaks/gitleaks/blob/v8.30.1/.pre-commit-hooks.yaml
+[gitleaks-readme]: https://github.com/gitleaks/gitleaks/blob/v8.30.1/README.md
 [graphene-build]: https://grapheneos.org/build
 [lineage-cf-mk]: https://github.com/LineageOS/android_vendor_lineage/blob/lineage-24.0/build/target/product/lineage_cf_phone_x86_64.mk
 [lineage-charter]: https://github.com/LineageOS/charter/blob/main/device-support-requirements.md
