@@ -1,0 +1,13 @@
+# Code owners: GitHub requests a review from these people on pull requests that touch the paths below.
+# CONTRIBUTING.md (Review) lists the changes that need a person's review.
+# Replace @alevromitis with the @alopex-org/foxieos-release team once that team exists.
+# The manifest, SELinux, framework and kernel changes live in other repositories, each with its own CODEOWNERS.
+
+/release/            @alevromitis
+/ota-server/         @alevromitis
+/docs/RELEASING.md   @alevromitis
+/docs/KEYS.md        @alevromitis
+/SECURITY.md         @alevromitis
+/CONTRIBUTING.md     @alevromitis
+/AGENTS.md           @alevromitis
+/.github/            @alevromitis

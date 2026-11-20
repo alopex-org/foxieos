@@ -1,0 +1,71 @@
+name: Bug report
+description: Something in a FoxieOS build doesn't work.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Don't report security problems here. Follow the [security policy](https://github.com/alopex-org/foxieos/blob/main/SECURITY.md) instead.
+        FoxieOS has no public releases yet, so reports come from development builds.
+  - type: input
+    id: build
+    attributes:
+      label: FoxieOS version and build
+      description: Settings → About phone, or `adb shell getprop ro.foxie.version`.
+    validations:
+      required: true
+  - type: input
+    id: device
+    attributes:
+      label: Device and codename
+      placeholder: "Pixel 9a (tegu), or Cuttlefish (cf_x86_64)"
+    validations:
+      required: true
+  - type: dropdown
+    id: channel
+    attributes:
+      label: Update channel
+      options:
+        - testing
+        - beta
+        - stable
+        - local or development build
+    validations:
+      required: true
+  - type: dropdown
+    id: upstream
+    attributes:
+      label: Does stock LineageOS 24.0 have the same problem?
+      description: Problems that LineageOS has too are reported to LineageOS first.
+      options:
+        - Not checked
+        - Yes, LineageOS has it too
+        - No, only FoxieOS
+    validations:
+      required: true
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1.
+        2.
+        3.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs
+      description: logcat or other output. Remove personal data first.
+      render: shell

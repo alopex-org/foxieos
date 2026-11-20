@@ -1,0 +1,59 @@
+name: Device request
+description: Ask for a phone to be supported. Read the device charter first.
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A device is added only if it meets every [selection criterion](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#selection-criteria) and someone on the team owns one and will maintain it.
+  - type: input
+    id: device
+    attributes:
+      label: Device and codename
+      placeholder: "Pixel 9a (tegu)"
+    validations:
+      required: true
+  - type: dropdown
+    id: lineage
+    attributes:
+      label: Is it officially supported by LineageOS 24.0?
+      options:
+        - "Yes"
+        - "No"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: wiki
+    attributes:
+      label: LineageOS wiki page
+      placeholder: "https://wiki.lineageos.org/devices/<codename>/"
+  - type: dropdown
+    id: unlock
+    attributes:
+      label: Can the bootloader be unlocked officially?
+      options:
+        - "Yes"
+        - "No"
+        - Not sure
+    validations:
+      required: true
+  - type: input
+    id: kernel
+    attributes:
+      label: Kernel version
+      placeholder: "6.1 GKI"
+  - type: dropdown
+    id: maintainer
+    attributes:
+      label: Will you maintain it?
+      options:
+        - Yes, I own one and will maintain it
+        - I own one but can't maintain it
+        - "No"
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else

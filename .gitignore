@@ -1,0 +1,26 @@
+# Key material: never committed (CONTRIBUTING.md, "Keys, secrets and personal details")
+keys/
+*.pk8
+*.pem
+*.key
+*.p12
+*.keystore
+*.jks
+avb*.bin
+avb_pkmd.bin
+vendor/lineage-priv/
+.android-certs/
+
+# Build output, downloads and logs (the Android tree lives outside this repo)
+out/
+logs/
+android-cts/
+*.zip
+*.img
+
+# Notes for one contributor's setup, never committed (AGENTS.md)
+*.local.md
+
+# Local tooling
+.venv/
+__pycache__/
