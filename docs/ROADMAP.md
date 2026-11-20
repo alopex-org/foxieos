@@ -138,7 +138,7 @@ Open; needed before the first public release (T10).
 
 Open; needed before a device from the hardware project joins FoxieOS (T12).
 
-[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches getting a device made.
+[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a prototype device for enthusiasts; it sells nothing.
 It doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria).
 A device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
 

@@ -19,7 +19,7 @@ It will not ship Google apps, make apps that depend on Play Integrity work, or m
 [docs/DESIGN.md](docs/DESIGN.md) explains why.
 
 FoxieOS doesn't make hardware.
-A separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), researches getting a device made, and roadmap decision D9 covers whether FoxieOS would support one.
+A separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), researches building a prototype device for enthusiasts, not a product for sale, and roadmap decision D9 covers whether FoxieOS would support one.
 
 ## Where to start
 
