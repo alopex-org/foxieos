@@ -12,7 +12,7 @@ Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIB
 
 ## How to read this file
 
-- **Decisions (D1–D8)** are the maintainer's to make.
+- **Decisions (D1–D9)** are the maintainer's to make.
   Each one lists the options and a recommendation.
 - **Tasks (T0–T13)** are the work, in order.
   Each one says what it needs, what to do, when it is done, and what to report.
@@ -47,6 +47,7 @@ Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIB
 | [D6](#d6-release-build-variant) | Are releases `userdebug` or `user` builds? | Open | T10 |
 | [D7](#d7-signing-host) | Which machine is the signing host? | Open | T8 |
 | [D8](#d8-security-contact) | What is the private security contact? | Open | T10 |
+| [D9](#d9-devices-from-the-hardware-project) | Does FoxieOS support a device from the hardware project, and on what terms? | Open | T12 |
 
 ### D1: device #1
 
@@ -132,6 +133,28 @@ Open; needed by T8.
 Open; needed before the first public release (T10).
 
 - **Recommendation:** a dedicated address or form for [SECURITY.md](../SECURITY.md), not a personal address.
+
+### D9: devices from the hardware project
+
+Open; needed before a device from the hardware project joins FoxieOS (T12).
+
+[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches getting a device made.
+It doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria).
+A device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
+
+- **Options:**
+  - Treat it like any other device: it waits until LineageOS supports it, or joins the unofficial GSI track.
+  - Make it a device FoxieOS maintains itself, with its own device tree, on these conditions:
+    - a FoxieOS maintainer owns one;
+    - its kernel is GKI 5.15 or newer, built from source;
+    - firmware and security updates from the chip vendor and the device maker last at least until the FoxieOS end-of-life date announced for it;
+    - it can be relocked with FoxieOS's own AVB key;
+    - it meets the rest of the [device charter](DEVICES.md#device-charter).
+  - Don't support it.
+- **Whichever option is chosen:** FoxieOS signs its builds with its own keys and relocks the bootloader with its own AVB key (`avb_custom_key`).
+  It never holds the device maker's secure-boot signing key, whose public-key hash is burned into the chip's fuses.
+- **Recommendation:** the second option, decided once the hardware project has chosen a platform.
+  Until then, nothing in FoxieOS changes for it.
 
 ## Tasks
 
@@ -292,6 +315,7 @@ Done 2026-11-20: this repository, with its docs.
 **Code and hands-on.** Needs T10 on the stable channel.
 
 - Apply the device charter in [DEVICES.md](DEVICES.md) to each new device.
+- A device from the hardware project joins only once D9 is decided.
 - Offer a GSI only as "unofficial".
   ⚠ First check the state of the community's Android 17 GSI patch sets.
 
@@ -326,6 +350,8 @@ If C11 passes, T9 can run on Cuttlefish before T7.
   A first build moves about 76 GB between the host and the workers, so they need a fast network between them.
 - **Hardening beyond LineageOS** (Pixel only).
   Re-evaluate forking GrapheneOS against reimplementing selected features once FoxieOS is stable.
+- **Designing or making hardware.**
+  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project; D9 decides whether FoxieOS supports its devices.
 
 ## Checks
 

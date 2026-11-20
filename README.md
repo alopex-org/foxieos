@@ -18,6 +18,9 @@ This repository holds the plan; scripts and tests follow as the roadmap tasks ar
 It will not ship Google apps, make apps that depend on Play Integrity work, or match GrapheneOS's hardening outside Pixels.
 [docs/DESIGN.md](docs/DESIGN.md) explains why.
 
+FoxieOS doesn't make hardware.
+A separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), researches getting a device made, and roadmap decision D9 covers whether FoxieOS would support one.
+
 ## Where to start
 
 1. [docs/ROADMAP.md](docs/ROADMAP.md): open decisions and the next task.

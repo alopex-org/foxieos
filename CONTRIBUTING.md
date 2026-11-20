@@ -54,6 +54,8 @@ A person must review changes to:
 
 In the pull request, list the commands you ran and their results: what passed, what failed (with a log excerpt) and what you skipped.
 
+If a change needs a matching change in another FoxieOS repository, such as [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), open a pull request there as well, and link each one from the other.
+
 ## Changes to LineageOS or AOSP
 
 FoxieOS stays as close to upstream as it can:
