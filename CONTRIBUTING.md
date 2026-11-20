@@ -10,6 +10,8 @@ Agents also follow [AGENTS.md](AGENTS.md).
 ## Before you start
 
 - Read [README.md](README.md) and [docs/DESIGN.md](docs/DESIGN.md).
+- Install [pre-commit](https://pre-commit.com/#install) and run `pre-commit install` in your clone.
+  Every commit is then checked for secrets, key files and private notes ([Keys, secrets and personal details](#keys-secrets-and-personal-details)).
 - Pick work from [docs/ROADMAP.md](docs/ROADMAP.md).
   Decisions marked open there are the maintainer's to make; ask before building on one.
 - Report security problems as described in [SECURITY.md](SECURITY.md), never in a public issue.
@@ -65,12 +67,22 @@ FoxieOS stays as close to upstream as it can:
 ## Keys, secrets and personal details
 
 - Never commit key material or secrets.
-  `gitleaks` checks every commit (planned, test layer L0).
+- The pre-commit hooks in `.pre-commit-config.yaml` check every commit:
+  - [gitleaks][gitleaks] scans the staged changes for keys, tokens and other secrets;
+  - two more hooks block key files (the "Key material" patterns in `.gitignore`) and `*.local.md` notes by name, in case one was added with `git add -f`.
+- Don't skip the hooks with `git commit --no-verify` or `SKIP=`.
+  If a gitleaks finding is a false positive, say so in the pull request, and add a `gitleaks:allow` comment to the line or the finding's fingerprint to `.gitleaksignore`.
+- If the hook stops a commit because of a real secret, take the secret out of the change.
+  If a secret ever reached a pushed commit, removing it is not enough: revoke or rotate it, and tell the maintainer.
+- A hook runs only in a clone where it is installed.
+  CI will repeat the checks from roadmap task T6 (planned).
 - Config files are committed only as `*.example` templates or SOPS-encrypted files.
 - Release keys live only on the signing host and are handled only by the maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
 - Describe machines by their role (build host, signing host, test host).
   Hostnames, addresses, local paths, account details and other personal information stay out of commits, pull requests and issues.
   Keep such notes in a `*.local.md` file, which git ignores.
+
+[gitleaks]: https://github.com/gitleaks/gitleaks
 
 ## Licensing and branding
 

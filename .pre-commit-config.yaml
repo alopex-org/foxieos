@@ -1,0 +1,28 @@
+# Pre-commit hooks: the part of test layer L0 that is in place
+# (docs/TESTING.md#l0-static-checks).
+# Set up once per clone with `pre-commit install`; see CONTRIBUTING.md.
+repos:
+  # Scans the staged changes for keys, tokens and other secrets.
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.1
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      # Content scans miss binary key files such as `.pk8`, so these are
+      # blocked by name: the same patterns as the "Key material" section of
+      # .gitignore, which catch files forced past it with `git add -f`.
+      # Keep the two lists in step.
+      - id: no-key-files
+        name: Block key files
+        language: fail
+        entry: "Key material is never committed (CONTRIBUTING.md, \"Keys, secrets and personal details\"). Unstage these files:"
+        files: '(^|/)(keys|\.android-certs|vendor/lineage-priv)/|\.(pk8|pem|key|p12|keystore|jks)$|(^|/)avb[^/]*\.bin$'
+
+      # `*.local.md` files hold one contributor's private notes.
+      - id: no-local-notes
+        name: Block private notes
+        language: fail
+        entry: "*.local.md files hold one contributor's private notes and are never committed. Unstage these files:"
+        files: '\.local\.md$'

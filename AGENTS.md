@@ -25,7 +25,8 @@ Don't add a step that only one agent's own tools can perform.
 
 - Build: none yet.
   Task T2 adds `ci/sync.sh` and `ci/build.sh`; the upstream commands are in [docs/TESTING.md](docs/TESTING.md#commands).
-- Checks: none yet for the docs.
+- Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, and blocks on key files and `*.local.md` notes) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
+  If pre-commit isn't installed or set up in the clone, tell the maintainer rather than committing without the hooks.
   From task T6 on, `ci/presubmit.sh`.
 - Release: done by hand by the maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
 
@@ -62,5 +63,7 @@ Don't add a step that only one agent's own tools can perform.
 ## Don't
 
 - Commit `keys/`, `*.pk8`, `*.pem`, `*.key`, `avb*.bin`, `out/` or `logs/`; `.gitignore` already excludes them.
+- Skip the pre-commit hooks with `git commit --no-verify` or `SKIP=`.
+  Report a finding you think is a false positive instead.
 - Put the Android source tree, build output or CTS downloads inside this repository.
 - Edit an upstream repository in the source tree without an entry in [docs/PATCHES.md](docs/PATCHES.md).
