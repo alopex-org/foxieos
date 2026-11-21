@@ -90,6 +90,7 @@ A second ruleset covers tags: only the maintainer creates, moves or deletes a ta
 In the pull request, list the commands you ran and their results: what passed, what failed (with a log excerpt) and what you skipped.
 
 If a change needs a matching change in another FoxieOS repository, such as [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), open a pull request there as well, and link each one from the other.
+FoxieOS depends on foxieos-hardware, not the other way round: a change in the hardware project can need a matching change here, but a change here never asks the hardware project to adapt to FoxieOS.
 
 ## Issues and labels
 
