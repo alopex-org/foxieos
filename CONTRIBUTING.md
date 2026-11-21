@@ -16,7 +16,10 @@ Everyone in the `alopex-org` organization also follows its [code of conduct][coc
   If you set up your clone before the sign-off hook was added, run `pre-commit install` again.
 - Pick work from [docs/ROADMAP.md](docs/ROADMAP.md), or from its [issues](#issues-and-labels).
   Decisions marked open there are the maintainers' to make; ask before building on one.
+- Organization members also talk the work over on the Alopex Discord, which has no public invite for now.
+  Discord is for conversation, not the record: put anything that should be kept, such as a bug, a correction or an argument for a decision, in an issue or a pull request.
 - Report security problems as described in [SECURITY.md](SECURITY.md), never in a public issue.
+  Don't post them, or code-of-conduct reports, on Discord either.
 - To ask for a new device, use the device-request issue form.
   The criteria are in [docs/DEVICES.md](docs/DEVICES.md).
 
