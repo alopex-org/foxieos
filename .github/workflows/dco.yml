@@ -1,0 +1,53 @@
+# Checks that every commit in a pull request carries a DCO sign-off whose
+# address matches the commit's author (CONTRIBUTING.md, "Sign-off").
+# The ruleset on main requires this check to pass.
+# It uses no third-party actions and only reads the pull request.
+name: DCO
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+jobs:
+  dco:
+    name: DCO
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check the sign-off on each commit
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+        run: |
+          set -euo pipefail
+          failed=0
+          # One line per commit: sha, parent count, author email, author login, message (base64).
+          # Fetched first, so a failed API call fails the check instead of checking nothing.
+          commits=$(gh api --paginate "repos/$REPO/pulls/$PR/commits" \
+            --jq '.[] | [.sha, (.parents | length), .commit.author.email, (.author.login // ""), (.commit.message | @base64)] | @tsv')
+          if [[ -z $commits ]]; then
+            echo "::error::Found no commits in pull request $PR."
+            exit 1
+          fi
+          while IFS=$'\t' read -r sha parents email login message; do
+            if [[ $parents -gt 1 ]]; then
+              echo "skip  $sha: merge commit"
+              continue
+            fi
+            if [[ $login == *'[bot]' ]]; then
+              echo "skip  $sha: $login"
+              continue
+            fi
+            if base64 -d <<<"$message" | grep -iE '^Signed-off-by: .+ <[^>]+>$' | grep -qiF -- "<$email>"; then
+              echo "ok    $sha"
+            else
+              echo "::error::Commit $sha has no 'Signed-off-by:' line with its author's address <$email>. Fix it with 'git rebase --signoff main' and push the branch again."
+              failed=1
+            fi
+          done <<<"$commits"
+          exit "$failed"

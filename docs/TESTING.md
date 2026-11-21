@@ -47,12 +47,14 @@ A security hotfix may shorten L8 to 24 hours on testing and 48 hours on beta, wi
   - `shellcheck` and `yamllint`;
   - `xmllint --noout` on overlays and manifests;
   - `bpfmt -d` on `Android.bp` files (unsourced);
-  - a check that commit messages follow `scope: description`.
+  - a check that commit messages follow `scope: description`;
+  - a check that every commit carries a DCO sign-off ([CONTRIBUTING.md](../CONTRIBUTING.md#sign-off)).
 - **Passes when** there are no findings.
 - **Budget:** under 2 minutes.
 - **In place:** the pre-commit hooks in `.pre-commit-config.yaml`, set up as described in [CONTRIBUTING.md](../CONTRIBUTING.md#keys-secrets-and-personal-details).
   - `gitleaks` v8.30.1 scans the staged changes.
   - Two hooks block key files (the "Key material" patterns in `.gitignore`) and `*.local.md` notes by name; a content scan can't recognise a binary key such as a `.pk8`.
+  - A commit-msg hook refuses a commit without a `Signed-off-by:` line, and the DCO workflow checks each pull request's commits for one that matches the author.
 - **Planned:** the other checks above, and L0 in CI (task T6).
   The gitleaks hook only scans staged changes, so CI scans a pull request's commits with `gitleaks git --log-opts="<base>..<head>"` ([gitleaks README][gitleaks-readme]).
 

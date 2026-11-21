@@ -18,6 +18,8 @@ Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIB
   Each one says what it needs, what to do, when it is done, and what to report.
 - **Checks (C1–C13)** are claims to confirm before the task that depends on them.
   A ⚠ in the other docs usually points to one of them.
+- Each decision, task and check also has an issue, and each phase below is a [milestone](https://github.com/alopex-org/foxieos/milestones).
+  This file is the plan; the issues track status and discussion ([CONTRIBUTING.md](../CONTRIBUTING.md#issues-and-labels)).
 - Each task says who does it:
   - **Code:** a change to files, made in a pull request.
     Anyone can do it, including a coding agent.
@@ -95,6 +97,8 @@ Extra machines fit better as Cuttlefish and CTS test hosts in T6.
 
 - The code lives in the [`alopex-org`](https://github.com/alopex-org) organization.
   This repository is `alopex-org/foxieos`, and every FoxieOS repository there starts with `foxieos`.
+- The repositories are public; on GitHub's free plan that includes rulesets, code owners, secret scanning and private vulnerability reporting.
+  A ruleset protects `main` ([CONTRIBUTING.md](../CONTRIBUTING.md#review)).
 - CI is settled in T6.
   The recommendation is GitHub Actions on a self-hosted runner on the build host.
 - No Gerrit until there are three or more contributors.
@@ -132,7 +136,8 @@ Open; needed by T8.
 
 Open; needed before the first public release (T10).
 
-- **Recommendation:** a dedicated address or form for [SECURITY.md](../SECURITY.md), not a personal address.
+- GitHub's private vulnerability reporting is the reporting channel in [SECURITY.md](../SECURITY.md) until D8 is decided.
+- **Recommendation:** keep private vulnerability reporting, and add a dedicated address, not a personal one, for reporters without a GitHub account.
 
 ### D9: devices from the hardware project
 
@@ -238,7 +243,8 @@ Done 2026-11-20: this repository, with its docs.
   - Self-hosted runners don't count against the plan's Actions minutes ([GitHub: self-hosted runners][gh-self-hosted]).
   - GitHub's standard hosted runners have far too little disk and memory for an Android build (unsourced).
   - GitHub advises against self-hosted runners for public repositories, because anyone can open a pull request whose workflow then runs on the runner ([GitHub: secure use][gh-hardening]).
-    Keep pull requests from forks off the runner, for example by requiring approval for workflows from forks and limiting the runner group to FoxieOS repositories (unsourced).
+    Keep pull requests from forks off the runner: limit the runner group to FoxieOS repositories (unsourced).
+    The organization already requires approval before workflows from outside contributors run.
 - `ci/presubmit.sh` runs on pull requests: layers L0–L3, on Cuttlefish.
 - `ci/nightly.sh` runs on a schedule: L1 builds, L3 and L4 on Cuttlefish; device builds join after T7.
 - Keep logs and artifacts for 14 days, and send a notification on failure.

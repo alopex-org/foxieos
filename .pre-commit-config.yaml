@@ -1,6 +1,9 @@
 # Pre-commit hooks: the part of test layer L0 that is in place
 # (docs/TESTING.md#l0-static-checks).
 # Set up once per clone with `pre-commit install`; see CONTRIBUTING.md.
+# That installs both hook types listed here.
+default_install_hook_types: [pre-commit, commit-msg]
+
 repos:
   # Scans the staged changes for keys, tokens and other secrets.
   - repo: https://github.com/gitleaks/gitleaks
@@ -26,3 +29,12 @@ repos:
         language: fail
         entry: "*.local.md files hold one contributor's private notes and are never committed. Unstage these files:"
         files: '\.local\.md$'
+
+      # Every commit carries a DCO sign-off (CONTRIBUTING.md, "Sign-off").
+      # The DCO workflow checks the same on each pull request.
+      - id: dco-sign-off
+        name: Require a DCO sign-off
+        language: pygrep
+        entry: '^Signed-off-by: .+ <[^>]+@[^>]+>$'
+        args: [--negate]
+        stages: [commit-msg]
