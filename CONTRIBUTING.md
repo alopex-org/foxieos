@@ -50,6 +50,8 @@ By adding a `Signed-off-by:` line to a commit, you certify that you wrote the ch
 - The commit-msg hook in `.pre-commit-config.yaml` refuses a commit without the line.
   The DCO workflow (`.github/workflows/dco.yml`) checks every commit in a pull request, and `main` accepts a pull request only once it passes.
 - To fix a branch that lacks the line, run `git rebase --signoff main` and push the branch again with `git push --force-with-lease`.
+- The hook also checks the message of a merge commit, so a plain `git merge` or `git pull` that creates one is refused.
+  Bring a branch up to date with `git pull --rebase` or `git rebase main` instead; if you need a merge commit, use `git merge --signoff`.
 - Commits from bots, such as Dependabot, are exempt.
 
 **Commits written by coding agents.**
