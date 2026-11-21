@@ -26,7 +26,8 @@ Don't add a step that only one agent's own tools can perform.
 
 - Build: none yet.
   Task T2 adds `ci/sync.sh` and `ci/build.sh`; the upstream commands are in [docs/TESTING.md](docs/TESTING.md#commands).
-- Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, and blocks on key files and `*.local.md` notes) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
+- Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, blocks on key files and `*.local.md` notes, and a DCO sign-off on the commit message) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
+  On pull requests, the DCO workflow checks the sign-off again.
   If pre-commit isn't installed or set up in the clone, tell the maintainer rather than committing without the hooks.
   From task T6 on, `ci/presubmit.sh`.
 - Release: done by hand by the maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
@@ -61,6 +62,12 @@ Don't add a step that only one agent's own tools can perform.
 - a ⚠ command behaves differently from the docs (report what happened, and don't improvise on device-level steps);
 - a test layer fails and the fix needs a carry patch to an upstream repository outside `vendor/foxie`;
 - disk use would exceed the space task T1 measured, or a job would run longer than about 6 hours.
+
+## Sign-off
+
+Commit with `git commit -s` only when the person directing you asked for the commit: the sign-off is theirs, in their name ([CONTRIBUTING.md](CONTRIBUTING.md#sign-off)).
+Never add a `Signed-off-by:` line for yourself or for anyone who didn't ask for the commit.
+Add your own `Co-Authored-By:` trailer as well.
 
 ## Don't
 
