@@ -7,6 +7,8 @@
 /ota-server/         @alevromitis
 /docs/RELEASING.md   @alevromitis
 /docs/KEYS.md        @alevromitis
+/docs/ROADMAP.md     @alevromitis
+/docs/DESIGN.md      @alevromitis
 /SECURITY.md         @alevromitis
 /.pre-commit-config.yaml  @alevromitis
 /CONTRIBUTING.md     @alevromitis
