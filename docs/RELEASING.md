@@ -81,6 +81,8 @@ Each release gets a folder, `release/<BUILD_NUMBER>/`, in release storage, holdi
 Release tags in git are signed.
 GrapheneOS uses SSH-signed tags with an `allowed_signers` file.
 
+Publishing a release on GitHub posts it to the Alopex Discord's announcements channel (`.github/workflows/discord-release.yml`), once the maintainer has set the `DISCORD_WEBHOOK_RELEASES` secret.
+
 ## Update server and channels
 
 - The LineageOS Updater reads its server address from `updater_server_url` (a resource) or `lineage.updater.uri` (a property).
