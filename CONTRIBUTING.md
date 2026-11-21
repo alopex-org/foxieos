@@ -70,7 +70,8 @@ A person must review changes to:
 - the Updater and the OTA path;
 - the signing scripts;
 - the manifest;
-- the kernel.
+- the kernel;
+- the decisions in [docs/ROADMAP.md](docs/ROADMAP.md#decisions) and the key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions).
 
 `.github/CODEOWNERS` requests these reviews automatically for the paths in this repository, and the ruleset on `main` requires a code owner's approval before a change to them is merged.
 
@@ -81,6 +82,8 @@ A ruleset protects `main`:
 - history stays linear: pull requests are merged by rebasing, so each commit lands on `main` as written, and force pushes and deleting the branch are blocked;
 - the maintainer can bypass these rules on a pull request, for example to merge their own change to a code-owned path once another reviewer has read it.
   Bypasses are recorded in the ruleset's history.
+
+A second ruleset covers tags: only the maintainer creates, moves or deletes a tag, so only the maintainer publishes a release.
 
 In the pull request, list the commands you ran and their results: what passed, what failed (with a log excerpt) and what you skipped.
 
