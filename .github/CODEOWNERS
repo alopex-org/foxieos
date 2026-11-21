@@ -8,6 +8,7 @@
 /docs/RELEASING.md   @alevromitis
 /docs/KEYS.md        @alevromitis
 /SECURITY.md         @alevromitis
+/.pre-commit-config.yaml  @alevromitis
 /CONTRIBUTING.md     @alevromitis
 /AGENTS.md           @alevromitis
 /.github/            @alevromitis
