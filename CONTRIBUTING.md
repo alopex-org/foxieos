@@ -61,8 +61,8 @@ The agent still names itself in a `Co-Authored-By:` trailer.
 
 ## Review
 
-Every change is reviewed by someone other than its author.
-For docs, CI and branding, a review by a different coding agent is enough.
+Every change is reviewed by someone other than its author, and a member other than the author approves the pull request on GitHub.
+For docs, CI and branding, the approving member may have a different coding agent read the change, and answers for the approval as for their own review.
 
 A person must review changes to:
 
@@ -78,9 +78,11 @@ A person must review changes to:
 A ruleset protects `main`:
 
 - every change arrives through a pull request, and no one pushes to `main` directly;
+- a member with write access other than the author approves the pull request, and pushing new commits dismisses earlier approvals;
+- review threads are resolved before merging;
 - the DCO check must pass;
 - history stays linear: pull requests are merged by rebasing, so each commit lands on `main` as written, and force pushes and deleting the branch are blocked;
-- the maintainer can bypass these rules on a pull request, for example to merge their own change to a code-owned path once another reviewer has read it.
+- the maintainer can bypass these rules on a pull request, for example to merge their own change to a code-owned path once another member has approved it.
   Bypasses are recorded in the ruleset's history.
 
 A second ruleset covers tags: only the maintainer creates, moves or deletes a tag, so only the maintainer publishes a release.
