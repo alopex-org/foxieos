@@ -71,7 +71,7 @@ A person must review changes to:
 - the signing scripts;
 - the manifest;
 - the kernel;
-- the decisions in [docs/ROADMAP.md](docs/ROADMAP.md#decisions) and the key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions).
+- any part of [docs/ROADMAP.md](docs/ROADMAP.md) or [docs/DESIGN.md](docs/DESIGN.md), which hold the decisions.
 
 `.github/CODEOWNERS` requests these reviews automatically for the paths in this repository, and the ruleset on `main` requires a code owner's approval before a change to them is merged.
 
