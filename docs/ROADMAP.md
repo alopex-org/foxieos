@@ -144,8 +144,9 @@ Open; needed before the first public release (T10).
 Open; needed before a device from the hardware project joins FoxieOS (T12).
 
 [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a prototype device for enthusiasts; it sells nothing.
-It doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria).
-A device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
+FoxieOS depends on it for a custom device, and the dependency runs one way: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
+The hardware project doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria), and a device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
+The conditions below are FoxieOS's own terms for support, not requirements on the hardware project.
 
 - **Options:**
   - Treat it like any other device: it waits until LineageOS supports it, or joins the unofficial GSI track.
@@ -357,7 +358,7 @@ If C11 passes, T9 can run on Cuttlefish before T7.
 - **Hardening beyond LineageOS** (Pixel only).
   Re-evaluate forking GrapheneOS against reimplementing selected features once FoxieOS is stable.
 - **Designing or making hardware.**
-  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project; D9 decides whether FoxieOS supports its devices.
+  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project, which FoxieOS depends on for a custom device; D9 decides whether and on what terms FoxieOS supports its devices.
 
 ## Checks
 
