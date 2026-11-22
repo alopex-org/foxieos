@@ -73,6 +73,8 @@ Each decision says what was chosen, why, and what was turned down.
 
 ### Base: LineageOS 24.0 (Android 17)
 
+Open (roadmap decision [D10](ROADMAP.md#d10-base)): the maintainers decide the base after the founding meeting, depending on what it decides about hardware.
+
 - **What:** build FoxieOS on LineageOS 24.0, which is based on Android 17.
 - **Why:** LineageOS supports more phones than any other free version of Android, and keeps up with Google's changes to Android for its users.
   Those changes make other routes harder: Google no longer publishes the files for its own Pixel phones, its public code is now read-only, and it publishes new code only twice a year (Q2 and Q4).

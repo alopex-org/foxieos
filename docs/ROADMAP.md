@@ -16,7 +16,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## How to read this page
 
-- **Decisions (D1–D9)** are questions the maintainers answer.
+- **Decisions (D1–D10)** are questions the maintainers answer.
   Each one lists the options and a recommendation.
 - **Tasks (T0–T13)** are the pieces of work, in order.
   Each one says what it needs first, what to do, when it is finished, and what to share afterwards.
@@ -54,6 +54,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 | [D7](#d7-signing-host) | Which computer signs releases? | Open | T8 |
 | [D8](#d8-security-contact) | How do people report security problems privately? | Open | T10 |
 | [D9](#d9-devices-from-the-hardware-project) | Does FoxieOS support a device from the hardware project, and on what terms? | Open | T12 |
+| [D10](#d10-base) | What is FoxieOS built on: LineageOS, plain AOSP, or something of its own? | Open | T2 |
 
 ### D1: device #1
 
@@ -176,6 +177,23 @@ The conditions below are FoxieOS's own terms, not requirements on the hardware p
   It never holds the device maker's secure-boot signing key, the one whose fingerprint is burned permanently into the chip.
 - **Recommendation:** the second option, decided once the hardware project has chosen its platform.
   Until then, nothing in FoxieOS changes for it.
+
+### D10: base
+
+What FoxieOS is built on.
+Open; the maintainers decide it after the founding meeting on 2026-11-24, and it is needed before the source code is downloaded (task T2).
+
+The answer depends on what the meeting decides about hardware.
+If FoxieOS runs on phones other companies make, it needs a base that already supports them; if it waits for a device from the [hardware project](https://github.com/alopex-org/foxieos-hardware), that device's chip and software package (BSP) set what is possible.
+The docs describe a LineageOS base throughout, because that is the current proposal ([DESIGN.md](DESIGN.md#base-lineageos-240-android-17)).
+
+- **Options:**
+  - **LineageOS:** FoxieOS stays close to LineageOS and takes its support for phones and its security fixes.
+    The least work for a small team, but only for phones LineageOS supports.
+  - **Plain AOSP:** FoxieOS builds on Google's own Android code, which has no support for real phones, so the team adds the support for each device itself ([FEASIBILITY.md](FEASIBILITY.md#plain-aosp)).
+  - **Something of its own:** a base built around one device, such as one from the hardware project, starting from that device's software package.
+- **If the base isn't LineageOS:** the LineageOS-specific docs ([TESTING.md](TESTING.md), [RELEASING.md](RELEASING.md), [DEVICES.md](DEVICES.md)) and tasks T1–T13 are rewritten before task T2.
+- **Recommendation:** LineageOS, unless the meeting chooses a device of the project's own as the first target.
 
 ## Tasks
 
