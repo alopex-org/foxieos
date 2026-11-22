@@ -425,7 +425,7 @@ Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilien
 - wiki.lineageos.org: build pages for each phone, `signing_builds`, `emulator`.
 - github.com/LineageOS/charter: LineageOS's requirements for supported phones.
 - grapheneos.org/build: signing, reproducible builds, the update server and channels.
-- github.com/alopex-org/foxieos-hardware: the separate research into building a device, which FoxieOS depends on for a device of its own.
+- github.com/alopex-org/alopex: the separate research into building a device, which FoxieOS depends on for a device of its own.
 
 ## Sources
 

@@ -157,7 +157,7 @@ Open; needed before the first public release (task T10).
 Whether FoxieOS supports a device from the separate hardware project, and on what terms.
 Open; needed before such a device joins FoxieOS (task T12).
 
-[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a device.
+[alopex](https://github.com/alopex-org/alopex) is a separate project that researches building a device.
 Whether that stays a prototype or becomes a product is its own decision D5.
 FoxieOS depends on it for a device of its own, and only in that direction: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
 The hardware project doesn't follow FoxieOS's [rules for choosing a phone](DEVICES.md#rules-for-choosing-a-phone), and a device from it would break at least one of them: LineageOS wouldn't support it officially, at least at first.
@@ -387,7 +387,7 @@ If check C11 passes, task T9 can run on the virtual phone before T7.
 - **Security changes beyond LineageOS's** (Pixel only).
   Once FoxieOS is stable, weigh copying GrapheneOS against rebuilding selected features.
 - **Designing or making hardware.**
-  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project, which FoxieOS depends on for a device of its own; decision D9 settles whether and on what terms FoxieOS supports its devices.
+  That is the work of the separate [alopex](https://github.com/alopex-org/alopex) project, which FoxieOS depends on for a device of its own; decision D9 settles whether and on what terms FoxieOS supports its devices.
 
 ## Checks
 

@@ -17,7 +17,7 @@ It is in the planning phase: no Android source has been synced and nothing is bu
 - What to do next: [docs/ROADMAP.md](docs/ROADMAP.md)
 - How changes are tested: [docs/TESTING.md](docs/TESTING.md)
 - How releases are signed and shipped: [docs/RELEASING.md](docs/RELEASING.md)
-- Other FoxieOS repositories, including the separate hardware project that FoxieOS depends on (not the reverse): [docs/DESIGN.md](docs/DESIGN.md#related-repositories)
+- Related repositories, including alopex, the separate hardware project that FoxieOS depends on (not the reverse): [docs/DESIGN.md](docs/DESIGN.md#related-repositories)
 
 Every step in these docs is a plain shell or file step, so any agent can follow it.
 Don't add a step that only one agent's own tools can perform.
@@ -56,8 +56,8 @@ Don't add a step that only one agent's own tools can perform.
 ## Stop and ask when…
 
 - a roadmap decision (D1–D9) is needed and not yet recorded;
-- a change here needs a matching change in another FoxieOS repository, such as `foxieos-hardware`: propose one pull request in each, linking the other.
-  FoxieOS depends on `foxieos-hardware`, not the reverse, so don't propose a change there that asks it to adapt to FoxieOS;
+- a change here needs a matching change in another repository, such as `alopex`: propose one pull request in each, linking the other.
+  FoxieOS depends on `alopex`, not the reverse, so don't propose a change there that asks it to adapt to FoxieOS;
 - a step would flash, unlock, lock or wipe a physical device;
 - a step touches release keys or the signing host, or would publish something (an OTA upload, a domain, a new repository, an announcement);
 - a ⚠ command behaves differently from the docs (report what happened, and don't improvise on device-level steps);
@@ -96,7 +96,7 @@ The docs are written for members who aren't technical; follow [CONTRIBUTING.md](
 - Give a roadmap code its name the first time a section uses it: "decision D2 (the build host)".
 - Keep instructions addressed to coding agents in this file.
   The people docs mention agents only to say that the person who directs an agent is responsible for its work.
-- When you rename a heading, search all three FoxieOS repositories and the issue forms for links to its old anchor, and update them.
+- When you rename a heading, search all three repositories in the organization (`foxieos`, `alopex` and `.github`) and the issue forms for links to its old anchor, and update them.
 - Don't write a foundational choice as settled: until the maintainers confirm them, the base (LineageOS) and the other key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are proposals.
 
 ## Don't
