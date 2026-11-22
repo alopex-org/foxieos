@@ -1,18 +1,18 @@
 ## What and why
 
-<!-- One logical change: what it does and why. The commit message gives the same reason. -->
+<!-- What this change does and why, in plain words. Keep it to one change. The commit message gives the same reason. -->
 
 ## Checklist
 
-See CONTRIBUTING.md for each item.
+Each item is explained in CONTRIBUTING.md.
 
-- [ ] Commit messages use `scope: description`, with the reason in the body.
-- [ ] The docs change in the same commit as the behaviour they describe, and anything not built yet is labelled as planned.
-- [ ] Changes to LineageOS or AOSP repositories are listed in `docs/PATCHES.md`.
-- [ ] No key material, secrets, or personal or machine-specific details.
-- [ ] Needs a person's review (signing, Updater/OTA, manifest, kernel, SELinux, permissions or framework)? Say so here.
-- [ ] Needs a matching change in another FoxieOS repository? Link its pull request here.
+- [ ] Commit messages use `scope: description`, with the reason in the body, and are signed off.
+- [ ] The docs change in the same commit as what they describe, and anything not built yet is labelled as planned.
+- [ ] Any change to LineageOS or Android's own code is listed in `docs/PATCHES.md`.
+- [ ] No keys, secrets, or personal or computer-specific details.
+- [ ] Does it touch a sensitive area that a person must review (signing, the Updater or updates, the manifest, the kernel, SELinux, permissions or the Android framework, the roadmap or the design)? Say so here.
+- [ ] Does it need a matching change in another FoxieOS repository? Link that pull request here.
 
 ## Tests
 
-<!-- The commands you ran and their results: what passed, what failed (with a log excerpt), and what you skipped. -->
+<!-- The commands you ran and what happened: what passed, what failed (with a short excerpt of the output), and what you skipped. -->

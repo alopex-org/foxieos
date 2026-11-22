@@ -2,138 +2,166 @@
 
 **Status: planned.**
 None of the scripts below exist yet; roadmap tasks T3, T6 and T7 build them.
-Until device #1 arrives (roadmap decision D1, task T7), layers L1–L4 run on the Cuttlefish virtual device ([Virtual devices](#virtual-devices)); layers L5 and L7 need the phone.
+Until the first phone arrives (roadmap decision D1, task T7), layers L1–L4 run on Cuttlefish, a virtual phone ([Virtual phones](#virtual-phones)); layers L5 and L7 need the real phone.
 
 How builds are signed and shipped is in [RELEASING.md](RELEASING.md).
 Sources are listed at the [end of this file](#sources) and in [FEASIBILITY.md](FEASIBILITY.md#sources).
+Technical words are explained in the [glossary](GLOSSARY.md).
 
-## The pipeline
+## In short
+
+- Every change, every night's build and every release goes through a series of tests, called layers, numbered L0 to L8.
+- The early layers are quick and automatic: they check the files, build FoxieOS, and start it on a virtual phone.
+- The later layers are slower: Google's compatibility tests, update tests, signature checks, a checklist on each real phone, and finally testers using it day to day.
+- If any layer fails, the process stops until the problem is fixed.
+
+## The order of the tests
 
 ```
 Every change:
-  L0 static checks → L1 build and L2 unit tests (presubmit) → review → merge
+  L0 file checks → L1 build and L2 unit tests → review → merge
 
 Every night:
-  L1 full builds → L3 Cuttlefish boot and smoke tests → L4 CTS against the baseline
+  L1 full builds → L3 start-up and quick checks on the virtual phone
+  → L4 compatibility tests, compared with the baseline
 
 Every release candidate:
-  build target-files → sign offline → L6 signature checks → L5 OTA tests → L7 device QA
+  build → sign offline → L6 signature checks → L5 update tests → L7 checklist on each phone
   → testing channel (48 hours or more) → beta (7 days or more) → stable
 ```
 
-A failure at any layer stops the pipeline.
-Fix forward, and never skip a layer for a stable release.
-A security hotfix may shorten L8 to 24 hours on testing and 48 hours on beta, with a note in the release notes.
+A failure at any layer stops everything after it.
+Fix the problem with a new change rather than going back, and never skip a layer for a stable release.
+A security emergency fix may shorten L8 to 24 hours on testing and 48 hours on beta, with a note in the release notes.
 
 ## Test layers
 
 | Layer | Runs | On | Passes when |
 |---|---|---|---|
-| [L0 static checks](#l0-static-checks) | every commit | any machine | no findings |
-| [L1 build](#l1-build) | every pull request; nightly | build host | the build exits 0 |
+| [L0 file checks](#l0-file-checks) | every commit | any computer | nothing is found |
+| [L1 build](#l1-build) | every pull request; nightly | build host | the build succeeds |
 | [L2 unit tests](#l2-unit-tests) | every pull request | build host | all tests pass |
-| [L3 boot and smoke](#l3-boot-and-smoke) | pull requests touching the system; nightly | Cuttlefish | it boots and smoke passes |
-| [L4 compatibility](#l4-compatibility) | nightly; every release candidate | Cuttlefish; devices | no failures beyond the baseline |
-| [L5 OTA](#l5-ota) | every release candidate | device | every scenario passes |
-| [L6 signatures](#l6-signatures) | every release candidate | signing host | only release keys |
-| [L7 device QA](#l7-device-qa) | every release candidate | each device | checklist complete |
-| [L8 soak](#l8-soak) | after L7 | testers | no serious regressions |
+| [L3 start-up and quick checks](#l3-start-up-and-quick-checks) | pull requests that change the system; nightly | Cuttlefish | it starts and the checks pass |
+| [L4 compatibility](#l4-compatibility-tests) | nightly; every release candidate | Cuttlefish; phones | no failures beyond the baseline |
+| [L5 updates](#l5-update-tests) | every release candidate | phone | every scenario passes |
+| [L6 signatures](#l6-signature-checks) | every release candidate | signing host | only release keys |
+| [L7 phone checklist](#l7-phone-checklist) | every release candidate | each phone | checklist complete |
+| [L8 everyday use](#l8-everyday-use) | after L7 | testers | no serious new problems |
 
-### L0 static checks
+### L0: file checks
 
-- **When:** every commit, as a pre-commit hook and in CI.
+Quick checks of the files themselves, before anything is built.
+
+- **When:** every commit, on your computer (a pre-commit hook) and, later, on GitHub.
 - **What:**
   - `gitleaks`, which blocks keys and secrets;
-  - `shellcheck` and `yamllint`;
-  - `xmllint --noout` on overlays and manifests;
-  - `bpfmt -d` on `Android.bp` files (unsourced);
+  - `shellcheck` and `yamllint`, which check scripts and settings files;
+  - `xmllint --noout`, which checks overlays and manifests;
+  - `bpfmt -d`, which checks the formatting of build files (`Android.bp`) (unsourced);
   - a check that commit messages follow `scope: description`;
-  - a check that every commit carries a DCO sign-off ([CONTRIBUTING.md](../CONTRIBUTING.md#sign-off)).
-- **Passes when** there are no findings.
-- **Budget:** under 2 minutes.
-- **In place:** the pre-commit hooks in `.pre-commit-config.yaml`, set up as described in [CONTRIBUTING.md](../CONTRIBUTING.md#keys-secrets-and-personal-details).
-  - `gitleaks` v8.30.1 scans the staged changes.
-  - Two hooks block key files (the "Key material" patterns in `.gitignore`) and `*.local.md` notes by name; a content scan can't recognise a binary key such as a `.pk8`.
-  - A commit-msg hook refuses a commit without a `Signed-off-by:` line, and the DCO workflow checks each pull request's commits for one that matches the author.
-- **Planned:** the other checks above, and L0 in CI (task T6).
-  The gitleaks hook only scans staged changes, so CI scans a pull request's commits with `gitleaks git --log-opts="<base>..<head>"` ([gitleaks README][gitleaks-readme]).
+  - a check that every commit has a sign-off ([CONTRIBUTING.md](../CONTRIBUTING.md#sign-off)).
+- **Passes when** nothing is found.
+- **Time limit:** under 2 minutes.
+- **Already in place:** the pre-commit hooks in `.pre-commit-config.yaml`, set up as [CONTRIBUTING.md](../CONTRIBUTING.md#keys-secrets-and-personal-details) describes.
+  - `gitleaks` v8.30.1 scans the changes you are about to commit.
+  - Two hooks block key files (the "Key material" patterns in `.gitignore`) and `*.local.md` notes by name, because scanning a file's contents can't recognise a binary key such as a `.pk8`.
+  - A hook refuses a commit without a `Signed-off-by:` line, and the DCO workflow on GitHub checks that each pull request's commits have one that matches the author.
+- **Planned:** the other checks above, and L0 on GitHub (task T6).
+  The gitleaks hook only scans what you are committing, so on GitHub it will scan a pull request's commits with `gitleaks git --log-opts="<base>..<head>"` ([gitleaks README][gitleaks-readme]).
 
-### L1 build
+### L1: build
 
-- **When:** every pull request (an incremental build of the Cuttlefish target) and nightly (clean builds of Cuttlefish and of every supported device as `userdebug`; there are none until T7).
-- **Where:** the build host, with a ccache of 50–100 GB.
-- **Passes when** the build exits 0, with no new Soong or Kati errors.
-- **Budget:** under 60 minutes for an incremental build; nightly builds take hours.
+Building FoxieOS from the source code.
 
-### L2 unit tests
+- **When:** every pull request (a quick rebuild of the virtual phone, reusing earlier results) and every night (fresh builds of the virtual phone and of every supported phone as `userdebug`; there are no phones until T7).
+- **Where:** the build host, with 50–100 GB set aside for earlier build results (ccache).
+- **Passes when** the build finishes without errors, and the build system (Soong or Kati) reports no new errors.
+- **Time limit:** under 60 minutes for a quick rebuild; nightly builds take hours.
+
+### L2: unit tests
+
+Small automatic tests of individual parts.
 
 - **When:** every pull request.
-- **What:** the `atest` presubmit group from the `TEST_MAPPING` of every project the change touches; host tests with `--host`.
-- **Passes when** all tests pass, and every module FoxieOS owns has a `TEST_MAPPING` entry.
-- **Budget:** under 30 minutes.
+- **What:** the tests that each changed part lists for this purpose (the `atest` presubmit group in its `TEST_MAPPING` file); tests that run on the computer itself use `--host`.
+- **Passes when** all tests pass, and every part FoxieOS owns lists its tests in a `TEST_MAPPING` file.
+- **Time limit:** under 30 minutes.
 
-### L3 boot and smoke
+### L3: start-up and quick checks
 
-- **When:** every pull request that touches the system image, and nightly.
-- **Where:** Cuttlefish, which needs KVM; on each device as part of L7.
-- **What:** boot, then run `tests/smoke/run.sh` ([Smoke suite](#smoke-suite)).
-- **Passes when** `sys.boot_completed` is reached within 5 minutes and every smoke check passes.
-- **Budget:** under 15 minutes.
+Starting FoxieOS and checking the basics.
 
-### L4 compatibility
+- **When:** every pull request that changes the system, and every night.
+- **Where:** Cuttlefish, which needs KVM; and on each real phone as part of L7.
+- **What:** start the phone, then run the quick checks in `tests/smoke/run.sh` ([Quick checks](#quick-checks)).
+- **Passes when** the phone reports that it has finished starting (`sys.boot_completed`) within 5 minutes, and every quick check passes.
+- **Time limit:** under 15 minutes.
 
-- **When:** nightly on Cuttlefish; on devices for every release candidate; a full CTS run on a device before each stable release.
-- **Where:** Cuttlefish, on the build host or a second test host; devices.
-- **What:** `cts-tradefed`, with the `cts-virtual-device-stable` plan on Cuttlefish and the modules in `tests/cts/modules-device.txt` on devices.
-- **Passes when** no test fails that didn't also fail on stock LineageOS for the same target ([CTS strategy](#cts-strategy)).
-- **Budget:** under 3 hours nightly.
+### L4: compatibility tests
 
-### L5 OTA
+Google's compatibility tests (CTS), which check that FoxieOS behaves like Android should.
+
+- **When:** every night on Cuttlefish; on phones for every release candidate; a full run on a phone before each stable release.
+- **Where:** Cuttlefish, on the build host or a second test computer; real phones.
+- **What:** `cts-tradefed`, with Google's `cts-virtual-device-stable` test set on Cuttlefish, and the parts listed in `tests/cts/modules-device.txt` on phones.
+- **Passes when** no test fails that didn't also fail on plain LineageOS for the same phone or virtual phone ([Compatibility tests](#compatibility-tests-cts)).
+- **Time limit:** under 3 hours each night.
+
+### L5: update tests
+
+Installing updates the way users will.
 
 - **When:** every release candidate.
-- **Where:** the device; also Cuttlefish if roadmap check C11 passes.
-- **What:** the [OTA scenarios](#ota-tests): full and incremental updates, two versions back to current, an interrupted install, and anti-rollback.
-- **Passes when** every scenario passes and user data is intact.
-- **Budget:** about half a day.
+- **Where:** the real phone; also Cuttlefish if roadmap check C11 shows that it works there.
+- **What:** the [update scenarios](#update-tests): full and incremental updates, updating from two versions back, an interrupted install, and refusing an older version.
+- **Passes when** every scenario passes and the user's data is intact.
+- **Time limit:** about half a day.
 
-### L6 signatures
+### L6: signature checks
+
+Checking that the release is signed correctly.
 
 - **When:** every release candidate, after signing.
 - **Where:** the signing host.
-- **What:** the checks in [RELEASING.md](RELEASING.md#verification).
-- **Passes when** every artifact is signed with release keys and nothing carries test-keys.
-- **Budget:** under 30 minutes.
+- **What:** the checks in [RELEASING.md](RELEASING.md#checking-a-signed-release).
+- **Passes when** every file is signed with release keys, and nothing carries test keys.
+- **Time limit:** under 30 minutes.
 
-### L7 device QA
+### L7: phone checklist
+
+A person checks each phone by hand.
 
 - **When:** every release candidate.
-- **Where:** each supported device.
-- **What:** the checklist in `tests/qa/<codename>.md`, plus the smoke suite on the device (`-s <serial>`).
-- **Passes when** every item is ticked or has a known issue filed.
-- **Budget:** about 2 hours per device.
+- **Where:** each supported phone.
+- **What:** the checklist in `tests/qa/<codename>.md`, plus the quick checks on the phone (`-s <serial>`).
+- **Passes when** every item is ticked, or has a known problem filed as an issue.
+- **Time limit:** about 2 hours per phone.
 
-### L8 soak
+### L8: everyday use
+
+Testers use the release in daily life.
 
 - **When:** after L7.
 - **Who:** testers on the update channels: `testing` for at least 48 hours, then `beta` for at least 7 days, then `stable`.
-- **Passes when** nobody reports boot loops, data loss or radio regressions.
+- **Passes when** nobody reports a phone that keeps restarting, lost data, or new problems with calls or mobile data.
 
 ## Commands
 
-Check the ⚠ ones on first use, then remove the marker.
+These are the commands for downloading the code, building and starting the virtual phone.
+Check the ⚠ ones the first time you use them, then remove the marker.
 
 ```bash
-# Sync (task T2). Flags from LineageOS's build page for lineage-24.0, checked 2026-11-20.
+# Download the source code (task T2). Options from LineageOS's build page for lineage-24.0, checked 2026-11-20.
 repo init -u https://github.com/LineageOS/android.git -b lineage-24.0 --git-lfs --no-clone-bundle
-repo sync    # the LineageOS manifest already sets -c and -j4; the wiki asks for no extra options
+repo sync    # LineageOS's manifest already sets -c and -j4; the wiki asks for no extra options
 
 # Build environment
 source build/envsetup.sh
-breakfast <codename>                # select a device target
-brunch <codename>                   # full device build
-mka target-files-package otatools   # the inputs for offline signing
+breakfast <codename>                # choose a phone to build for
+brunch <codename>                   # build everything for that phone
+mka target-files-package otatools   # the files the signing host needs
 
-# Virtual device (tasks T2–T6), from the same tree
+# Virtual phone (tasks T2–T6), from the same source code
 lunch lineage_cf_phone_x86_64-userdebug
 mka
 launch_cvd --daemon                 # needs the Cuttlefish host tools (⚠ roadmap check C1)
@@ -143,102 +171,112 @@ stop_cvd
 
 Sources: [LineageOS build page for shiba][lineage-shiba-build], [LineageOS emulator page][lineage-emulator], [Cuttlefish: get started][cf-start].
 
-## Virtual devices
+## Virtual phones
 
-**Cuttlefish is the CI target** (decided 2026-11-20, virtual first).
-The goldfish emulator stays available for interactive use.
-Both come from the same LineageOS 24.0 tree; no separate AOSP checkout is needed.
+A virtual phone runs on the build host and behaves like a phone, so most testing can happen before a real phone is chosen.
+There are two kinds.
+
+**Cuttlefish is the one for automatic tests** (decided 2026-11-20, "virtual first" in [DESIGN.md](DESIGN.md#virtual-phone-first)).
+The goldfish emulator stays available for trying things by hand.
+Both are built from the same LineageOS 24.0 source code; no separate copy of AOSP is needed.
 Checked on 2026-11-20 in `vendor/lineage/build/target/product/AndroidProducts.mk` on lineage-24.0 ([AndroidProducts.mk][lineage-products]) and on the LineageOS wiki.
 
-- **Emulator (goldfish):** `lineage_sdk_phone_x86_64-userdebug` is a lunch choice.
+- **Emulator (goldfish):** `lineage_sdk_phone_x86_64-userdebug` is one of the build choices.
   The wiki builds it with `breakfast sdk_phone_x86_64 eng` (or `userdebug`) and then `mka`, and `mka emu_img_zip` packs it for Android Studio.
   LineageOS 24.0 is on the wiki's list of tested versions.
-  Use x86_64 for native KVM speed.
+  Use the x86_64 version, so it runs at full speed with KVM.
   ([LineageOS emulator page][lineage-emulator])
-- **Cuttlefish:** `lineage_cf_phone_x86_64-userdebug` is a lunch choice, as is `lineage_cf_phone_arm64`.
-  It inherits AOSP's `aosp_cf.mk` plus LineageOS's generic target configuration, and uses the prebuilt Cuttlefish kernel ([lineage_cf_phone_x86_64.mk][lineage-cf-mk]).
-  The LineageOS manifest carries AOSP's `device/google/cuttlefish`.
-  It is AOSP's own CI device, with a `cts-virtual-device-stable` CTS plan ([CTS strategy](#cts-strategy)).
-  The host needs KVM and Google's `cuttlefish-base` and `cuttlefish-user` Debian packages, or their Docker or Podman container images on other distributions ([Cuttlefish: get started][cf-start], [google/android-cuttlefish][cf-github]).
-  ⚠ Whether OTA tests work on it is roadmap check C11; AOSP made it a Virtual A/B device (unsourced).
-- Neither is a "virtual Pixel": Android Studio's Pixel profiles only set the screen size and skin over a generic image (unsourced).
-  Hardware tests (verified-boot relocking, the modem, cameras, sensors, the battery) need the D1 phone.
-- The rule that every flash needs a go-ahead ([AGENTS.md](../AGENTS.md), hard rule 2) covers physical devices only.
-  Cuttlefish instances on the build host can be started, wiped and reflashed freely.
-- For a headless emulator run: `emulator -no-window -no-audio -no-snapshot -gpu swiftshader_indirect` (unsourced).
-  The emulator needs KVM and doesn't work under Wayland, so run it headless in CI, or under X ([GrapheneOS build guide][graphene-build]).
+- **Cuttlefish:** `lineage_cf_phone_x86_64-userdebug` is one of the build choices, as is `lineage_cf_phone_arm64`.
+  It builds on AOSP's `aosp_cf.mk` plus LineageOS's generic settings, and uses Cuttlefish's ready-made kernel ([lineage_cf_phone_x86_64.mk][lineage-cf-mk]).
+  LineageOS's manifest includes AOSP's `device/google/cuttlefish`.
+  It is the virtual phone Google itself tests Android on, with its own compatibility test set, `cts-virtual-device-stable` ([Compatibility tests](#compatibility-tests-cts)).
+  The computer needs KVM and Google's `cuttlefish-base` and `cuttlefish-user` Debian packages, or their Docker or Podman container images on other Linux systems ([Cuttlefish: get started][cf-start], [google/android-cuttlefish][cf-github]).
+  ⚠ Whether update tests work on it is roadmap check C11; AOSP made it a Virtual A/B device (unsourced).
+- **Neither is a "virtual Pixel":** Android Studio's Pixel profiles only set the screen size and frame around a generic system (unsourced).
+  Hardware tests (relocking the bootloader, the mobile network, cameras, sensors, the battery) need the real phone from decision D1.
+- **Virtual phones are safe to experiment on.**
+  Cuttlefish phones on the build host can be started, wiped and reinstalled freely.
+  Installing on a real phone is different: a mistake can make it unusable, so the maintainer does it or approves each step.
+- **Running the emulator without a screen:** `emulator -no-window -no-audio -no-snapshot -gpu swiftshader_indirect` (unsourced).
+  The emulator needs KVM and doesn't work under Wayland, so run it without a screen for automatic tests, or under X ([GrapheneOS build guide][graphene-build]).
 
-## Smoke suite
+## Quick checks
 
-`tests/smoke/run.sh [-s SERIAL]` prints TAP output and runs against Cuttlefish, the emulator or a physical device.
+The quick checks: `tests/smoke/run.sh [-s SERIAL]` runs them against Cuttlefish, the emulator or a real phone, and prints the results in the TAP format.
 
 | Check | Command (sketch) | Expected |
 |---|---|---|
-| Boot completes | `adb wait-for-device`, then poll `getprop sys.boot_completed` with a timeout | `1` within 300 s |
-| SELinux enforcing | `adb shell getenforce` | `Enforcing` (a LineageOS charter requirement) |
-| No `su` | `adb shell 'command -v su'` | empty (a LineageOS charter requirement) |
-| Identity properties | `getprop ro.foxie.version` and `ro.foxie.build.channel` | non-empty and matching the build |
-| Patch level | `getprop ro.build.version.security_patch` | the value in the release notes |
-| Key tags | `getprop ro.build.tags` | `release-keys` on release candidates; `test-keys` only in CI |
-| Debuggable | `getprop ro.debuggable` | matches the variant (`0` on `user`) |
+| Start-up finishes | `adb wait-for-device`, then keep asking `getprop sys.boot_completed` until a time limit | `1` within 300 s |
+| Security rules on | `adb shell getenforce` | `Enforcing` (a LineageOS rule) |
+| No root access | `adb shell 'command -v su'` | empty (a LineageOS rule) |
+| FoxieOS version values | `getprop ro.foxie.version` and `ro.foxie.build.channel` | not empty, and matching the build |
+| Security patch level | `getprop ro.build.version.security_patch` | the value in the release notes |
+| Signed with the right keys | `getprop ro.build.tags` | `release-keys` on release candidates; `test-keys` only in automatic tests |
+| Developer access | `getprop ro.debuggable` | matches the build variant (`0` on `user`) |
 | Encryption | `getprop ro.crypto.state` and `ro.crypto.type` | `encrypted` and `file` (unsourced) |
-| No crash loop | `adb logcat -b crash -d` after 5 minutes idle; compare the `system_server` PID | empty; same PID |
-| Packages | `adb shell pm list packages` against `tests/smoke/packages-{required,forbidden}.txt` | all required present, none forbidden |
-| Updater URL | `getprop lineage.updater.uri`, or the overlay value | the FoxieOS URL for the channel |
-| Privacy defaults | `settings get <namespace> <key>` for each default in `tests/smoke/settings.txt` | matches |
-| Browser present | `pm list packages` | the shipped browser is installed |
+| No crash loop | `adb logcat -b crash -d` after 5 minutes of doing nothing; compare the `system_server` process number | empty; same number |
+| Installed apps | `adb shell pm list packages` against `tests/smoke/packages-{required,forbidden}.txt` | all required apps present, no forbidden ones |
+| Update server address | `getprop lineage.updater.uri`, or the overlay value | the FoxieOS address for the channel |
+| Privacy settings | `settings get <namespace> <key>` for each setting in `tests/smoke/settings.txt` | matches |
+| Web browser present | `pm list packages` | the included browser is installed |
 
-FoxieOS keeps a browser because LineageOS requires one in its official builds ([LineageOS charter][lineage-charter]).
+FoxieOS keeps a web browser because LineageOS requires one in its official builds ([LineageOS charter][lineage-charter]).
 
-## CTS strategy
+## Compatibility tests (CTS)
 
-- CTS can be downloaded publicly as `android-cts-17_rN-linux_x86-{arm,x86}.zip` from `dl.google.com`.
+How FoxieOS uses Google's compatibility tests (CTS).
+
+- **Getting CTS:** it can be downloaded publicly as `android-cts-17_rN-linux_x86-{arm,x86}.zip` from `dl.google.com`.
   Run it with `./android-cts/tools/cts-tradefed`, then `run cts --plan …` and `run retry --retry N` ([CTS downloads][cts-downloads]).
-- A CTS host needs at least 32 GB of RAM and 256 GB of disk, JDK 11 or later, `adb`, `aapt2`, and FFmpeg 5.1.3 or later.
+- **The computer that runs it** needs at least 32 GB of RAM and 256 GB of disk, JDK 11 or later, `adb`, `aapt2`, and FFmpeg 5.1.3 or later.
   Keep the unzipped folder's name unchanged ([CTS][cts]).
-- **Baseline method.**
+- **Comparing with a baseline.**
   LineageOS itself doesn't pass all of CTS (unsourced), and not all of CTS passes on Cuttlefish ([Cuttlefish: run CTS][cf-cts]).
-  1. Run the same plan or module list on stock lineage-24.0, built from the same manifest snapshot, for the same target.
+  So FoxieOS compares its results with plain LineageOS:
+  1. Run the same tests on plain lineage-24.0, built from the same snapshot of the source code, for the same phone or virtual phone.
   2. Save the failures to `tests/cts/baseline-<lineage-tag>-<target>.txt`: `cf_x86_64` in task T3, `<codename>` in task T7.
-  3. The FoxieOS gate is that no test fails that isn't in the baseline.
-  4. Regenerate the baselines whenever FoxieOS rebases.
-- **Nightly on Cuttlefish:** the `cts-virtual-device-stable` plan, which tracks the part of CTS that is stable on virtual devices.
-  ⚠ Roadmap check C3 confirms that the CTS 17 download includes it; if not, build CTS from the tree as AOSP's Cuttlefish guide does.
-  AOSP's example runs `cts-tradefed run cts-virtual-device-stable --no-enable-parameterized-modules --max-testcase-run-count 2 --retry-strategy RETRY_ANY_FAILURE --reboot-at-last-retry --shard-count 8` on 8 instances: 184 modules in about 22 minutes.
-  Each instance needs Wi-Fi enabled (`WifiUtil.apk`) ([Cuttlefish: run CTS][cf-cts]).
-- **Devices**, for every release candidate: the modules in `tests/cts/modules-device.txt`.
+  3. FoxieOS passes if no test fails that isn't already in the baseline.
+  4. Make new baselines whenever FoxieOS moves to a new LineageOS version.
+- **Every night on Cuttlefish:** the `cts-virtual-device-stable` test set, the part of CTS that runs reliably on virtual phones.
+  ⚠ Roadmap check C3 confirms that the CTS 17 download includes it; if not, build CTS from the source code as AOSP's Cuttlefish guide does.
+  AOSP's example runs `cts-tradefed run cts-virtual-device-stable --no-enable-parameterized-modules --max-testcase-run-count 2 --retry-strategy RETRY_ANY_FAILURE --reboot-at-last-retry --shard-count 8` on 8 virtual phones: 184 test groups in about 22 minutes.
+  Each virtual phone needs Wi-Fi switched on (`WifiUtil.apk`) ([Cuttlefish: run CTS][cf-cts]).
+- **On phones,** for every release candidate: the test groups in `tests/cts/modules-device.txt`.
   ⚠ Confirm the names with `list modules` (roadmap check C3).
   The planned list: `CtsSecurityTestCases`, `CtsSecurityBulletinHostTestCases`, `CtsPermissionTestCases`, `CtsPermission3TestCases`, `CtsAppSecurityHostTestCases`, `CtsSelinuxTargetSdkCurrentTestCases`, `CtsOsTestCases`, `CtsNetTestCases`, `CtsKeystoreTestCases`, `CtsAppTestCases`.
-- **Before every stable release:** a full CTS run on a physical device running a `user` build, which the security tests need.
-  Prepare the device as the CTS setup page describes: Wi-Fi with IPv6, SIM lock off, location on ([CTS][cts]).
-- Passing CTS does **not** bring Google certification or Play Integrity; never claim it does.
-- VTS and CTS-on-GSI are optional, and useful only for the GSI track ([CTS][cts]).
-- **More than one test host** (planned, task T6).
-  Cuttlefish and CTS can run on a second host from copied images, so the build host can start the next build.
-  To split one CTS run across hosts, start the same plan on each with `--shard-count N --shard-index i`: every host builds the same test list and runs a disjoint slice of it.
-  Tradefed doesn't merge sharded results, so the nightly script merges them ([Tradefed sharding][tf-sharding], [sharded results][tf-sharded-runner]).
-  A test host needs KVM and enough RAM for its Cuttlefish instances; a virtual machine also needs nested virtualization (roadmap check C5).
+- **Before every stable release:** a full CTS run on a real phone running a `user` build, which the security tests need.
+  Prepare the phone as Google's CTS setup page describes: Wi-Fi with IPv6, SIM lock off, location on ([CTS][cts]).
+- **CTS is not certification.**
+  Passing it does **not** bring Google's approval or Play Integrity; never claim it does.
+- **Optional tests:** VTS and CTS-on-GSI are useful only for the generic-image (GSI) track ([CTS][cts]).
+- **More than one test computer** (planned, task T6).
+  Cuttlefish and CTS can run on a second computer from copied images, so the build host can start the next build.
+  To split one CTS run across computers, start the same test set on each with `--shard-count N --shard-index i`: every computer makes the same list of tests and runs its own share of it.
+  Tradefed doesn't combine the results, so the nightly script does ([Tradefed sharding][tf-sharding], [sharded results][tf-sharded-runner]).
+  A test computer needs KVM and enough RAM for its virtual phones; a virtual machine also needs nested virtualisation (roadmap check C5).
 
-## OTA tests
+## Update tests
 
-The scenarios live in `tests/ota/`.
-How the packages are built is in [RELEASING.md](RELEASING.md#ota-packages).
+The update scenarios, kept in `tests/ota/`.
+How the update packages are made is in [RELEASING.md](RELEASING.md#update-packages).
 
-They run on the physical device, where every flash needs a go-ahead.
+They run on the real phone, where the maintainer does or approves every install.
 If roadmap check C11 passes, scenarios 1–4 run on Cuttlefish first.
 
-1. **Incremental update**, from the previous build (N-1) to the new one (N), through the Updater on the `testing` channel.
-   Afterwards the device boots, the slot has switched, the smoke suite passes, and seeded user data is intact: a contact, a file in `/sdcard`, an installed app with its data, and a saved Wi-Fi network.
-2. **Full update** from two builds back (N-2) to N, with the same checks.
-3. **Interrupted install:** reboot during the download, then during the install.
-   The device stays on the old slot, and a retry succeeds.
-   This relies on A/B fallback; Virtual A/B is the current design ([A/B updates][aosp-ab]).
-4. **Anti-rollback:** offer build N-1 to a device on N.
-   The update is refused.
-5. **Clean install** from the factory or recovery package, then the first OTA.
+In the scenarios, N is the new build, N-1 the one before it, and N-2 the one before that.
 
-Keep the signed target-files and OTA packages for N-1 and N-2 in release storage.
-Without them, you can't build incremental updates or run these tests.
+1. **Incremental update** from N-1 to N, through the Updater app on the `testing` channel.
+   Afterwards the phone starts, it runs from the other system slot, the quick checks pass, and test data is still there: a contact, a file in `/sdcard`, an installed app with its data, and a saved Wi-Fi network.
+2. **Full update** from N-2 to N, with the same checks.
+3. **Interrupted install:** restart the phone during the download, then during the install.
+   The phone stays on the old version, and trying again works.
+   This relies on the A/B design, where the old version stays in place until the new one works; Virtual A/B is the current form of it ([A/B updates][aosp-ab]).
+4. **Refusing an older version (anti-rollback):** offer build N-1 to a phone on N.
+   The phone refuses it.
+5. **Clean install** from the factory or recovery package, then the first update.
+
+Keep the signed build files and update packages for N-1 and N-2 in the release storage.
+Without them, you can't make incremental updates or run these tests.
 
 ## Sources
 

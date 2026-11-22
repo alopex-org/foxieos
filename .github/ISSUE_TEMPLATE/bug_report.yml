@@ -35,8 +35,8 @@ body:
   - type: dropdown
     id: upstream
     attributes:
-      label: Does stock LineageOS 24.0 have the same problem?
-      description: Problems that LineageOS has too are reported to LineageOS first.
+      label: Does plain LineageOS 24.0 have the same problem?
+      description: Problems that LineageOS has too are reported to LineageOS first. "Not checked" is a fine answer.
       options:
         - Not checked
         - Yes, LineageOS has it too
@@ -67,5 +67,5 @@ body:
     id: logs
     attributes:
       label: Logs
-      description: logcat or other output. Remove personal data first.
+      description: Output from logcat or another tool, if you have it. Remove personal data first.
       render: shell
