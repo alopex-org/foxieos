@@ -55,7 +55,7 @@ Don't add a step that only one agent's own tools can perform.
 
 ## Stop and ask when…
 
-- a roadmap decision (D1–D9) is needed and not yet recorded;
+- a roadmap decision (D1–D10) is needed and not yet recorded;
 - a change here needs a matching change in another repository, such as `alopex`: propose one pull request in each, linking the other.
   FoxieOS depends on `alopex`, not the reverse, so don't propose a change there that asks it to adapt to FoxieOS;
 - a step would flash, unlock, lock or wipe a physical device;
