@@ -1,0 +1,39 @@
+# Requests a review from the reviewer below on every pull request that is
+# opened, reopened or marked ready for review (CONTRIBUTING.md, "Review").
+# It only requests the review: approving stays as the ruleset on main sets it,
+# a member other than the author, plus a code owner for the paths in CODEOWNERS.
+# pull_request_target gives the token write access to the pull request even
+# from a fork, so this workflow never checks out or runs the pull request's code.
+name: Review request
+
+on:
+  pull_request_target:
+    types: [opened, reopened, ready_for_review]
+
+permissions:
+  pull-requests: write
+
+jobs:
+  request:
+    name: Request review
+    if: ${{ !github.event.pull_request.draft }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Request a review from the reviewer
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          PR: ${{ github.event.pull_request.number }}
+          AUTHOR: ${{ github.event.pull_request.user.login }}
+          REVIEWER: alevromitis
+        run: |
+          set -euo pipefail
+          # GitHub refuses a review request to the pull request's own author.
+          if [[ ${AUTHOR,,} == "${REVIEWER,,}" ]]; then
+            echo "skip: $REVIEWER opened pull request $PR"
+            exit 0
+          fi
+          gh api --method POST "repos/$REPO/pulls/$PR/requested_reviewers" \
+            -f "reviewers[]=$REVIEWER" --silent
+          echo "requested a review from $REVIEWER on pull request $PR"
