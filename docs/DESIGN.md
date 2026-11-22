@@ -135,9 +135,9 @@ Decided 2026-11-20.
 
 Decided 2026-11-20 (decision D3).
 
-- **What:** the code lives in the `alopex-org` organization on GitHub, in repositories whose names start with `foxieos`.
+- **What:** the code lives in the `alopex-org` organization on GitHub, in repositories named after each project (`foxieos` and its related repositories, and `alopex` for the hardware project).
   Automatic checks are planned on GitHub Actions, running on the project's own computer (task T6).
-- **Why:** FoxieOS is a project of Alopex, which owns the organization.
+- **Why:** FoxieOS is a project of the Alopex student organization, which owns the GitHub organization.
 - **Turned down:** running our own code server (Gitea); Gerrit, a review tool, put off until there are three or more contributors.
 
 ### Testing in layers, against a baseline
@@ -171,7 +171,7 @@ Decided 2026-11-20 (decision D3).
 
 ## Related repositories
 
-- [alopex](https://github.com/alopex-org/alopex) researches building a phone, or a similar device, for an Android-based operating system.
+- [Alopex](https://github.com/alopex-org/alopex) researches building a phone, or a similar device, for an Android-based operating system.
   Whether that stays a prototype or becomes a product is its decision D5.
   FoxieOS depends on it for a device of its own, and only in that direction: the hardware project doesn't follow FoxieOS's rules for phones, and FoxieOS adapts to its choices.
   Whether FoxieOS supports a device from it, and on what terms, is roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).

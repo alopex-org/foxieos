@@ -17,7 +17,7 @@ It is in the planning phase: no Android source has been synced and nothing is bu
 - What to do next: [docs/ROADMAP.md](docs/ROADMAP.md)
 - How changes are tested: [docs/TESTING.md](docs/TESTING.md)
 - How releases are signed and shipped: [docs/RELEASING.md](docs/RELEASING.md)
-- Related repositories, including alopex, the separate hardware project that FoxieOS depends on (not the reverse): [docs/DESIGN.md](docs/DESIGN.md#related-repositories)
+- Related repositories, including `alopex`, the repository of Alopex, the separate hardware project that FoxieOS depends on (not the reverse): [docs/DESIGN.md](docs/DESIGN.md#related-repositories)
 
 Every step in these docs is a plain shell or file step, so any agent can follow it.
 Don't add a step that only one agent's own tools can perform.
@@ -94,6 +94,7 @@ The docs are written for members who aren't technical; follow [CONTRIBUTING.md](
 - Explain a technical term the first time a page uses it, or link to [docs/GLOSSARY.md](docs/GLOSSARY.md), and add new terms there.
   GitHub and process terms go in the [organization's glossary](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
 - Give a roadmap code its name the first time a section uses it: "decision D2 (the build host)".
+- Call the hardware project "Alopex" and its repository `alopex`; the student organization shares the name, so write "the Alopex student organization" when you mean it.
 - Keep instructions addressed to coding agents in this file.
   The people docs mention agents only to say that the person who directs an agent is responsible for its work.
 - When you rename a heading, search all three repositories in the organization (`foxieos`, `alopex` and `.github`) and the issue forms for links to its old anchor, and update them.

@@ -120,8 +120,8 @@ A second ruleset covers tags: only the maintainer creates, moves or deletes a ta
 In the pull request, list the commands you ran and what happened: what passed, what failed (with a short excerpt of the output) and what you skipped.
 
 **Changes that touch another repository.**
-If a change needs a matching change in a related repository, such as [alopex](https://github.com/alopex-org/alopex), open a pull request there as well, and link each one from the other.
-FoxieOS depends on alopex, not the other way round.
+If a change needs a matching change in a related repository, such as [alopex](https://github.com/alopex-org/alopex) for the Alopex hardware project, open a pull request there as well, and link each one from the other.
+FoxieOS depends on Alopex, not the other way round.
 A change in the hardware project can need a matching change here, but a change here never asks the hardware project to adapt to FoxieOS.
 
 ## Issues and labels
