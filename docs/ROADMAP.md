@@ -104,7 +104,7 @@ Where the code and the automatic checks live.
 **Decided 2026-11-20: GitHub.**
 
 - The code lives in the [`alopex-org`](https://github.com/alopex-org) organization.
-  This repository is `alopex-org/foxieos`, and every FoxieOS repository there starts with `foxieos`.
+  This repository is `alopex-org/foxieos`, and FoxieOS's other repositories there start with `foxieos` too.
 - The repositories are public.
   On GitHub's free plan, public repositories get protected branches (rulesets), code owners, secret scanning and private vulnerability reporting.
   A ruleset protects `main` ([CONTRIBUTING.md](../CONTRIBUTING.md#review)).
@@ -158,7 +158,7 @@ Open; needed before the first public release (task T10).
 Whether FoxieOS supports a device from the separate hardware project, and on what terms.
 Open; needed before such a device joins FoxieOS (task T12).
 
-[alopex](https://github.com/alopex-org/alopex) is a separate project that researches building a device.
+[Alopex](https://github.com/alopex-org/alopex) is a separate project that researches building a device.
 Whether that stays a prototype or becomes a product is its own decision D5.
 FoxieOS depends on it for a device of its own, and only in that direction: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
 The hardware project doesn't follow FoxieOS's [rules for choosing a phone](DEVICES.md#rules-for-choosing-a-phone), and a device from it would break at least one of them: LineageOS wouldn't support it officially, at least at first.
@@ -184,7 +184,7 @@ What FoxieOS is built on.
 Open; the maintainers decide it after the founding meeting on 2026-11-24, and it is needed before the source code is downloaded (task T2).
 
 The answer depends on what the meeting decides about hardware.
-If FoxieOS runs on phones other companies make, it needs a base that already supports them; if it waits for a device from the [hardware project](https://github.com/alopex-org/foxieos-hardware), that device's chip and software package (BSP) set what is possible.
+If FoxieOS runs on phones other companies make, it needs a base that already supports them; if it waits for a device from the [hardware project, Alopex](https://github.com/alopex-org/alopex), that device's chip and software package (BSP) set what is possible.
 The docs describe a LineageOS base throughout, because that is the current proposal ([DESIGN.md](DESIGN.md#base-lineageos-240-android-17)).
 
 - **Options:**
@@ -405,7 +405,7 @@ If check C11 passes, task T9 can run on the virtual phone before T7.
 - **Security changes beyond LineageOS's** (Pixel only).
   Once FoxieOS is stable, weigh copying GrapheneOS against rebuilding selected features.
 - **Designing or making hardware.**
-  That is the work of the separate [alopex](https://github.com/alopex-org/alopex) project, which FoxieOS depends on for a device of its own; decision D9 settles whether and on what terms FoxieOS supports its devices.
+  That is the work of the separate hardware project, [Alopex](https://github.com/alopex-org/alopex), which FoxieOS depends on for a device of its own; decision D9 settles whether and on what terms FoxieOS supports its devices.
 
 ## Checks
 
