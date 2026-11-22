@@ -11,7 +11,7 @@ Each item is explained in CONTRIBUTING.md.
 - [ ] Any change to LineageOS or Android's own code is listed in `docs/PATCHES.md`.
 - [ ] No keys, secrets, or personal or computer-specific details.
 - [ ] Does it touch a sensitive area that a person must review (signing, the Updater or updates, the manifest, the kernel, SELinux, permissions or the Android framework, the roadmap or the design)? Say so here.
-- [ ] Does it need a matching change in another FoxieOS repository? Link that pull request here.
+- [ ] Does it need a matching change in another repository, such as alopex? Link that pull request here.
 
 ## Tests
 

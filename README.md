@@ -33,7 +33,7 @@ What it won't do:
 [docs/DESIGN.md](docs/DESIGN.md) explains why.
 
 FoxieOS doesn't make hardware.
-A separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), researches building a device.
+A separate project, [alopex](https://github.com/alopex-org/alopex), researches building a device.
 Whether that stays a prototype or becomes a product is that project's own open decision (its D5).
 FoxieOS depends on it, not the other way round: the hardware project doesn't follow FoxieOS's wishes, and FoxieOS adapts to its choices.
 Roadmap decision D9 covers whether, and on what terms, FoxieOS supports a device from it.

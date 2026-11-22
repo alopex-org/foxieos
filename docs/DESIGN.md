@@ -169,7 +169,7 @@ Decided 2026-11-20 (decision D3).
 
 ## Related repositories
 
-- [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) researches building a phone, or a similar device, for an Android-based operating system.
+- [alopex](https://github.com/alopex-org/alopex) researches building a phone, or a similar device, for an Android-based operating system.
   Whether that stays a prototype or becomes a product is its decision D5.
   FoxieOS depends on it for a device of its own, and only in that direction: the hardware project doesn't follow FoxieOS's rules for phones, and FoxieOS adapts to its choices.
   Whether FoxieOS supports a device from it, and on what terms, is roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
