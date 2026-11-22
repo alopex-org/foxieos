@@ -61,8 +61,10 @@ The agent still names itself in a `Co-Authored-By:` trailer.
 
 ## Review
 
-Every change is reviewed by someone other than its author, and a member other than the author approves the pull request on GitHub.
-For docs, CI and branding, the approving member may have a different coding agent read the change, and answers for the approval as for their own review.
+Every change is reviewed by someone other than its author.
+Until the members choose the founding maintainers on 2026-11-24 ([governance][governance]), only the interim maintainer's approval lets a pull request merge: `.github/CODEOWNERS` makes them a code owner of every file.
+Members still review each other's changes and the maintainer's own, and their comments are answered before merging.
+For docs, CI and branding, the reviewer may have a different coding agent read the change, and answers for it as for their own review.
 
 A person must review changes to:
 
@@ -74,7 +76,6 @@ A person must review changes to:
 - any part of [docs/ROADMAP.md](docs/ROADMAP.md) or [docs/DESIGN.md](docs/DESIGN.md), which hold the decisions.
 
 `.github/CODEOWNERS` requests these reviews automatically for the paths in this repository, and the ruleset on `main` requires a code owner's approval before a change to them is merged.
-The `Review request` workflow also requests the maintainer's review on every other pull request; that request adds no required approval.
 
 A ruleset protects `main`:
 
@@ -83,7 +84,7 @@ A ruleset protects `main`:
 - review threads are resolved before merging;
 - the DCO check must pass;
 - history stays linear: pull requests are merged by rebasing, so each commit lands on `main` as written, and force pushes and deleting the branch are blocked;
-- the maintainer can bypass these rules on a pull request, for example to merge their own change to a code-owned path once another member has approved it.
+- the maintainer can bypass these rules on a pull request, for example to merge their own change, which no other code owner can approve, once another member has approved it.
   Bypasses are recorded in the ruleset's history.
 
 A second ruleset covers tags: only the maintainer creates, moves or deletes a tag, so only the maintainer publishes a release.
