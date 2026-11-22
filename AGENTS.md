@@ -68,7 +68,36 @@ Don't add a step that only one agent's own tools can perform.
 
 Commit with `git commit -s` only when the person directing you asked for the commit: the sign-off is theirs, in their name ([CONTRIBUTING.md](CONTRIBUTING.md#sign-off)).
 Never add a `Signed-off-by:` line for yourself or for anyone who didn't ask for the commit.
-Add your own `Co-Authored-By:` trailer as well.
+Add your own `Co-Authored-By:` trailer naming yourself as well.
+
+## Review
+
+- You may review a change to docs, CI or branding when a member asks you to, as a second reader for them.
+  The member approves the pull request and answers for the review; you never approve on your own behalf.
+- The sensitive areas in [CONTRIBUTING.md](CONTRIBUTING.md#review) (SELinux, permissions, the framework, the Updater and OTA path, signing scripts, the manifest, the kernel, the roadmap and the design) need a person's review.
+  Say so in the pull request when your change touches one.
+
+## Roadmap tasks
+
+- Each task in [docs/ROADMAP.md](docs/ROADMAP.md) ends with **Finished when** and **Share**.
+  Treat **Finished when** as the acceptance test, and put what **Share** asks for in the pull request, with the commands you ran and their results (hard rule 6).
+- **Hands-on** steps on a physical phone (task T7 and the OTA scenarios in [docs/TESTING.md](docs/TESTING.md#update-tests)) need a go-ahead for each flash, unlock, lock or wipe (hard rule 2).
+  Cuttlefish instances on the build host are exempt.
+- **Maintainer only** steps (keys, accounts, purchases, publishing) are never yours to perform (hard rules 1 and 3).
+  You may write the scripts and the procedure for them.
+
+## Writing docs
+
+The docs are written for members who aren't technical; follow [CONTRIBUTING.md](CONTRIBUTING.md#writing-docs), and in particular:
+
+- Lead each page and section with what it means for the project, in plain words, before the technical detail.
+- Explain a technical term the first time a page uses it, or link to [docs/GLOSSARY.md](docs/GLOSSARY.md), and add new terms there.
+  GitHub and process terms go in the [organization's glossary](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
+- Give a roadmap code its name the first time a section uses it: "decision D2 (the build host)".
+- Keep instructions addressed to coding agents in this file.
+  The people docs mention agents only to say that the person who directs an agent is responsible for its work.
+- When you rename a heading, search all three FoxieOS repositories and the issue forms for links to its old anchor, and update them.
+- Don't write a foundational choice as settled: until the maintainers confirm them, the base (LineageOS) and the other key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are proposals.
 
 ## Don't
 

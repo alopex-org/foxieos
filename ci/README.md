@@ -1,10 +1,10 @@
 # ci/
 
 Planned.
-The scripts that check the build host and run the builds and CI:
+Scripts that check the build computer, run the builds, and run the automatic checks:
 
-- `check-host.sh` (roadmap task T1);
-- `sync.sh` and `build.sh` (T2);
-- `presubmit.sh` and `nightly.sh` (T6).
+- `check-host.sh`, which checks that the build computer is ready (roadmap task T1);
+- `sync.sh` and `build.sh`, which download the source code and build it (T2);
+- `presubmit.sh` and `nightly.sh`, which run the checks on every pull request and every night (T6).
 
-The test layers they run are defined in [docs/TESTING.md](../docs/TESTING.md).
+The tests they run are described in [docs/TESTING.md](../docs/TESTING.md).

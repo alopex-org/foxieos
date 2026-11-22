@@ -1,11 +1,12 @@
 name: Device request
-description: Ask for a phone to be supported. Read the device charter first.
+description: Ask for a phone to be supported. Read the rules for choosing a phone first.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        A device is added only if it meets every [selection criterion](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#selection-criteria) and someone on the team owns one and will maintain it.
+        A phone is added only if it meets every one of the [rules for choosing a phone](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#rules-for-choosing-a-phone), and someone on the team owns one and will look after it.
+        If a question below is unclear, the [glossary](https://github.com/alopex-org/foxieos/blob/main/docs/GLOSSARY.md) explains the words, and "Not sure" is a fine answer.
   - type: input
     id: device
     attributes:

@@ -1,172 +1,185 @@
 # FoxieOS roadmap
 
-What is decided, what is still open, and the work in the order it should happen.
-Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIBILITY.md) for the research.
+This page lists what is decided, what is still open, and the work in the order it should happen.
+Background: [DESIGN.md](DESIGN.md) for how FoxieOS fits together, [FEASIBILITY.md](FEASIBILITY.md) for the research.
+Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Where things stand
 
-- **Done:** task T0, the project skeleton (this repository and its docs), on 2026-11-20.
-- **Founding meeting, 2026-11-24:** the members choose the maintainers, who decide the project's foundations together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
-  One interim maintainer decided everything marked decided here (decision D3 and virtual first), so the meeting confirms or changes it.
-- **Next:** decision D2 (the build host), then task T1 (host readiness).
-- **Virtual first** (decided 2026-11-20): tasks T2–T6 run on LineageOS's Cuttlefish virtual device, `lineage_cf_phone_x86_64`, so a phone (decision D1) is needed only from task T7.
-  See [TESTING.md](TESTING.md#virtual-devices).
+- **Done:** task T0, setting up this repository and its docs, on 2026-11-20.
+- **Next:** decision D2 (which computer builds FoxieOS), then task T1 (getting that computer ready).
+- **Virtual phone first** (decided 2026-11-20): tasks T2–T6 run on Cuttlefish, a virtual phone (LineageOS's `lineage_cf_phone_x86_64`).
+  A real phone (decision D1) is needed only from task T7.
+  See [TESTING.md](TESTING.md#virtual-phones).
+- **Proposals, not yet confirmed:** everything marked decided here was decided by the interim maintainer alone, before the founding meeting on 2026-11-24.
+  The maintainers chosen there confirm or change it ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 
-## How to read this file
+## How to read this page
 
-- **Decisions (D1–D9)** are the maintainers' to make.
+- **Decisions (D1–D9)** are questions the maintainers answer.
   Each one lists the options and a recommendation.
-- **Tasks (T0–T13)** are the work, in order.
-  Each one says what it needs, what to do, when it is done, and what to report.
-- **Checks (C1–C14)** are claims to confirm before the task that depends on them.
+- **Tasks (T0–T13)** are the pieces of work, in order.
+  Each one says what it needs first, what to do, when it is finished, and what to share afterwards.
+- **Checks (C1–C14)** are facts to confirm before the task that relies on them.
   A ⚠ in the other docs usually points to one of them.
-- Each decision, task and check also has an issue, and each phase below is a [milestone](https://github.com/alopex-org/foxieos/milestones).
-  This file is the plan; the issues track status and discussion ([CONTRIBUTING.md](../CONTRIBUTING.md#issues-and-labels)).
-- Each task says who does it:
+- **On GitHub,** each decision, task and check also has an issue, and each phase below is a [milestone](https://github.com/alopex-org/foxieos/milestones).
+  This page is the plan; the issues track progress and discussion ([CONTRIBUTING.md](../CONTRIBUTING.md#issues-and-labels)).
+- **Who does each task:**
   - **Code:** a change to files, made in a pull request.
-    Anyone can do it, including a coding agent.
-  - **Hands-on:** runs on the build host or on a phone.
+    Anyone can do it.
+  - **Hands-on:** runs on the build computer or on a phone.
     The maintainer runs it, or approves each step.
   - **Maintainer only:** keys, accounts, purchases and publishing.
 
 ## Phases
 
-1. **Setup:** the build host, a LineageOS 24.0 sync, and a stock build for Cuttlefish (T1–T3).
-2. **Branding:** `vendor/foxie`, the boot animation, the About page and default apps (T4–T5).
-3. **CI and tests:** presubmit checks, nightly Cuttlefish boot tests and the CTS baseline (T3, T6).
-4. **Device #1:** bring-up and QA on a real phone (T7).
-5. **Release infrastructure:** signing, OTA packages, the update server and channels, and the first alpha (T8–T10).
+1. **Setup:** the build computer, downloading LineageOS 24.0, and a first plain build for the virtual phone (T1–T3).
+2. **Branding:** FoxieOS's own folder (`vendor/foxie`), the start-up animation, the About page and the default apps (T4–T5).
+3. **Automatic checks and tests:** checks on every change, nightly tests on the virtual phone, and the compatibility baseline (T3, T6).
+4. **The first phone:** getting FoxieOS running and tested on a real phone (T7).
+5. **Releases:** signing, update packages, the update server and channels, and the first test release (alpha) (T8–T10).
 6. **Privacy features:** a small, useful set (T11).
-7. **More devices, and later a GSI** (T12), with a rebase drill before each LineageOS major version (T13).
+7. **More phones, and later a generic image (GSI)** (T12), with a practice run before each new LineageOS version (T13).
 
 ## Decisions
 
 | ID | Question | Status | Needed by |
 |---|---|---|---|
-| [D1](#d1-device-1) | Which phone is device #1? | Open | T7 |
-| [D2](#d2-build-host) | Which machine is the build host? | Open | T1 |
-| [D3](#d3-code-and-ci-hosting) | Where are the code and CI hosted? | Decided: GitHub | T5, T6 |
+| [D1](#d1-device-1) | Which phone comes first? | Open | T7 |
+| [D2](#d2-build-host) | Which computer builds FoxieOS? | Open | T1 |
+| [D3](#d3-code-and-ci-hosting) | Where do the code and automatic checks live? | Decided: GitHub | T5, T6 |
 | [D4](#d4-update-server-hosting) | Where is the update server hosted? | Open | T9 |
-| [D5](#d5-microg) | Is microG shipped, optional, or absent? | Open | T11 |
+| [D5](#d5-microg) | Does FoxieOS include microG, offer it, or leave it out? | Open | T11 |
 | [D6](#d6-release-build-variant) | Are releases `userdebug` or `user` builds? | Open | T10 |
-| [D7](#d7-signing-host) | Which machine is the signing host? | Open | T8 |
-| [D8](#d8-security-contact) | What is the private security contact? | Open | T10 |
+| [D7](#d7-signing-host) | Which computer signs releases? | Open | T8 |
+| [D8](#d8-security-contact) | How do people report security problems privately? | Open | T10 |
 | [D9](#d9-devices-from-the-hardware-project) | Does FoxieOS support a device from the hardware project, and on what terms? | Open | T12 |
 
 ### D1: device #1
 
-Open; needed by T7.
+Which phone FoxieOS supports first.
+Open; needed by task T7.
 
-- **Recommendation:** a Pixel 8 or later.
-  All of them run LineageOS 24.0, can be relocked with a custom verified-boot key, and get seven years of Google updates.
-  Among them, the Pixel 9a (`tegu`) has two LineageOS maintainers and updates until about April 2032.
-- **Options:** the candidates table in [DEVICES.md](DEVICES.md#candidates-for-device-1).
+- **Recommendation:** a Google Pixel 8 or later.
+  All of them run LineageOS 24.0, can be locked again with FoxieOS's own key, and get seven years of updates from Google.
+  Among them, the Pixel 9a (`tegu`) has two LineageOS volunteers looking after it and gets updates until about April 2032.
+- **Options:** the table of candidates in [DEVICES.md](DEVICES.md#candidates-for-the-first-phone).
 
 ### D2: build host
 
-Open; needed by T1.
+Which computer builds FoxieOS.
+Open; needed by task T1.
 
-The build host holds the source tree, runs the builds and, from T6, the CI runner.
+The build host holds the source code, runs the builds and, from task T6, the automatic checks.
 It needs:
 
-- x86-64 Linux with KVM, for Cuttlefish and the emulator;
-- memory for Android 17's build-graph step, which runs as one process and has been reported above 55 GiB: 96 GB of RAM, or 32–64 GB plus zram sized at twice the RAM;
-- about 400 GB of disk per source tree, so plan for a 1 TB NVMe drive;
-- as many cores as possible: AOSP quotes about 40 minutes for a full build on 72 cores and about 6 hours on 6 cores, both with 64 GB of RAM.
+- Linux on a normal PC processor (x86-64), with KVM to run virtual phones;
+- a lot of memory for one step of Android 17's build, which runs as a single program and has been reported to use more than 55 GiB: either 96 GB of RAM, or 32–64 GB plus zram (compressed memory) twice the size of the RAM;
+- about 400 GB of disk for each copy of the source code, so plan for a 1 TB NVMe drive;
+- as many processor cores as possible: AOSP quotes about 40 minutes for a full build on 72 cores and about 6 hours on 6 cores, both with 64 GB of RAM.
 
-Google's Cuttlefish packages are built for Debian; other distributions use its container images (C1).
+Google's Cuttlefish packages are made for Debian Linux; other Linux systems use its container images (check C1).
 The requirements and their sources are in [FEASIBILITY.md](FEASIBILITY.md#build-host).
 
 | Option | Memory | Cost | Notes |
 |---|---|---|---|
-| Own hardware, 32 GB | 32 GB plus zram | Hardware only | Reported to work; the build-graph step is slower with zram |
-| Own hardware, 64 GB or more | 64 GB plus zram, or 96 GB+ | RAM not priced | Less zram, or none at 96 GB |
+| Own computer, 32 GB | 32 GB plus zram | Hardware only | Reported to work; the big build step is slower with zram |
+| Own computer, 64 GB or more | 64 GB plus zram, or 96 GB+ | RAM not priced | Less zram, or none at 96 GB |
 | Rented: Hetzner EX63 | 64 GB plus zram | €149/month or €0.2388/hour, €21 setup | Core Ultra 7 265 (20 cores), 2 × 1 TB NVMe, Debian |
 | Rented: Hetzner AX102 | 128 GB | €259/month or €0.415/hour, €129 setup | Ryzen 9 7950X3D (16 cores), 2 × 1.92 TB NVMe |
 
 Hetzner prices exclude VAT and were checked on 2026-11-20.
-A rented host needs an account, which the maintainer creates, and is never used as the signing host.
+A rented computer needs an account, which the maintainer creates, and is never used to sign releases.
 
-**Recommendation:** start with the smallest host that meets the requirements, with zram at twice the RAM and the tree on a disk with at least 400 GB free.
-Task T2 measures the build-graph peak and the full build time (C2).
-Then add RAM if the zram step is too slow, or move to more cores if full builds take too long.
-Adding machines doesn't replace the RAM: only compiling and tests can be spread out ([FEASIBILITY.md](FEASIBILITY.md#spreading-the-work-over-several-machines)).
-Extra machines fit better as Cuttlefish and CTS test hosts in T6.
+**Recommendation:** start with the smallest computer that meets the requirements, with zram twice the size of the RAM and at least 400 GB of free disk for the source code.
+Task T2 measures the memory peak and the full build time (check C2).
+Then add RAM if the step with zram is too slow, or move to more cores if full builds take too long.
+Adding computers doesn't replace the RAM: only compiling and testing can be spread out ([FEASIBILITY.md](FEASIBILITY.md#spreading-the-work-over-several-machines)).
+Extra computers fit better as test computers for the virtual phones and compatibility tests in task T6.
 
 ### D3: code and CI hosting
 
+Where the code and the automatic checks live.
 **Decided 2026-11-20: GitHub.**
 
 - The code lives in the [`alopex-org`](https://github.com/alopex-org) organization.
   This repository is `alopex-org/foxieos`, and every FoxieOS repository there starts with `foxieos`.
-- The repositories are public; on GitHub's free plan that includes rulesets, code owners, secret scanning and private vulnerability reporting.
+- The repositories are public.
+  On GitHub's free plan, public repositories get protected branches (rulesets), code owners, secret scanning and private vulnerability reporting.
   A ruleset protects `main` ([CONTRIBUTING.md](../CONTRIBUTING.md#review)).
-- CI is settled in T6.
-  The recommendation is GitHub Actions on a self-hosted runner on the build host.
-- No Gerrit until there are three or more contributors.
-- Rejected: a self-hosted Gitea with Gitea Actions.
+- How the automatic checks run is settled in task T6.
+  The recommendation is GitHub Actions, running on the build host (a self-hosted runner).
+- No Gerrit (another review tool) until there are three or more contributors.
+- Turned down: running our own code server (Gitea with Gitea Actions).
 
 ### D4: update server hosting
 
-Open; needed by T9.
+Where the update server, which phones download updates from, is hosted.
+Open; needed by task T9.
 
-- **Recommendation:** a static HTTPS host on a domain the project controls.
-  The LineageOS Updater accepts only HTTPS.
+- **Recommendation:** a simple secure (HTTPS) website on a domain the project controls.
+  The LineageOS Updater only accepts HTTPS.
 
 ### D5: microG
 
-Open; needed by T11.
+Whether FoxieOS includes microG, a free replacement for some Google services.
+Open; needed by task T11.
 
-- **Recommendation:** optional and off by default, once C13 confirms how LineageOS 24.0 handles signature spoofing.
+- **Recommendation:** offer it, switched off by default, once check C13 confirms how LineageOS 24.0 lets microG stand in for Google's services (signature spoofing).
 
 ### D6: release build variant
 
-Open; needed by T10.
+Whether releases are `userdebug` builds, which keep some developer tools, or `user` builds, like normal phones.
+Open; needed by task T10.
 
-- `userdebug` is LineageOS's default; `user` is what CTS's security tests need.
-- **Recommendation:** `userdebug` for alpha releases, and `user` before a release is advertised as stable.
+- `userdebug` is LineageOS's default; `user` is what Google's security tests need.
+- **Recommendation:** `userdebug` for early test releases (alpha), and `user` before a release is called stable.
 
 ### D7: signing host
 
-Open; needed by T8.
+Which computer signs releases.
+Open; needed by task T8.
 
-- **Options:** an air-gapped machine, or the build host with keys decrypted only into memory (tmpfs).
-- **Recommendation:** a separate machine.
-  At a minimum, keys are decrypted into tmpfs and swap is off while signing.
+- **Options:** a computer that is never connected to a network, or the build host with the keys unlocked only in memory (tmpfs).
+- **Recommendation:** a separate computer.
+  At the very least, the keys are unlocked only in memory, with swap switched off, while signing.
 
 ### D8: security contact
 
-Open; needed before the first public release (T10).
+How people report security problems privately.
+Open; needed before the first public release (task T10).
 
-- GitHub's private vulnerability reporting is the reporting channel in [SECURITY.md](../SECURITY.md) until D8 is decided.
-- **Recommendation:** keep private vulnerability reporting, and add a dedicated address, not a personal one, for reporters without a GitHub account.
+- Until D8 is decided, [SECURITY.md](../SECURITY.md) uses GitHub's private vulnerability reporting.
+- **Recommendation:** keep private vulnerability reporting, and add a dedicated email address, not a personal one, for people without a GitHub account.
 
 ### D9: devices from the hardware project
 
-Open; needed before a device from the hardware project joins FoxieOS (T12).
+Whether FoxieOS supports a device from the separate hardware project, and on what terms.
+Open; needed before such a device joins FoxieOS (task T12).
 
-[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a device; whether that stays a prototype or becomes a product is its decision D5.
-FoxieOS depends on it for a custom device, and the dependency runs one way: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
-The hardware project doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria), and a device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
-The conditions below are FoxieOS's own terms for support, not requirements on the hardware project.
+[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a device.
+Whether that stays a prototype or becomes a product is its own decision D5.
+FoxieOS depends on it for a device of its own, and only in that direction: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
+The hardware project doesn't follow FoxieOS's [rules for choosing a phone](DEVICES.md#rules-for-choosing-a-phone), and a device from it would break at least one of them: LineageOS wouldn't support it officially, at least at first.
+The conditions below are FoxieOS's own terms, not requirements on the hardware project.
 
 - **Options:**
-  - Treat it like any other device: it waits until LineageOS supports it, or joins the unofficial GSI track.
-  - Make it a device FoxieOS maintains itself, with its own device tree, on these conditions:
+  - Treat it like any other phone: it waits until LineageOS supports it, or joins the unofficial generic-image (GSI) track.
+  - Make it a device FoxieOS looks after itself, with its own device tree, on these conditions:
     - a FoxieOS maintainer owns one;
     - its kernel is GKI 5.15 or newer, built from source;
-    - firmware and security updates from the chip vendor and the device maker last at least until the FoxieOS end-of-life date announced for it;
-    - it can be relocked with FoxieOS's own AVB key;
-    - it meets the rest of the [device charter](DEVICES.md#device-charter).
+    - firmware and security updates from the chip maker and the device maker last at least until the end-of-life date FoxieOS announces for it;
+    - its bootloader can be locked again with FoxieOS's own verified-boot (AVB) key;
+    - it meets the rest of [what every supported phone must meet](DEVICES.md#what-every-supported-phone-must-meet).
   - Don't support it.
-- **Whichever option is chosen:** FoxieOS signs its builds with its own keys and relocks the bootloader with its own AVB key (`avb_custom_key`).
-  It never holds the device maker's secure-boot signing key, whose public-key hash is burned into the chip's fuses.
-- **Recommendation:** the second option, decided once the hardware project has chosen a platform.
+- **Whichever option is chosen:** FoxieOS signs its builds with its own keys and locks the bootloader with its own AVB key (`avb_custom_key`).
+  It never holds the device maker's secure-boot signing key, the one whose fingerprint is burned permanently into the chip.
+- **Recommendation:** the second option, decided once the hardware project has chosen its platform.
   Until then, nothing in FoxieOS changes for it.
 
 ## Tasks
 
-Work in order unless the dependencies allow otherwise.
+Work in this order, unless a task's needs allow another.
 
 ### T0: project skeleton
 
@@ -174,234 +187,248 @@ Done 2026-11-20: this repository, with its docs.
 
 ### T1: host readiness
 
-**Code and hands-on.** Needs D2.
+Getting the build computer ready.
+**Code and hands-on.** Needs decision D2.
 
 - Write `ci/check-host.sh`, which prints PASS or FAIL for each item:
-  - Memory for the build-graph step: PASS at 96 GB of RAM or more; PASS with a warning when RAM plus zram or swap reaches 96 GB; FAIL below that.
-    These thresholds are FoxieOS's own, taken from the reported setup of 32 GB plus zram at twice the RAM; Soong itself only warns.
-    T2's measurement replaces them (C2).
-  - At least 1 TB free on the source path.
-  - `/dev/kvm` usable by the build user.
-  - `repo`, `git-lfs`, `ccache`, and the Java and Python versions the build needs.
-  - The Cuttlefish host tools: the `cuttlefish-base` package or a Docker or Podman image (C1).
+  - Memory for the big build step: PASS at 96 GB of RAM or more; PASS with a warning when RAM plus zram or swap reaches 96 GB; FAIL below that.
+    These limits are FoxieOS's own, based on the reported setup of 32 GB plus zram twice the size of the RAM; the build system itself only warns.
+    Task T2's measurement replaces them (check C2).
+  - At least 1 TB free where the source code goes.
+  - KVM (`/dev/kvm`) usable by the account that builds.
+  - The tools `repo`, `git-lfs` and `ccache`, and the Java and Python versions the build needs.
+  - The Cuttlefish tools: the `cuttlefish-base` package, or a Docker or Podman image (check C1).
 - The maintainer runs the script on the build host.
 - If memory is short, set zram to twice the RAM with zstd compression: `zram-size = ram * 2` and `compression-algorithm = zstd` in `/etc/systemd/zram-generator.conf`, the setting from the XDA report.
-  Without `zram-size`, zram-generator creates only min(RAM ÷ 2, 4 GiB) ([zram-generator example][zram-example]).
+  Without `zram-size`, zram-generator makes only the smaller of RAM ÷ 2 and 4 GiB ([zram-generator example][zram-example]).
 
-**Done when** the script passes on the build host, or the maintainer accepts the gaps it lists.
-**Report** the script's output.
+**Finished when** the script passes on the build host, or the maintainer accepts the gaps it lists.
+**Share** the script's output.
 
 ### T2: sync and a stock virtual build
 
-**Hands-on.** Needs T1.
+Downloading LineageOS and building it, unchanged, for the virtual phone.
+**Hands-on.** Needs task T1.
 
-- Sync in the background with `ci/sync.sh`, using the commands in [TESTING.md](TESTING.md#commands).
-- Build stock LineageOS `lineage_cf_phone_x86_64-userdebug` and start it with `launch_cvd`.
-- Log memory and swap use during the build, for example with `vmstat 5` written to the log.
-- Run the build again with no changes, and see whether the build-graph step is skipped.
+- Download the source code in the background with `ci/sync.sh`, using the commands in [TESTING.md](TESTING.md#commands).
+- Build plain LineageOS for the virtual phone (`lineage_cf_phone_x86_64-userdebug`) and start it with `launch_cvd`.
+- Record memory and swap use during the build, for example with `vmstat 5` written to the log.
+- Build again with no changes, and see whether the big memory step is skipped.
 
-**Done when** the build exits 0, and Cuttlefish reaches `sys.boot_completed=1` and shows up in `adb devices`.
-**Report** the build log, the boot time, peak memory and swap during the build-graph step, the full build time, and whether a rebuild with no changes skips the build-graph step (C2).
+**Finished when** the build succeeds, and the virtual phone finishes starting (`sys.boot_completed=1`) and shows up in `adb devices`.
+**Share** the build log, the start-up time, the peak memory and swap during the big build step, the full build time, and whether a rebuild with no changes skips that step (check C2).
 
 ### T3: test harness and virtual baseline
 
-**Code and hands-on.** Needs T2.
+Writing the quick checks and recording which compatibility tests already fail on plain LineageOS.
+**Code and hands-on.** Needs task T2.
 
 - Write `tests/smoke/run.sh`.
-  It skips the FoxieOS-specific checks when the FoxieOS properties are absent, so it also runs on stock LineageOS.
-- Download CTS 17 (C3).
-- Run the `cts-virtual-device-stable` plan on stock LineageOS on Cuttlefish, and save the failures to `tests/cts/baseline-<lineage-tag>-cf_x86_64.txt`.
+  It skips the FoxieOS-specific checks when the FoxieOS version values are missing, so it also runs on plain LineageOS.
+- Download Google's compatibility tests, CTS 17 (check C3).
+- Run the `cts-virtual-device-stable` test set on plain LineageOS on the virtual phone, and save the failures to `tests/cts/baseline-<lineage-tag>-cf_x86_64.txt`.
 
-**Done when** the smoke suite passes on stock LineageOS (FoxieOS checks skipped) and the baseline is committed.
-**Report** the smoke suite's TAP output and the CTS summary.
+**Finished when** the quick checks pass on plain LineageOS (with the FoxieOS checks skipped) and the baseline is committed.
+**Share** the quick checks' output (TAP) and the CTS summary.
 
 ### T4: `vendor/foxie` and branding
 
-**Code.** Needs T2.
+Adding FoxieOS's own folder, name and look.
+**Code.** Needs task T2.
 
-- Write `vendor/foxie/config/common.mk`: properties, packages and overlays.
-- Make the boot animation from `branding/foxieos-logo.png`, once the maintainer has confirmed the rights to the artwork.
+- Write `vendor/foxie/config/common.mk`: FoxieOS's built-in values, apps and overlays.
+- Make the start-up animation from `branding/foxieos-logo.png`, once the maintainer has confirmed the rights to the artwork.
 - Add an About-page overlay and wallpapers.
-- Add one carry patch to `vendor/lineage` that calls `inherit-product-if-exists vendor/foxie/config/common.mk` (C4), and record it in [PATCHES.md](PATCHES.md).
+- Add one carry patch to `vendor/lineage` that brings in FoxieOS's folder (`inherit-product-if-exists vendor/foxie/config/common.mk`, check C4), and record it in [PATCHES.md](PATCHES.md).
 
-**Done when** the Cuttlefish build shows FoxieOS branding (a screenshot through its web view), the full smoke suite passes, and layer L4 shows no new failures.
-**Report** the output of layers L0–L4.
+**Finished when** the virtual phone shows FoxieOS branding (a screenshot through its web view), all the quick checks pass, and test layer L4 shows no new failures.
+**Share** the output of test layers L0–L4.
 
 ### T5: manifest repository
 
-**Code.** Needs T4 and D3.
+Creating the list of FoxieOS's own code that is added to LineageOS's.
+**Code.** Needs task T4 and decision D3.
 
-- The maintainer creates `alopex-org/foxieos_android_manifest`.
-- Add `local_manifests/foxie.xml`, which adds `vendor/foxie` and, later, any forked repositories.
-- Pin the revisions for each release.
+- The maintainer creates the repository `alopex-org/foxieos_android_manifest`.
+- Add `local_manifests/foxie.xml`, which adds `vendor/foxie` and, later, any copied upstream repositories.
+- Fix the exact versions for each release.
 
-**Done when** a fresh sync into an empty directory reproduces the T4 build.
-**Report** the sync and build logs.
+**Finished when** downloading into an empty folder gives the same build as task T4.
+**Share** the download and build logs.
 
 ### T6: CI
 
-**Code and hands-on.** Needs T3–T5 and D3.
+Setting up automatic checks on every change and every night.
+**Code and hands-on.** Needs tasks T3–T5 and decision D3.
 
-- Set up GitHub Actions with a self-hosted runner on the build host.
-  - Self-hosted runners don't count against the plan's Actions minutes ([GitHub: self-hosted runners][gh-self-hosted]).
-  - GitHub's standard hosted runners have far too little disk and memory for an Android build (unsourced).
-  - GitHub advises against self-hosted runners for public repositories, because anyone can open a pull request whose workflow then runs on the runner ([GitHub: secure use][gh-hardening]).
-    Keep pull requests from forks off the runner: limit the runner group to FoxieOS repositories (unsourced).
-    The organization already requires approval before workflows from outside contributors run.
-- `ci/presubmit.sh` runs on pull requests: layers L0–L3, on Cuttlefish.
-- `ci/nightly.sh` runs on a schedule: L1 builds, L3 and L4 on Cuttlefish; device builds join after T7.
-- Keep logs and artifacts for 14 days, and send a notification on failure.
-- Optionally, run Cuttlefish and CTS on a second host from copied images, so the build host can start the next build.
-  With more than one test host, split CTS with Tradefed's sharding and merge the results in the script ([TESTING.md](TESTING.md#cts-strategy)).
-  A test host needs KVM and enough RAM for its Cuttlefish instances; for a virtual machine, see C5.
+- Set up GitHub Actions to run on the build host (a self-hosted runner).
+  - Running on our own computer doesn't use up the free plan's Actions minutes ([GitHub: self-hosted runners][gh-self-hosted]).
+  - GitHub's own computers for Actions have far too little disk and memory for an Android build (unsourced).
+  - GitHub advises against running public repositories' checks on your own computer, because anyone can open a pull request whose checks then run there ([GitHub: secure use][gh-hardening]).
+    Keep pull requests from forks off the build host: allow the runner only for FoxieOS repositories (unsourced).
+    The organization already requires approval before checks from outside contributors run.
+- `ci/presubmit.sh` runs on pull requests: test layers L0–L3, on the virtual phone.
+- `ci/nightly.sh` runs every night: L1 builds, and L3 and L4 on the virtual phone; builds for real phones join after task T7.
+- Keep logs and results for 14 days, and send a notification when something fails.
+- Optionally, run the virtual phones and compatibility tests on a second computer from copied images, so the build host can start the next build.
+  With more than one test computer, split the compatibility tests between them (Tradefed's sharding) and combine the results in the script ([TESTING.md](TESTING.md#compatibility-tests-cts)).
+  A test computer needs KVM and enough RAM for its virtual phones; for a virtual machine, see check C5.
 
-**Done when** a deliberately broken pull request is blocked, and the nightly run passes twice in a row.
-**Report** the CI run logs.
+**Finished when** a deliberately broken pull request is blocked, and the nightly run passes twice in a row.
+**Share** the logs of the automatic runs.
 
 ### T7: device #1 bring-up and QA
 
-**Hands-on.** Needs T4, D1 with the phone at hand, and a go-ahead for each flash.
+Getting FoxieOS running and tested on the first real phone.
+**Hands-on.** Needs task T4, decision D1 with the phone at hand, and the maintainer's go-ahead for each install on the phone.
 
-- Clear C6, C7 and C8 first.
-- The maintainer unlocks the bootloader and installs stock LineageOS 24.0.
+- Clear checks C6, C7 and C8 first.
+- The maintainer unlocks the bootloader and installs plain LineageOS 24.0.
   This wipes the phone.
-- Extract the vendor blobs.
-- Build stock LineageOS for the device and record a device CTS baseline with `tests/cts/modules-device.txt`.
-- Build FoxieOS for the device.
-  The maintainer flashes it, or approves an agent doing so.
-- Write `tests/qa/<codename>.md`, covering calls, SMS and MMS, mobile data and VoLTE, Wi-Fi, hotspot, Bluetooth audio, NFC, GPS, cameras, biometrics, sensors, audio, charging and overnight drain, encryption, recovery, and factory reset.
-- Run the smoke suite on the device with `-s <serial>`.
+- Copy the maker's files from the phone (the vendor blobs).
+- Build plain LineageOS for the phone, and record its compatibility baseline with `tests/cts/modules-device.txt`.
+- Build FoxieOS for the phone.
+  The maintainer installs it, or approves each install.
+- Write `tests/qa/<codename>.md`, the phone checklist, covering calls, SMS and MMS, mobile data and VoLTE, Wi-Fi, hotspot, Bluetooth audio, NFC, GPS, cameras, fingerprint and face unlock, sensors, audio, charging and overnight battery drain, encryption, recovery mode, and factory reset.
+- Run the quick checks on the phone with `-s <serial>`.
 
-**Done when** FoxieOS builds and boots on the device (and joins the nightly run once T6 exists), and the checklist is complete, with known issues filed.
-**Report** the build log, the CTS baseline, the QA sheet and the smoke output.
+**Finished when** FoxieOS builds and starts on the phone (and joins the nightly run once task T6 exists), and the checklist is complete, with known problems filed as issues.
+**Share** the build log, the compatibility baseline, the checklist and the quick checks' output.
 
 ### T8: signing workflow
 
-**Code and maintainer only.** Needs T2 and D7.
+Writing the signing scripts and the procedure for the keys.
+**Code and maintainer only.** Needs task T2 and decision D7.
 
 - Write `release/sign.sh` and `release/verify.sh`.
-- Write `docs/KEYS.md`, the procedure the maintainer follows: encrypted keys, RSA-4096 AVB and APEX keys, backups, and a rotation policy.
-- Dry-run the whole flow with dev keys.
+- Write `docs/KEYS.md`, the procedure the maintainer follows: encrypted keys, RSA-4096 verified-boot (AVB) and APEX keys, backups, and when to change keys.
+- Practise the whole process with dev keys.
 
-**Done when** a dev-signed build passes `verify.sh`, and the maintainer has reviewed `docs/KEYS.md`.
-**Report** the output of `verify.sh`.
+**Finished when** a build signed with dev keys passes `verify.sh`, and the maintainer has reviewed `docs/KEYS.md`.
+**Share** the output of `verify.sh`.
 
 ### T9: update server and Updater
 
-**Code.** Needs T8 and D4.
+Making phones find and install FoxieOS updates.
+**Code.** Needs task T8 and decision D4.
 
-- Clear C10 (the Updater's JSON schema) first.
-- Write `release/publish-metadata.py`, which writes the JSON for each device and channel.
-- Overlay `updater_server_url` (HTTPS, with `{device}`, `{type}` and `{incr}` placeholders) and add channel selection.
+- Clear check C10 (the format of the Updater's server answers) first.
+- Write `release/publish-metadata.py`, which writes the update descriptions (JSON) for each phone and channel.
+- Point the Updater at the server with an overlay of `updater_server_url` (HTTPS, with `{device}`, `{type}` and `{incr}` placeholders) and add a way to choose the channel.
 
-**Done when** Cuttlefish (if C11 passes) or the device finds a test update on a local HTTPS server and installs it.
-**Report** OTA scenario 1 on a dev build.
+**Finished when** the virtual phone (if check C11 passes) or the real phone finds a test update on a local HTTPS server and installs it.
+**Share** the result of update scenario 1 on a dev build.
 
 ### T10: release process and the first alpha
 
-**Maintainer only, and hands-on.** Needs T6–T9, D6, D8, C12, and the maintainer's approval to publish.
+The first test release.
+**Maintainer only, and hands-on.** Needs tasks T6–T9, decisions D6 and D8, check C12, and the maintainer's approval to publish.
 
 - The maintainer signs release candidate 1 (RC1) offline.
-- Run layers L5–L7.
+- Run test layers L5–L7.
 - Publish to the `testing` channel only.
 - Complete the release record.
 
-**Done when** RC1 is on the testing channel and its release record is complete.
-**Report** the output of every layer.
+**Finished when** RC1 is on the testing channel and its release record is complete.
+**Share** the output of every test layer.
 
 ### T11: privacy features
 
-**Code.** Needs T10 and D5.
+**Code.** Needs task T10 and decision D5.
 
-- Write a short plan for each feature: a network permission toggle, a sensors toggle, the microG option, MAC randomisation defaults, and a minimal set of preinstalled apps.
-- Give each feature tests in `TEST_MAPPING` and settings checks in the smoke suite.
+- Write a short plan for each feature: a switch for an app's network access, a switch for sensors, the microG option, random Wi-Fi addresses (MAC randomisation) by default, and a small set of preinstalled apps.
+- Give each feature automatic tests (in `TEST_MAPPING`) and settings checks in the quick checks.
 
-**Done when** each feature passes layers L0–L4 and is documented.
-**Report** the results for each feature.
+**Finished when** each feature passes test layers L0–L4 and is documented.
+**Share** the results for each feature.
 
 ### T12: more devices and a GSI track
 
-**Code and hands-on.** Needs T10 on the stable channel.
+More phones, and later a generic image for many phones.
+**Code and hands-on.** Needs task T10 on the stable channel.
 
-- Apply the device charter in [DEVICES.md](DEVICES.md) to each new device.
-- A device from the hardware project joins only once D9 is decided.
-- Offer a GSI only as "unofficial".
-  ⚠ First check the state of the community's Android 17 GSI patch sets.
+- Check each new phone against [DEVICES.md](DEVICES.md).
+- A device from the hardware project joins only once decision D9 is taken.
+- Offer a generic image (GSI) only as "unofficial".
+  ⚠ First check how far the community's Android 17 GSI work has got.
 
-**Done when** each new device passes the charter checklist.
-**Report** the QA sheets.
+**Finished when** each new phone meets every requirement on its checklist.
+**Share** the phone checklists.
 
 ### T13: rebase drill
 
+A practice run before each new LineageOS major version.
 **Code and hands-on.** Before each LineageOS major version.
 
-- Rebase on the new LineageOS branch in a separate worktree.
+- Move FoxieOS onto the new LineageOS version in a separate copy (worktree).
 - Run every test layer again.
-- Refresh the CTS baselines.
+- Make new compatibility baselines.
 - Review every carry patch again.
 
-**Done when** the new branch passes layers L0–L7.
-**Report** the output of every layer.
+**Finished when** the new version passes test layers L0–L7.
+**Share** the output of every test layer.
 
-## Critical path
+## Order of the critical work
 
-D2 → T1 → T2 → T3 → T4 → T5 and T8 in parallel → T6 → T7 and T9 → T10.
+The longest chain of work, where each step waits for the one before:
 
-D1 only has to be settled, with the phone at hand, before T7.
-If C11 passes, T9 can run on Cuttlefish before T7.
+D2 → T1 → T2 → T3 → T4 → T5 and T8 at the same time → T6 → T7 and T9 → T10.
+
+Decision D1 only has to be taken, with the phone at hand, before task T7.
+If check C11 passes, task T9 can run on the virtual phone before T7.
 
 ## Not planned
 
-- **Spreading compiling over several machines** with Soong's remote execution ([FEASIBILITY.md](FEASIBILITY.md#spreading-the-work-over-several-machines)).
-  Reconsider it only if T2 shows that compiling dominates the build time.
-  Only the main host needs the build-graph RAM; workers just compile.
-  lineage-24.0 builds with Siso, but its remote execution still defaults to reclient.
-  A first build moves about 76 GB between the host and the workers, so they need a fast network between them.
-- **Hardening beyond LineageOS** (Pixel only).
-  Re-evaluate forking GrapheneOS against reimplementing selected features once FoxieOS is stable.
+- **Spreading compiling over several computers** with the build system's remote execution ([FEASIBILITY.md](FEASIBILITY.md#spreading-the-work-over-several-machines)).
+  Reconsider it only if task T2 shows that compiling takes most of the build time.
+  Only the main computer needs the big memory; the others just compile.
+  lineage-24.0 builds with Siso, but its remote execution still uses reclient by default.
+  A first build moves about 76 GB between the computers, so they need a fast network between them.
+- **Security changes beyond LineageOS's** (Pixel only).
+  Once FoxieOS is stable, weigh copying GrapheneOS against rebuilding selected features.
 - **Designing or making hardware.**
-  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project, which FoxieOS depends on for a custom device; D9 decides whether and on what terms FoxieOS supports its devices.
+  That is the work of the separate [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) project, which FoxieOS depends on for a device of its own; decision D9 settles whether and on what terms FoxieOS supports its devices.
 
 ## Checks
 
-Each check is a short task.
-Do it before the task that depends on it, then update the docs that carry the ⚠.
+Each check is a short task to confirm a fact.
+Do it before the task that relies on it (shown by →), then update the docs that carry the ⚠.
 
-1. **C1, Cuttlefish host tools** (→ T1).
-   Google's `cuttlefish-base` and `cuttlefish-user` packages (Debian) or its container images; the `kvm`, `cvdnetwork` and `render` groups; and how many instances the build host's RAM allows (AOSP's CTS example uses 8).
-2. **C2, build-graph memory and build time** (→ T2).
-   The peak memory of `soong_build` on lineage-24.0 (reported above 55 GiB on Android 17) and the full build time on the build host.
+1. **C1, Cuttlefish tools** (→ T1).
+   Google's `cuttlefish-base` and `cuttlefish-user` packages (Debian) or its container images; the `kvm`, `cvdnetwork` and `render` user groups; and how many virtual phones the build host's RAM allows (AOSP's compatibility-test example uses 8).
+2. **C2, memory and build time** (→ T2).
+   The peak memory of the big build step (`soong_build`) on lineage-24.0, reported above 55 GiB on Android 17, and the full build time on the build host.
    Size zram or RAM from the measurement.
-   Also check whether a rebuild with no `Android.bp` change skips that step (unsourced).
+   Also check whether a rebuild with no change to the build files (`Android.bp`) skips that step (unsourced).
 3. **C3, CTS 17** (→ T3).
-   Whether the CTS 17 download includes the `cts-virtual-device-stable` plan (`list plans`); if not, build CTS from the tree as AOSP's Cuttlefish guide does.
-   Also the module names for `tests/cts/modules-device.txt` (`list modules`).
-4. **C4, the hook for `vendor/foxie`** (→ T4).
-   Where to inherit `vendor/foxie` in `vendor/lineage/config/common.mk` on 24.0.
-5. **C5, a virtual machine as test host** (→ T6, only if a test host is a VM).
-   Nested virtualization must be enabled on the hypervisor, for example `nested=1` for the `kvm_intel` or `kvm_amd` module, with the host CPU model passed through (unsourced).
-   Confirm that `launch_cvd` boots there and how many instances fit in the VM's RAM.
-6. **C6, end-of-life date for device #1** (→ T7).
-   Pixel 8 and later get seven years of updates from US Google Store availability, the Pixel 6 and 7 families five.
-   Still to do: the exact date for the D1 phone, recorded in [DEVICES.md](DEVICES.md).
+   Whether the CTS 17 download includes the `cts-virtual-device-stable` test set (`list plans`); if not, build CTS from the source code as AOSP's Cuttlefish guide does.
+   Also the names of the test groups for `tests/cts/modules-device.txt` (`list modules`).
+4. **C4, where to add `vendor/foxie`** (→ T4).
+   Where in `vendor/lineage/config/common.mk` on 24.0 to bring in FoxieOS's folder.
+5. **C5, a virtual machine as test computer** (→ T6, only if a test computer is a virtual machine).
+   Nested virtualisation must be switched on, for example `nested=1` for the `kvm_intel` or `kvm_amd` module, with the real processor model passed through (unsourced).
+   Confirm that `launch_cvd` starts there and how many virtual phones fit in the virtual machine's RAM.
+6. **C6, end-of-life date for the first phone** (→ T7).
+   Pixel 8 and later get seven years of updates from when they went on sale in Google's US store, the Pixel 6 and 7 families five.
+   Still to do: the exact date for the phone chosen in D1, recorded in [DEVICES.md](DEVICES.md).
 7. **C7, the Pixel kernel** (→ T7, Pixel only).
-   How the kernel built from LineageOS's separate Kleaf workspace (`android_kernel_google_gs-6.1_manifest`, or `gs-6.6` for the Pixel 10, 10 Pro and 10 Pro XL) gets into `device/google/<family>-kernels/`, and whether a newer GKI tag than the pinned one exists.
-8. **C8, blob extraction** (→ T7).
-   LineageOS's wiki extracts blobs from a phone running LineageOS, with root over ADB.
-   Check whether extracting from an image file works instead.
-9. **C9, the signing APK list** (→ T8).
+   How the kernel built in LineageOS's separate Kleaf workspace (`android_kernel_google_gs-6.1_manifest`, or `gs-6.6` for the Pixel 10, 10 Pro and 10 Pro XL) gets into `device/google/<family>-kernels/`, and whether a newer GKI version than the one it uses exists.
+8. **C8, copying the maker's files** (→ T7).
+   LineageOS's wiki copies the vendor blobs from a phone running LineageOS, with root access over adb.
+   Check whether copying them from an image file works instead.
+9. **C9, the list of apps to sign** (→ T8).
    The current `--extra_apks` and APEX list for 24.0 on `wiki.lineageos.org/signing_builds`.
    Copy it fresh for each release.
-10. **C10, the Updater's JSON schema** (→ T9).
-    The JSON schema of the LineageOS Updater and what its channel and `type` fields mean.
-11. **C11, OTA tests on Cuttlefish** (→ T9).
-    Whether Cuttlefish supports the Virtual A/B OTA tests through `update_engine`; if not, run them on the device only.
+10. **C10, the Updater's answer format** (→ T9).
+    The JSON format the LineageOS Updater expects from the server, and what its channel and `type` fields mean.
+11. **C11, update tests on the virtual phone** (→ T9).
+    Whether Cuttlefish supports the Virtual A/B update tests through `update_engine`; if not, run them on the real phone only.
 12. **C12, trademark search** (→ T10, maintainer only).
-    Search the EUIPO and USPTO registers for "FoxieOS".
+    Search the EU (EUIPO) and US (USPTO) trademark registers for "FoxieOS".
 13. **C13, microG signature spoofing** (→ D5).
-    Whether LineageOS 24.0 has built-in signature spoofing restricted to microG.
+    Whether LineageOS 24.0 has a built-in way for microG, and only microG, to stand in for Google's services.
 14. **C14, legal advice before any sale** (→ before FoxieOS, or a phone with it, is sold; maintainers only).
-    Whether selling FoxieOS, or another maker's phone with FoxieOS installed, makes the seller a manufacturer under the Cyber Resilience Act, the radio-equipment rules and the ecodesign rules, and what that requires ([FEASIBILITY.md](FEASIBILITY.md#obligations-once-money-is-involved)).
+    Whether selling FoxieOS, or another maker's phone with FoxieOS installed, makes the seller a manufacturer under the EU's Cyber Resilience Act, radio-equipment rules and ecodesign rules, and what that requires ([FEASIBILITY.md](FEASIBILITY.md#obligations-once-money-is-involved)).
 
 [zram-example]: https://github.com/systemd/zram-generator/blob/main/zram-generator.conf.example
 [gh-self-hosted]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners

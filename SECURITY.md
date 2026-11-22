@@ -1,18 +1,21 @@
 # Security policy
 
-FoxieOS has no releases yet, so there is nothing in use to report against.
+FoxieOS hasn't released anything yet, so there is nothing in use to report a problem against.
+If you find a security problem in this repository or its plans, report it as described here.
 
 ## Reporting
 
-Report a security problem privately through GitHub's [private vulnerability reporting](https://github.com/alopex-org/foxieos/security/advisories/new) (the repository's Security tab, then "Report a vulnerability").
+Report a security problem privately, through GitHub's [private vulnerability reporting](https://github.com/alopex-org/foxieos/security/advisories/new): open the repository's Security tab, then "Report a vulnerability".
 Only the maintainer sees the report.
-Don't report security problems in public issues.
+Never report a security problem in a public issue or on Discord.
 
-**Planned before the first public release (roadmap decision D8):**
+## Planned before the first public release
 
-- A dedicated contact address may be added here, alongside private vulnerability reporting.
-- Coordinated disclosure, with a 90-day default deadline.
-- Security fixes take priority over features.
+These are part of roadmap decision D8 (the security contact):
+
+- A dedicated contact address may be added here, next to private vulnerability reporting.
+- Coordinated disclosure: the details of a problem are made public only after it is fixed, or after 90 days by default.
+- Security fixes come before new features.
   The targets for shipping them are in [docs/RELEASING.md](docs/RELEASING.md#security-update-targets).
-- Vulnerabilities in LineageOS or AOSP code go to those projects first.
-  FoxieOS ships the fix once it is merged upstream.
+- Problems in LineageOS or Android's own code are reported to those projects first.
+  FoxieOS ships the fix once they have accepted it.
