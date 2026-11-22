@@ -18,7 +18,7 @@ Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIB
   Each one lists the options and a recommendation.
 - **Tasks (T0–T13)** are the work, in order.
   Each one says what it needs, what to do, when it is done, and what to report.
-- **Checks (C1–C13)** are claims to confirm before the task that depends on them.
+- **Checks (C1–C14)** are claims to confirm before the task that depends on them.
   A ⚠ in the other docs usually points to one of them.
 - Each decision, task and check also has an issue, and each phase below is a [milestone](https://github.com/alopex-org/foxieos/milestones).
   This file is the plan; the issues track status and discussion ([CONTRIBUTING.md](../CONTRIBUTING.md#issues-and-labels)).
@@ -400,6 +400,8 @@ Do it before the task that depends on it, then update the docs that carry the �
     Search the EUIPO and USPTO registers for "FoxieOS".
 13. **C13, microG signature spoofing** (→ D5).
     Whether LineageOS 24.0 has built-in signature spoofing restricted to microG.
+14. **C14, legal advice before any sale** (→ before FoxieOS, or a phone with it, is sold; maintainers only).
+    Whether selling FoxieOS, or another maker's phone with FoxieOS installed, makes the seller a manufacturer under the Cyber Resilience Act, the radio-equipment rules and the ecodesign rules, and what that requires ([FEASIBILITY.md](FEASIBILITY.md#obligations-once-money-is-involved)).
 
 [zram-example]: https://github.com/systemd/zram-generator/blob/main/zram-generator.conf.example
 [gh-self-hosted]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners
