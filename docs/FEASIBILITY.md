@@ -3,7 +3,7 @@
 The research behind the plan: whether a small team can build and maintain FoxieOS, which base to build it on, and what that takes.
 The plan built on it is in [ROADMAP.md](ROADMAP.md) and [DESIGN.md](DESIGN.md).
 
-Sources were checked on 2026-11-20.
+Sources were checked on 2026-11-20, except those for the [business model](#business-model), checked on 2026-11-22.
 Each section ends with the sources behind it, and the [Sources](#sources) section lists every source with what it supports.
 ⚠ marks a claim that is unconfirmed or disputed; check it before relying on it.
 "(unsourced)" marks a statement from general knowledge that was not checked against a source.
@@ -17,6 +17,7 @@ Each section ends with the sources behind it, and the [Sources](#sources) sectio
 | GrapheneOS-level security on those phones | No |
 | Banking and other apps that depend on Play Integrity | Mostly no |
 | Sustainable for one person or a small team | Yes, if the scope stays narrow |
+| Earning money from it | Not as planned; an open question |
 
 - **A branded build on 1–3 devices** takes weeks for one person with a strong build host ([Build host](#build-host)).
 - **Phones from many manufacturers** are reachable only through LineageOS device trees or Treble GSIs.
@@ -26,6 +27,7 @@ Each section ends with the sources behind it, and the [Sources](#sources) sectio
 - **Play Integrity:** since May 2025 the *device* verdict needs a hardware-backed, positive verified-boot result, and the *strong* verdict also needs a security patch from the last 12 months.
   Builds signed with FoxieOS's own keys fail both.
 - **Sustainability:** the recurring cost is merging upstream security fixes and rebasing on AOSP's twice-yearly source drops ([Upstream security updates](#upstream-security-updates)).
+- **Earning money:** free alternatives run on the same phones, and selling FoxieOS or phones with it would bring EU obligations the plan doesn't budget for ([Business model](#business-model)).
 
 **Recommendation:** a soft fork of LineageOS 24.0 (Android 17) for a short, explicit list of 2–4 devices that the maintainer owns, with FoxieOS branding, a curated set of apps and privacy defaults.
 A Treble GSI can follow later as an "unofficial, best-effort, no verified boot" build.
@@ -304,6 +306,73 @@ Sources: [LineageOS devices][lineage-devices], [Pixel update policy][pixel-updat
   Credit cherry-picks from GrapheneOS and CalyxOS, whose code is MIT or Apache ([LineageOS charter][lineage-charter], [Wikipedia on GrapheneOS][wikipedia-graphene]).
 - [ ] **Vendor blobs:** follow the extract-files model, as the LineageOS charter requires a working extraction script, and don't redistribute blobs beyond what upstream already does ([LineageOS charter][lineage-charter]).
 
+## Business model
+
+Whether FoxieOS earns money, and how, is open: the maintainers decide it.
+This section is research for that decision, not the decision.
+The rest of this study assumes a project that sells nothing.
+
+### Starting point
+
+- Google apps need Google's agreements with device makers, a per-device licence fee and compliance with Android's compatibility requirements ([CMA on Google's OEM agreements][cma-oem]).
+  A project that doesn't make the phones can't get them (unsourced).
+- Banking and other apps that depend on Play Integrity break ([Play Integrity](#play-integrity)).
+  So FoxieOS appeals to people who choose a phone without Google, a small market (unsourced).
+- The alternatives on the same phones are free: GrapheneOS on Pixels, with stronger hardening, and LineageOS, CalyxOS, /e/OS and iodéOS ([Choosing a base](#choosing-a-base)).
+  A paying user needs a reason to choose FoxieOS, and these docs don't name one yet.
+- The recurring cost is mostly people's time: merging security fixes, two rebases a year and testing every release on each phone ([Upstream security updates](#upstream-security-updates)).
+  A rented build host costs €149–259 a month ([ROADMAP.md D2](ROADMAP.md#d2-build-host)).
+- Small projects depend on a few people.
+  CalyxOS stopped installs and updates in August 2025, after its founder and its tech lead left, and returned in July 2026 ([CalyxOS letter][calyx-letter], [Privacy Guides][pg-calyx]).
+
+Sources: [CMA on Google's OEM agreements][cma-oem], [CalyxOS letter][calyx-letter], [Privacy Guides][pg-calyx].
+
+### Ways to fund it
+
+| Model | Example | Fit for FoxieOS |
+|---|---|---|
+| Donations and sponsors | GrapheneOS | Covers costs at best |
+| Grants | NLnet | Pays for defined work, not upkeep |
+| Selling phones with FoxieOS installed | iodé, Murena | Needs stock, warranty and EU compliance |
+| Paid services on a free OS | Murena's cloud (unsourced) | Needs users first |
+| Building Android for businesses | Emteria (unsourced) | A different business on the same pipeline |
+
+- **Donations and sponsors:** GrapheneOS is funded by donations from individuals, companies and other organisations ([GrapheneOS donations][graphene-donate]).
+  Software that isn't monetised stays outside the Cyber Resilience Act ([below](#obligations-once-money-is-involved)).
+- **Grants:** NLnet funds open-source technical development through open calls, with €5,000–50,000 for a first grant ([NLnet][nlnet-propose]).
+  Its next deadline is 2027-01-03, and it asks that proposals be written by people, not AI.
+- **Selling phones:** iodé sells new and refurbished phones with iodéOS installed, in Europe only, with a one-year warranty on refurbished ones ([iodé][iode-shop]).
+  Murena does the same with /e/OS (unsourced).
+  The seller buys stock, and handles warranty, returns and support.
+- **Paid services:** a cloud account or paid support next to a free OS (unsourced).
+- **Building Android for businesses:** custom builds for kiosks or company devices reuse the build, signing and update pipeline (unsourced).
+  It is a services business, and FoxieOS itself would stay free.
+
+Sources: [GrapheneOS donations][graphene-donate], [NLnet][nlnet-propose], [iodé][iode-shop].
+
+### Obligations once money is involved
+
+- **Cyber Resilience Act:** it covers products with digital elements made available in the course of a commercial activity.
+  Free and open-source software that isn't monetised is not a commercial activity (recital 18).
+  A manufacturer is whoever markets the product under its own name or trademark (Art. 3(13)).
+- Reporting actively exploited vulnerabilities and severe incidents applies from 2026-09-11; the rest of the act from 2027-12-11 (recital 126).
+- A manufacturer supports a product for a period of, in general, at least five years (Art. 13(8)).
+  FoxieOS gets most security fixes through LineageOS and two AOSP drops a year, and each phone's firmware has an end of life ([Vendor firmware](#vendor-firmware)).
+- An open-source software steward, a legal person that supports open-source software used commercially, has a lighter regime than a manufacturer (Art. 3(14), recital 19).
+- Whoever substantially modifies a product and makes it available is treated as its manufacturer (Commission guidance, paragraph 91).
+  ⚠ Whether installing FoxieOS on another maker's phone and selling it makes the seller that phone's manufacturer, under this act, the radio-equipment rules or the ecodesign rules, is unconfirmed: it needs legal advice (roadmap check C14).
+- **Ecodesign:** phones placed on the EU market from 2025-06-20 need operating-system updates for at least five years after the last unit of the model is sold ([European Commission][ec-ecodesign]).
+- **Name and logo:** the trademark search (C12) and the rights to the logo come before any sale ([Project and legal checklist](#project-and-legal-checklist)).
+
+Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilience Act][cra-guidance], [European Commission on ecodesign][ec-ecodesign].
+
+### Assessment
+
+- As planned, FoxieOS has nothing to sell; donations and grants could cover part of its costs (unsourced estimate).
+- Selling phones or services first needs a reason to choose FoxieOS over the free alternatives.
+- Selling anything turns the Cyber Resilience Act and, for phones, the ecodesign rules into release requirements, with a support period longer than the plan promises now.
+- Building Android for businesses is the likeliest source of income, but it is a separate business.
+
 ## Risks
 
 | Risk | Impact | Mitigation |
@@ -314,6 +383,7 @@ Sources: [LineageOS devices][lineage-devices], [Pixel update policy][pixel-updat
 | Release keys stolen or lost | Critical | Offline, encrypted keys with backups; agents never handle them |
 | Apps that need Play Integrity | Medium to high | Document it clearly; never promise banking support; never tamper with verdicts |
 | Bricked phones, especially from relocking | Medium to high | An install guide per device; never advise relocking unproven devices; staged rollout |
+| Selling before the EU obligations are met | High | Decide the [business model](#business-model) first; legal advice before any sale (C14) |
 
 ## Further reading
 
@@ -325,7 +395,7 @@ Sources: [LineageOS devices][lineage-devices], [Pixel update policy][pixel-updat
 
 ## Sources
 
-All checked on 2026-11-20.
+All checked on 2026-11-20, except [Regulation and business](#regulation-and-business), checked on 2026-11-22.
 
 ### AOSP and Google
 
@@ -388,6 +458,17 @@ All checked on 2026-11-20.
 - [Secure use reference][gh-hardening]: GitHub advises against self-hosted runners for public repositories, because pull requests can run code on them.
 - [Hetzner EX63][hetzner-ex63] and [Hetzner AX102][hetzner-ax102]: rented build-host prices.
 
+### Regulation and business
+
+- [Cyber Resilience Act][cra]: scope, the open-source exemption and stewards, the manufacturer, the support period and the dates.
+- [Commission guidance on the Cyber Resilience Act][cra-guidance]: substantial modification makes the modifier the manufacturer.
+- [European Commission on ecodesign][ec-ecodesign]: five years of operating-system updates for phones placed on the market from 2025-06-20.
+- [CMA on Google's OEM agreements][cma-oem]: Google apps need agreements, a per-device licence fee and compatibility.
+- [GrapheneOS donations][graphene-donate]: funded by donations.
+- [NLnet][nlnet-propose]: open calls and grant sizes.
+- [iodé][iode-shop]: phones sold with iodéOS installed.
+- [CalyxOS letter][calyx-letter] and [Privacy Guides][pg-calyx]: CalyxOS's pause and return.
+
 [9to5-graphene-moto]: https://9to5google.com/2026/03/01/motorola-confirms-grapheneos-partnership-for-a-future-smartphone-porting-features/
 [9to5-lineage24]: https://9to5google.com/2026/10/12/lineageos-24-launches-based-on-android-17-with-app-redesigns-and-simple-flash-tool/
 [9to5-pixel-source]: https://9to5google.com/2025/06/12/android-open-source-project-pixel-change/
@@ -407,12 +488,17 @@ All checked on 2026-11-20.
 [aosp-start-requirements]: https://source.android.com/docs/setup/start/requirements
 [avbroot]: https://www.github.com/chenxiaolong/avbroot
 [buildbarn]: https://www.maksonlee.com/setting-up-a-buildbarn-rbe-cluster-for-aosp-ubuntu-24-04-from-source/
+[calyx-letter]: https://calyxos.org/news/2025/08/01/a-letter-to-our-community/
 [cf-cts]: https://source.android.com/docs/devices/cuttlefish/cts
 [cf-github]: https://github.com/google/android-cuttlefish
 [cf-start]: https://source.android.com/docs/devices/cuttlefish/get-started
 [chromium-reclient]: https://groups.google.com/a/chromium.org/g/chromium-dev/c/v-WOvWUtOpg/m/2HlNqp-6BgAJ
+[cma-oem]: https://assets.publishing.service.gov.uk/media/6880b39e901d5f8d471204f1/Appendix_C__Google_s_OEM_Agreements.pdf
+[cra]: https://eur-lex.europa.eu/eli/reg/2024/2847/oj/eng
+[cra-guidance]: https://eur-lex.europa.eu/eli/C/2026/6013
 [cts]: https://source.android.com/docs/compatibility/cts
 [cyberinsider-lineage24]: https://cyberinsider.com/lineageos-24-lands-with-android-17-and-upgrade-limits-for-older-devices/
+[ec-ecodesign]: https://single-market-economy.ec.europa.eu/news/new-eu-rules-durable-energy-efficient-and-repairable-smartphones-and-tablets-start-applying-2025-06-20_en
 [emteria]: https://emteria.com/blog/android-17-ram-build-requirement
 [fp4-forum]: https://forum.fairphone.com/t/bootloader-avb-keys-used-in-roms-for-fairphone-3-4/83448
 [fp6-forum]: https://forum.fairphone.com/t/official-lineageos-23-for-the-fairphone-gen-6/132450?page=4
@@ -422,6 +508,7 @@ All checked on 2026-11-20.
 [gh-protected]: https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches
 [gh-self-hosted]: https://docs.github.com/en/actions/hosting-your-own-runners/managing-self-hosted-runners/about-self-hosted-runners
 [graphene-build]: https://grapheneos.org/build
+[graphene-donate]: https://grapheneos.org/donate
 [gs61-manifest]: https://github.com/LineageOS/android_kernel_google_gs-6.1_manifest
 [gsi16]: https://developer.android.com/about/versions/16/gsi-release-notes
 [gsmarena-graphene-moto]: https://www.gsmarena.com/grapheneos_confirms_the_first_motorola_to_support_the_privacyfocused_android_fork-news-74750.php
@@ -432,6 +519,7 @@ All checked on 2026-11-20.
 [hetzner-ax102]: https://www.hetzner.com/dedicated-rootserver/ax102/
 [hetzner-ex63]: https://www.hetzner.com/dedicated-rootserver/ex63/
 [iode-fp5]: https://community.iode.tech/t/booloader-relock-limbo-on-fairphone-5/7394
+[iode-shop]: https://iode.tech/smartphones-and-tablets/
 [lineage-cf-mk]: https://github.com/LineageOS/android_vendor_lineage/blob/lineage-24.0/build/target/product/lineage_cf_phone_x86_64.mk
 [lineage-charter]: https://github.com/LineageOS/charter/blob/main/device-support-requirements.md
 [lineage-devices]: https://wiki.lineageos.org/devices/
@@ -441,6 +529,8 @@ All checked on 2026-11-20.
 [lineage-shiba-build]: https://wiki.lineageos.org/devices/shiba/build/
 [lineage-signing]: https://wiki.lineageos.org/signing_builds
 [microg-spoofing]: https://www.github.com/microg/GmsCore/wiki/Signature-Spoofing
+[nlnet-propose]: https://nlnet.nl/propose/
+[pg-calyx]: https://www.privacyguides.org/livestreams/2026/07/03/calyxos-is-officially-back/
 [piunika-aosp]: https://piunikaweb.com/2026/01/07/android-aosp-source-code-q2-and-q4-pixel-monthly-security-patches-unchanged/
 [pixel-updates]: https://support.google.com/nexus/answer/4457705?hl=en
 [play-integrity]: https://developer.android.com/google/play/integrity/improvements
