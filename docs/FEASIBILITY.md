@@ -321,7 +321,7 @@ Sources: [LineageOS devices][lineage-devices], [Pixel update policy][pixel-updat
 - wiki.lineageos.org: device build pages, `signing_builds`, `emulator`.
 - github.com/LineageOS/charter: the device support requirements.
 - grapheneos.org/build: signing, reproducible builds, the update server and channels.
-- github.com/alopex-org/foxieos-hardware: the separate research into building a prototype device for enthusiasts, which FoxieOS depends on for a custom device.
+- github.com/alopex-org/foxieos-hardware: the separate research into building a device, which FoxieOS depends on for a custom device.
 
 ## Sources
 

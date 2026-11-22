@@ -6,13 +6,15 @@ Background: [DESIGN.md](DESIGN.md) for the architecture, [FEASIBILITY.md](FEASIB
 ## Where things stand
 
 - **Done:** task T0, the project skeleton (this repository and its docs), on 2026-11-20.
+- **Founding meeting, 2026-11-24:** the members choose the maintainers, who decide the project's foundations together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
+  One interim maintainer decided everything marked decided here (decision D3 and virtual first), so the meeting confirms or changes it.
 - **Next:** decision D2 (the build host), then task T1 (host readiness).
 - **Virtual first** (decided 2026-11-20): tasks T2–T6 run on LineageOS's Cuttlefish virtual device, `lineage_cf_phone_x86_64`, so a phone (decision D1) is needed only from task T7.
   See [TESTING.md](TESTING.md#virtual-devices).
 
 ## How to read this file
 
-- **Decisions (D1–D9)** are the maintainer's to make.
+- **Decisions (D1–D9)** are the maintainers' to make.
   Each one lists the options and a recommendation.
 - **Tasks (T0–T13)** are the work, in order.
   Each one says what it needs, what to do, when it is done, and what to report.
@@ -143,7 +145,7 @@ Open; needed before the first public release (T10).
 
 Open; needed before a device from the hardware project joins FoxieOS (T12).
 
-[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a prototype device for enthusiasts; it sells nothing.
+[foxieos-hardware](https://github.com/alopex-org/foxieos-hardware) is a separate project that researches building a device; whether that stays a prototype or becomes a product is its decision D5.
 FoxieOS depends on it for a custom device, and the dependency runs one way: FoxieOS adapts to the hardware project's choices, or doesn't support the device.
 The hardware project doesn't follow FoxieOS's [selection criteria](DEVICES.md#selection-criteria), and a device from it would fail at least one of them: LineageOS wouldn't support it officially, at least at first.
 The conditions below are FoxieOS's own terms for support, not requirements on the hardware project.

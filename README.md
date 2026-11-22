@@ -8,6 +8,7 @@ It adds its own branding, privacy defaults and update server, for a short list o
 **Status: planning.**
 No Android source has been synced and nothing is built yet.
 This repository holds the plan; scripts and tests follow as the roadmap tasks are done.
+The members choose the project's maintainers at a founding meeting on 2026-11-24, and the maintainers then decide its foundations together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 
 ## What FoxieOS will be
 
@@ -19,7 +20,7 @@ It will not ship Google apps, make apps that depend on Play Integrity work, or m
 [docs/DESIGN.md](docs/DESIGN.md) explains why.
 
 FoxieOS doesn't make hardware.
-For a custom device, it depends on a separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), which researches building a prototype device for enthusiasts, not a product for sale.
+For a custom device, it depends on a separate project, [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware), which researches building a device; whether that stays a prototype or becomes a product is its own open decision D5.
 The dependency runs one way: the hardware project doesn't follow FoxieOS's requirements, and FoxieOS adapts to its choices.
 Roadmap decision D9 covers whether, and on what terms, FoxieOS supports a device from it.
 

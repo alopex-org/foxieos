@@ -2,6 +2,7 @@
 # CONTRIBUTING.md (Review) lists the changes that need a person's review.
 # Replace @alevromitis with the @alopex-org/foxieos-release team once that team exists.
 # The manifest, SELinux, framework and kernel changes live in other repositories, each with its own CODEOWNERS.
+# After the founding meeting on 2026-11-24, the maintainers it chooses are added next to or in place of @alevromitis.
 
 /release/            @alevromitis
 /ota-server/         @alevromitis
