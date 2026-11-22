@@ -51,6 +51,9 @@ Release keys exist only on the signing host and its offline backups.
 
 ## Key decisions
 
+One interim maintainer wrote these choices before the founding meeting on 2026-11-24.
+The maintainers chosen there confirm or change them ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
+
 ### Base: LineageOS 24.0 (Android 17)
 
 - **Why:** LineageOS has the broadest maintained device support, and it absorbs Google's changes to AOSP: no more Pixel device trees, a read-only AOSP tree, and source drops only in Q2 and Q4.
@@ -144,7 +147,7 @@ Decided 2026-11-20 (decision D3).
 
 ## Related repositories
 
-- [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware): research into building a prototype phone, or a similar device, for an Android-based operating system: for enthusiasts, not for sale.
+- [foxieos-hardware](https://github.com/alopex-org/foxieos-hardware): research into building a phone, or a similar device, for an Android-based operating system; whether that stays a prototype or becomes a product is its decision D5.
   FoxieOS depends on it for a custom device, and the dependency runs one way: the hardware project doesn't follow FoxieOS's device criteria, and FoxieOS adapts to its choices.
   Whether FoxieOS supports a device from it, and on what terms, is roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
 

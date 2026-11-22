@@ -15,7 +15,7 @@ Everyone in the `alopex-org` organization also follows its [code of conduct][coc
   Every commit is then checked for secrets, key files and private notes ([Keys, secrets and personal details](#keys-secrets-and-personal-details)), and for a sign-off ([Sign-off](#sign-off)).
   If you set up your clone before the sign-off hook was added, run `pre-commit install` again.
 - Pick work from [docs/ROADMAP.md](docs/ROADMAP.md), or from its [issues](#issues-and-labels).
-  Decisions marked open there are the maintainer's to make; ask before building on one.
+  Decisions marked open there are the maintainers' to make; ask before building on one.
 - Report security problems as described in [SECURITY.md](SECURITY.md), never in a public issue.
 - To ask for a new device, use the device-request issue form.
   The criteria are in [docs/DEVICES.md](docs/DEVICES.md).
