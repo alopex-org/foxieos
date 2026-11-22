@@ -74,6 +74,7 @@ A person must review changes to:
 - any part of [docs/ROADMAP.md](docs/ROADMAP.md) or [docs/DESIGN.md](docs/DESIGN.md), which hold the decisions.
 
 `.github/CODEOWNERS` requests these reviews automatically for the paths in this repository, and the ruleset on `main` requires a code owner's approval before a change to them is merged.
+The `Review request` workflow also requests the maintainer's review on every other pull request; that request adds no required approval.
 
 A ruleset protects `main`:
 
