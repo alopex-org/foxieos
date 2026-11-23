@@ -11,14 +11,14 @@ body:
     id: build
     attributes:
       label: FoxieOS version and build
-      description: Settings → About, or the output of `cat /etc/os-release`.
+      description: Where FoxieOS shows its version and build number.
     validations:
       required: true
   - type: input
     id: device
     attributes:
       label: Device or board
-      placeholder: "Alopex cyber-deck, the development board (name it), or a QEMU virtual machine"
+      placeholder: "Alopex cyber-deck, the development board (name it), or a virtual machine"
     validations:
       required: true
   - type: dropdown
@@ -67,5 +67,5 @@ body:
     id: logs
     attributes:
       label: Logs
-      description: Output from `journalctl` or another tool, if you have it. Remove personal data first.
+      description: Logs from the device, if you have them. Remove personal data first.
       render: shell

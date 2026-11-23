@@ -13,7 +13,6 @@ out/
 logs/
 *.zip
 *.img
-*.raucb
 
 # Notes for one contributor's setup, never committed (AGENTS.md)
 *.local.md

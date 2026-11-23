@@ -6,7 +6,7 @@ GitHub words such as branch, commit and pull request are explained in the [organ
 
 FoxieOS is still being planned.
 This repository holds the docs, and later the scripts and tests that build, check and release FoxieOS.
-FoxieOS is a Linux system for the Alopex cyber-deck; most of its code comes from the base system it is built on (roadmap decision D10), and FoxieOS adds its own parts.
+FoxieOS is proposed as the operating system for the Alopex cyber-deck; what it is built on is open (roadmap decision D10).
 
 Everyone in the `alopex-org` organization follows its [code of conduct][coc], and its [governance][governance] says who decides what.
 If you use an AI coding agent, you are responsible for its work as for your own; the agent's own rules are in [AGENTS.md](AGENTS.md).
@@ -95,11 +95,10 @@ Someone other than the author reviews every change.
 
 A person must read every change to these sensitive areas:
 
-- the update service and the way updates reach devices;
+- updates and the way they reach devices;
 - the signing scripts;
-- secure boot and disk encryption;
+- secure boot and encryption;
 - the kernel and its settings;
-- the LoRa radio's region and power settings;
 - any part of [docs/ROADMAP.md](docs/ROADMAP.md) or [docs/DESIGN.md](docs/DESIGN.md), which hold the decisions.
 
 `.github/CODEOWNERS` asks for these reviews automatically, and the rules on `main` require a code owner's approval before such a change merges.
@@ -177,7 +176,7 @@ FoxieOS stays as close to the projects it builds on (its "upstream") as it can, 
   `branding/` is excluded until the rights to the artwork are confirmed.
 - Every kernel FoxieOS ships has its source code published, as its GPL licence requires.
 - Keep the licence notices in code you reuse, and credit the projects it comes from.
-- Use "Raspberry Pi", "Meshtastic" and "Linux" only to describe what FoxieOS runs on or with, never as part of FoxieOS's name.
+- Use other projects' and companies' names only to describe what FoxieOS runs on or with, never as part of FoxieOS's name.
 - Don't use other projects' logos as FoxieOS branding.
 
 ## Writing docs
