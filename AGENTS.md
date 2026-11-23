@@ -9,7 +9,8 @@ Never copy anything from them into a commit, pull request or issue.
 
 ## The project in brief
 
-FoxieOS is a planned Linux system for one device: the Alopex cyber-deck, a hand-held computer with a slide-out keyboard and a LoRa mesh radio, built around a Raspberry Pi Compute Module 5.
+FoxieOS is a planned Linux system for one device: the Alopex cyber-deck, a hand-held computer with a slide-out keyboard and a LoRa mesh radio.
+Its main board is Alopex's choice and still open (Alopex decision D1): a Raspberry Pi compute module is one candidate among other boards, so don't write Raspberry Pi-specific steps as the only way.
 It is in the planning phase: nothing is built yet, and the base system is open (roadmap decision D10).
 It was planned as a version of Android on LineageOS; that plan is replaced, as a proposal for the maintainers to confirm.
 

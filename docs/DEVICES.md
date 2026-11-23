@@ -2,13 +2,13 @@
 
 **Status: no supported devices yet.**
 FoxieOS is planned for one device, the Alopex cyber-deck, which isn't built yet.
-Until it is, FoxieOS develops on a Raspberry Pi board (roadmap decision D12) and is tested on a virtual machine ([TESTING.md](TESTING.md#virtual-machine)).
+Until it is, FoxieOS develops on a development board (roadmap decision D12) and is tested on a virtual machine ([TESTING.md](TESTING.md#virtual-machine)).
 Sources are in [FEASIBILITY.md](FEASIBILITY.md#sources), and technical words in the [glossary](GLOSSARY.md).
 
 ## In short
 
 - FoxieOS supports one device: the Alopex cyber-deck.
-- While the cyber-deck is being built, FoxieOS runs on the Raspberry Pi board it is proposed around.
+- While the cyber-deck is being built, FoxieOS runs on a development board like the one Alopex chooses for it.
 - Every device has a maintainer who owns one and tests each release on it.
 - FoxieOS doesn't support phones.
 
@@ -36,7 +36,7 @@ The prototype it proposes is a rugged hand-held computer:
 - knobs and buttons on the sides;
 - two 18650 batteries in bays at the back, either of which can be swapped while the device runs on the other;
 - hardware switches that cut the radios and the microphone;
-- a Raspberry Pi Compute Module 5 inside, proposed.
+- a main board still to choose: a Raspberry Pi compute module, another single-board computer or module, or something else ([Alopex decision D1](https://github.com/alopex-org/alopex/blob/main/docs/ROADMAP.md#d1-route-to-a-prototype)).
 
 What FoxieOS has to support on it is task T11 in [ROADMAP.md](ROADMAP.md#t11-the-cyber-deck).
 The terms on which FoxieOS supports it are decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
@@ -45,10 +45,9 @@ The terms on which FoxieOS supports it are decision [D9](ROADMAP.md#d9-devices-f
 
 Until the cyber-deck exists, FoxieOS is developed on one of these (decision [D12](ROADMAP.md#d12-development-board)):
 
-- **Raspberry Pi Compute Module 5 (CM5) on Raspberry Pi's IO board:** the module the cyber-deck is proposed around, so drivers and settings carry over.
-- **Raspberry Pi 5:** the same chip on a ready board.
+- **The board Alopex chooses for the cyber-deck,** or its maker's development kit, so drivers and settings carry over.
+- **Until Alopex chooses,** one of the candidates it compares, such as a Raspberry Pi Compute Module 5 on its IO board or an Arm or RISC-V board from another maker ([Alopex: boards](https://github.com/alopex-org/alopex/blob/main/docs/BOARDS.md#comparison)).
 
-Raspberry Pi says both stay in production until at least January 2036 ([Alopex: boards](https://github.com/alopex-org/alopex/blob/main/docs/BOARDS.md#raspberry-pi-5-and-compute-module-5)).
 A LoRa board with an SX1262 chip is wired to the board's pins for the mesh radio (task T5).
 
 ## Rules for adding a device
@@ -56,9 +55,9 @@ A LoRa board with an SX1262 chip is wired to the board's pins for the mesh radio
 A device is added only if **all** of these are true:
 
 - **A FoxieOS maintainer owns one** and tests every release on it.
-- **It is the cyber-deck, or a board it is built around.**
+- **It is the cyber-deck, or the board it is built around or a candidate for it.**
   Other devices are out of scope ([ROADMAP.md](ROADMAP.md#not-planned)).
-- **Its kernel is built from source,** from Raspberry Pi's kernel or the mainline kernel.
+- **Its kernel is built from source,** from the mainline kernel or the board maker's published kernel.
 - **Every part has a Linux driver** that FoxieOS may ship.
 - **Secure boot is under the owner's control:** the device is either not fused, or fused with a key settled under decision D9.
 

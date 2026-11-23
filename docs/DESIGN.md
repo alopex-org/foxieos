@@ -8,7 +8,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 ## In short
 
 - FoxieOS is a small Linux system for one device: the Alopex cyber-deck, a rugged hand-held computer with a slide-out keyboard and a LoRa mesh radio.
-- Until the cyber-deck exists, it runs on the Raspberry Pi boards the cyber-deck is built around, and on a virtual machine for automatic tests.
+- Until the cyber-deck exists, it runs on a development board like the one Alopex chooses for it, and on a virtual machine for automatic tests.
 - A build host turns the source code into a complete system image.
 - A separate offline computer, the signing host, signs each release, so devices accept only real FoxieOS updates.
 - A website, the update server, delivers the signed updates; the device installs each one beside the running system and falls back if it fails.
@@ -76,9 +76,9 @@ Proposed 2026-11-23, for the founding meeting to confirm.
 
 - **What:** FoxieOS is a Linux system for the Alopex cyber-deck, no longer a version of Android built on LineageOS for phones.
 - **Why:**
-  - The cyber-deck is the device the project wants to build, and Alopex already proposes a Raspberry Pi hand-held running Linux as its first prototype.
+  - The cyber-deck is the device the project wants to build, and Alopex proposes it with Linux in mind; its main board is still Alopex's choice (its decision D1).
   - The tools it needs run on Linux today: Meshtastic's Linux service for the LoRa radio, LUKS for encrypting the storage, and messaging apps such as Session ([FEASIBILITY.md](FEASIBILITY.md#what-the-cyber-deck-needs-from-its-software)).
-  - Android on a Raspberry Pi exists only as a community build, with its security rules switched off and no encryption of user data.
+  - Android on small boards is often only a community or developer build; on a Raspberry Pi, one candidate board, its security rules are switched off and user data isn't encrypted.
   - A Linux system for one device is far less work than an Android version: no 400 GB source tree, no build computer with 64 GB of memory or more, and no dependence on Google's release schedule (unsourced estimate; task T1 measures it).
 - **Turned down:**
   - staying a version of Android on LineageOS for phones, which serves a different device and couldn't run on the cyber-deck;
@@ -95,7 +95,7 @@ Open (roadmap decision [D10](ROADMAP.md#d10-base)).
 
 ### Few devices
 
-- **What:** the Alopex cyber-deck, plus the Raspberry Pi boards it is built around while it doesn't exist yet ([DEVICES.md](DEVICES.md)).
+- **What:** the Alopex cyber-deck, plus a development board like the one it uses while it doesn't exist yet ([DEVICES.md](DEVICES.md)).
 - **Why:** each device is ongoing work, and each needs an owner who tests every release on it.
 - **Turned down:** a general Linux system for many devices; plenty already exist.
 
@@ -103,7 +103,7 @@ Open (roadmap decision [D10](ROADMAP.md#d10-base)).
 
 - **What:** FoxieOS is a system image with two slots, A and B.
   An update, a signed RAUC bundle, is installed into the slot that isn't running; the device starts the new slot, and goes back to the old one if the new one doesn't confirm a good start.
-  On a Raspberry Pi 5 this uses the board's "tryboot" feature, as Home Assistant OS does ([FEASIBILITY.md](FEASIBILITY.md#updates)).
+  How the board starts the other slot depends on its bootloader; on a Raspberry Pi 5, for example, Home Assistant OS uses the board's "tryboot" feature ([FEASIBILITY.md](FEASIBILITY.md#updates)).
 - **Why:** a device in the field must never be left unable to start, and an update installed as one piece behaves the same on every device.
 - **Turned down:** updating package by package (`apt`, `apk`), which can stop halfway and leaves each device a little different; writing a new update tool.
 
@@ -118,7 +118,7 @@ Open (roadmap decision [D10](ROADMAP.md#d10-base)).
 
 - **What:** the whole storage is encrypted with LUKS.
   Secure boot, which makes the board start only a signed system, is set up only on devices the project keeps for testing, until decision D9 settles who holds the key ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
-- **Why:** on a Raspberry Pi, turning on secure boot writes the fingerprint of one signing key into the chip for good.
+- **Why:** on many chips, turning on secure boot writes the fingerprint of a signing key into the chip for good; on a Raspberry Pi, for example, that one key signs everything the board starts.
   Whoever holds that key decides what the device will ever start, so it is not a choice FoxieOS makes for an owner.
 - **Turned down:** shipping devices locked to FoxieOS's key; no encryption.
 
@@ -138,7 +138,7 @@ Open (roadmap decision [D11](ROADMAP.md#d11-user-interface)).
 
 ### Testing on a virtual machine first
 
-- **What:** the automatic checks start FoxieOS on a virtual 64-bit Arm machine on the build host; a Raspberry Pi board is needed from task T2, the cyber-deck from task T11.
+- **What:** the automatic checks start FoxieOS on a virtual 64-bit Arm machine on the build host; a development board is needed from task T2, the cyber-deck from task T11.
 - **Why:** the build, branding, automatic checks and signing can start before any hardware is bought.
 - **Turned down:** waiting for the cyber-deck before anything else.
 
@@ -157,8 +157,8 @@ Decided 2026-11-20 (decision D3).
   Until Alopex has a cyber-deck, the touchscreen, keyboard, knobs, gauges, switches and battery bays can only be tried on a board with parts wired to it.
 - **A virtual machine can't test hardware.**
   The LoRa radio, the switches, the batteries and secure boot need a real board (test layers L4 and L7).
-- **Secure boot on a Raspberry Pi is permanent.**
-  Once a key's fingerprint is written into a board's one-time-programmable memory, it can't be changed, and losing the key means the board can no longer be updated with trusted start-up files ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
+- **Secure boot is usually permanent.**
+  Once a key's fingerprint is written into a chip's one-time-programmable memory, as on a Raspberry Pi, it can't be changed, and losing the key means the board can no longer be updated with trusted start-up files ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
 - **The LoRa band is narrow in Europe.**
   Meshtastic's EU_868 setting uses 869.4–869.65 MHz with a 10% limit on transmitting time, so messages are short and slow ([FEASIBILITY.md](FEASIBILITY.md#the-lora-mesh-radio)).
 - **No mainstream apps.**

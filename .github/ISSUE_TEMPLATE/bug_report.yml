@@ -18,7 +18,7 @@ body:
     id: device
     attributes:
       label: Device or board
-      placeholder: "Alopex cyber-deck, Raspberry Pi CM5 on the IO board, or a QEMU virtual machine"
+      placeholder: "Alopex cyber-deck, the development board (name it), or a QEMU virtual machine"
     validations:
       required: true
   - type: dropdown

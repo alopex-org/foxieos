@@ -11,9 +11,11 @@ Words about the hardware, radios and its rules are in [Alopex's glossary](https:
 - **Cyber-deck:** a custom-built, portable computer, often made for one purpose, with a keyboard, a screen and a rugged or "cyberpunk" look.
   The word comes from William Gibson's 1984 novel *Neuromancer*.
 - **The Alopex cyber-deck:** the hand-held cyber-deck that the Alopex hardware project designs, and that FoxieOS is made for.
-- **Raspberry Pi:** a family of small, cheap computers on one board, made by Raspberry Pi Ltd.
-- **Compute Module 5 (CM5):** a Raspberry Pi 5 shrunk onto a small module, made to plug into a board someone else designs, such as the cyber-deck's.
-  The **IO board** is Raspberry Pi's own board for trying a CM5.
+- **Main board:** the computer inside the cyber-deck; Alopex hasn't chosen it yet.
+- **Single-board computer (SBC):** a whole computer on one board, ready to use.
+- **Compute module:** a computer on a small module, made to plug into a board someone else designs (a carrier board).
+- **Raspberry Pi:** a family of small, cheap computers on one board, made by Raspberry Pi Ltd; one candidate for the cyber-deck.
+  The **Compute Module 5 (CM5)** is a Raspberry Pi 5 as a compute module, and its **IO board** is Raspberry Pi's own board for trying it.
 - **Development board:** a ready-made board used to develop FoxieOS before the cyber-deck exists.
 - **Slide-out keyboard:** the cyber-deck's keyboard, hidden under the screen until the screen slides sideways.
 - **18650:** a common size of rechargeable lithium-ion battery cell, 18 mm across and 65 mm long.
@@ -41,7 +43,8 @@ Words about the hardware, radios and its rules are in [Alopex's glossary](https:
 ## Building and testing
 
 - **Build host:** the computer that builds FoxieOS (roadmap decision D2).
-- **arm64:** the kind of processor in the Raspberry Pi 5 and the CM5 (64-bit Arm).
+- **arm64:** 64-bit Arm, the kind of processor in most candidate boards, such as the Raspberry Pi 5.
+  **RISC-V** is another kind, which some candidate boards use.
 - **Cross-compiling:** building, on one kind of processor, programs that run on another.
 - **Virtual machine:** a computer simulated in software.
   **QEMU** is the program that runs it, and **KVM** lets Linux run it fast.
@@ -71,7 +74,7 @@ Words about the hardware, radios and its rules are in [Alopex's glossary](https:
 ## Security and privacy
 
 - **Secure boot:** the board starting only a system signed with a particular key.
-  On a Raspberry Pi, the key's fingerprint is written into the chip's **OTP memory** (one-time programmable), which can never be changed.
+  On many chips, such as a Raspberry Pi's, the key's fingerprint is written into the chip's **OTP memory** (one-time programmable), which can never be changed.
 - **Fusing:** writing into a chip's one-time-programmable memory; it can't be undone.
 - **LUKS:** the standard way to encrypt a whole disk on Linux; **cryptsetup** is its tool.
 - **MAC address:** the hardware address a device shows on a Wi-Fi network.

@@ -32,7 +32,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Phases
 
-1. **Setup:** the build computer, and a first plain image that starts on a virtual machine and on a Raspberry Pi board (T1–T3).
+1. **Setup:** the build computer, and a first plain image that starts on a virtual machine and on a development board (T1–T3).
 2. **FoxieOS's own parts:** branding, the LoRa mesh service and the interface (T4, T5, T9).
 3. **Automatic checks and tests:** checks on every change and nightly tests on the virtual machine (T3, T6).
 4. **Updates and security:** signing, A/B updates, encryption and secure boot on a test board (T7, T8, T10).
@@ -121,10 +121,10 @@ The conditions below are FoxieOS's own terms, not requirements on the hardware p
 
 - **Proposed terms:**
   - a FoxieOS maintainer owns one;
-  - its kernel is built from source, from Raspberry Pi's kernel or the mainline kernel;
+  - its kernel is built from source, from the mainline kernel or the board maker's published kernel;
   - every part has a Linux driver FoxieOS may ship;
   - FoxieOS signs its own updates with its own keys, and never holds a key it would have to give up if the device changes hands.
-- **Secure boot:** on the Raspberry Pi boards the cyber-deck is proposed around, the key whose fingerprint is written into the chip signs everything the board starts ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
+- **Secure boot:** on many boards, such as a Raspberry Pi, the key whose fingerprint is written into the chip signs everything the board starts ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)); how it works on the cyber-deck depends on the main board Alopex chooses (its decision D1).
   Options:
   - devices leave the builder without secure boot, and the owner may turn it on with their own key;
   - FoxieOS's key is written into the devices the project keeps for testing only;
@@ -140,7 +140,7 @@ Earlier, this decision was between LineageOS, plain AOSP and a base of FoxieOS's
 With the move to a cyber-deck, the options are Linux systems ([FEASIBILITY.md](FEASIBILITY.md#choosing-a-base)).
 
 - **Options:**
-  - **Debian,** as Raspberry Pi OS is: closest to what Raspberry Pi supports.
+  - **Debian:** the widest board support, and on a Raspberry Pi what the maker ships (Raspberry Pi OS).
   - **Alpine Linux, or Nura** (formerly postmarketOS), built on it: smaller, with mobile interfaces ready.
   - **Buildroot or Yocto:** a system built entirely from source, with the most control and the most work.
 - **Whichever is chosen,** FoxieOS ships it as a whole image with A/B updates, not as packages updated one by one ([DESIGN.md](DESIGN.md#the-whole-system-updated-in-one-piece)).
@@ -165,10 +165,14 @@ It also has knobs on its side, and signal gauges on its top that FoxieOS drives.
 Which board FoxieOS develops on until the cyber-deck exists.
 Open; needed by task T2.
 
+The cyber-deck's main board is Alopex's choice, still open: a Raspberry Pi compute module is one candidate among other single-board computers and modules ([Alopex decision D1](https://github.com/alopex-org/alopex/blob/main/docs/ROADMAP.md#d1-route-to-a-prototype)).
+FoxieOS adapts to that choice.
+
 - **Options** ([DEVICES.md](DEVICES.md#development-boards)):
-  - a Raspberry Pi Compute Module 5 on Raspberry Pi's IO board, the module the cyber-deck is proposed around;
-  - a Raspberry Pi 5, the same chip on a ready board.
-- **Recommendation:** the CM5 on its IO board, so the work carries over to the cyber-deck; one board per maintainer who tests releases, bought by the maintainer.
+  - the board Alopex chooses, or its maker's development kit, once Alopex has chosen;
+  - until then, one of the candidates Alopex compares on the bench (its task T2).
+- **Recommendation:** the board Alopex chooses, so the work carries over to the cyber-deck; if FoxieOS's task T2 has to start first, a candidate with mainline Linux support, and keep the board-specific parts small.
+  One board per maintainer who tests releases, bought by the maintainer.
 
 ## Tasks
 
@@ -272,7 +276,7 @@ Making devices find and install FoxieOS updates.
 **Code and hands-on.** Needs task T7, decision D4 and check C1.
 
 - Lay out the image with two system slots and a data partition.
-- Install updates with RAUC into the slot not running, start it with the board's tryboot feature, and mark it good only after the quick checks pass on the device.
+- Install updates with RAUC into the slot not running, start it through the board's bootloader (check C1), and mark it good only after the quick checks pass on the device.
 - Write `release/publish-metadata.py`, which writes the update descriptions for each channel, and a small service on the device that checks for updates.
 
 **Finished when** update scenarios 1–3 in [TESTING.md](TESTING.md#update-tests) pass on the development board.
@@ -295,7 +299,7 @@ Practising encryption and secure boot.
 **Hands-on and maintainer only.** Needs task T8, decision D9, check C3, and the maintainer's go-ahead for each permanent step.
 
 - Encrypt the data partition with LUKS, and ask for the passphrase at start-up.
-- On a board bought only for this, set up secure boot with a dev key through Raspberry Pi's provisioner, and check that an unsigned image no longer starts.
+- On a board bought only for this, set up secure boot with a dev key using the board maker's tools (on a Raspberry Pi, its provisioner), and check that an unsigned image no longer starts.
 - Record in `docs/SECURE-BOOT.md` which steps were permanent and what the owner of a device can still change.
 
 **Finished when** the encrypted board updates through both slots, and the fused board starts only signed images.
@@ -360,12 +364,12 @@ D2 and D10 → T1 → T2 → T3 → T4 and T5 → T6 → T7 → T8 → T12.
 Each check is a short task to confirm a fact.
 Do it before the task that relies on it (shown by →), then update the docs that carry the ⚠.
 
-1. **C1, A/B updates on a CM5** (→ T8).
-   Whether RAUC with the tryboot feature works on a CM5 as Home Assistant OS describes for the Pi 5, and whether a restart that isn't `systemctl reboot` starts the old slot.
+1. **C1, A/B updates on the chosen board** (→ T8).
+   Which bootloader switches slots on the board (for example GRUB, U-Boot, or a Raspberry Pi's tryboot), whether RAUC supports it, and what happens on a restart during an update.
 2. **C2, build size and time** (→ T2).
    The disk, memory and time a full build of the chosen base needs on the build host.
 3. **C3, the secure-boot key** (→ D9, T10).
-   From Raspberry Pi's security documentation: what exactly the key written into the chip signs, whether a second key can ever be added, and what an owner can still do with a fused board.
+   From the chosen board maker's security documentation (for a Raspberry Pi, its security architecture page): what exactly the key written into the chip signs, whether a second key can ever be added, and what an owner can still do with a fused board.
 4. **C4, GNSS position over the mesh** (→ T5).
    Whether `meshtasticd` can read a GNSS receiver and share its position (the same as Alopex check C14).
 5. **C5, Meshtastic's region setting** (→ T5).
@@ -374,7 +378,7 @@ Do it before the task that relies on it (shown by →), then update the docs tha
    Search the EU (EUIPO) and US (USPTO) trademark registers for "FoxieOS".
 7. **C7, legal advice before any sale** (→ before FoxieOS, or a device with it, is sold; maintainers only).
    Whether selling a cyber-deck with FoxieOS makes the seller a manufacturer under the EU's Cyber Resilience Act, radio-equipment rules and ecodesign rules, and what that requires ([FEASIBILITY.md](FEASIBILITY.md#obligations-once-money-is-involved)).
-8. **C8, Nura on a Raspberry Pi 5** (→ D10).
-   Whether Nura (formerly postmarketOS) supports the Pi 5 and the CM5, and which of its interfaces work there.
+8. **C8, Nura on the candidate boards** (→ D10).
+   Whether Nura (formerly postmarketOS) supports the boards Alopex is weighing, and which of its interfaces work there.
 
 [gh-hardening]: https://docs.github.com/en/actions/security-for-github-actions/security-guides/security-hardening-for-github-actions

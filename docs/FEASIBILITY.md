@@ -16,7 +16,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 | Goal | Possible? |
 |---|---|
-| A FoxieOS-branded Linux system on a Raspberry Pi board | Yes |
+| A FoxieOS-branded Linux system on a development board | Yes |
 | The same system on the Alopex cyber-deck | Yes, once the hardware exists |
 | Messaging over a LoRa mesh with no network | Yes, with Meshtastic's Linux service |
 | Safe updates that can't leave the device unable to start | Yes, with A/B slots and RAUC |
@@ -25,13 +25,13 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 | Manageable for one person or a small team | Yes, if it stays on one device |
 | Earning money from it | An open question |
 
-- **A branded Linux system on a Raspberry Pi** is ordinary work: Raspberry Pi publishes its own Debian-based system, and Alpine Linux, Buildroot and Yocto all build for it ([Choosing a base](#choosing-a-base)).
+- **A branded Linux system on a development board** is ordinary work on a board with good Linux support; on a Raspberry Pi, for example, the maker publishes its own Debian-based system, and Alpine Linux and Buildroot build for it ([Choosing a base](#choosing-a-base)).
 - **The cyber-deck's parts** (a LoRa radio, a touchscreen, a keyboard, a GNSS receiver) need drivers and settings rather than new software, except the interface ([What the cyber-deck needs](#what-the-cyber-deck-needs-from-its-software)).
-- **Updates:** RAUC installs a signed update beside the running system and falls back if it fails; Home Assistant OS does this on the Raspberry Pi 5 today ([Updates](#updates)).
-- **Secure boot:** Raspberry Pi's tool sets up secure boot and disk encryption, but it writes the key's fingerprint into the chip for good ([Secure boot and encryption](#secure-boot-and-encryption)).
+- **Updates:** RAUC installs a signed update beside the running system and falls back if it fails; Home Assistant OS does this on the Raspberry Pi 5, for example, today ([Updates](#updates)).
+- **Secure boot** depends on the chip of the board Alopex chooses; on a Raspberry Pi, the maker's tool sets it up with disk encryption, but writes the key's fingerprint into the chip for good ([Secure boot and encryption](#secure-boot-and-encryption)).
 - **Keeping it going** is mostly taking in the base system's security fixes, and far less work than an Android version (unsourced estimate).
 
-**Recommendation:** an image-based Linux system for the Alopex cyber-deck and the Raspberry Pi Compute Module 5 it is proposed to use, with A/B updates through RAUC, LUKS encryption, Meshtastic built in, and an interface for both the touchscreen and the keyboard.
+**Recommendation:** an image-based Linux system for the Alopex cyber-deck, whatever main board Alopex chooses for it, with A/B updates through RAUC, LUKS encryption, Meshtastic built in, and an interface for both the touchscreen and the keyboard.
 Choose the base after trying two of them on a board (roadmap decision D10).
 
 ## What a cyber-deck is
@@ -49,10 +49,10 @@ Sources: [Wikipedia: Cyberdeck][wiki-cyberdeck], [Hackaday 2022 contest][had-202
 
 ## What the cyber-deck needs from its software
 
-The Alopex cyber-deck is proposed around a Raspberry Pi Compute Module 5, with a LoRa radio, a GNSS receiver, a removable USB Wi-Fi adapter, hardware switches, a touchscreen that slides over a keyboard, and two swappable 18650 batteries.
+The Alopex cyber-deck is proposed with a main board still to choose (Alopex decision D1), a LoRa radio, a GNSS receiver, a removable USB Wi-Fi adapter, hardware switches, a touchscreen that slides over a keyboard, and two swappable 18650 batteries.
 Most of it needs drivers and settings that already exist:
 
-- **LoRa radio:** Meshtastic's Linux service, `meshtasticd`, drives an SX1262 LoRa radio on the Pi's SPI pins, or one on a USB adapter.
+- **LoRa radio:** Meshtastic's Linux service, `meshtasticd`, drives an SX1262 LoRa radio on a Raspberry Pi's SPI pins, or one on a USB adapter; ⚠ on another board, its support needs checking.
 - **Encrypted storage:** LUKS, through the `cryptsetup` tool, encrypts the whole storage and asks for a passphrase at every start.
 - **Messaging over the internet:** Session has a Linux app, needs no phone number and sends messages over onion-routed paths; Briar's Linux app is a beta without Bluetooth.
 - **Messaging over LoRa:** Meshtastic encrypts channels with AES and a shared key, and direct messages with a key pair for each device; message headers aren't encrypted, and there is no forward secrecy.
@@ -75,7 +75,7 @@ The choice sets how security fixes arrive and how much work each update is.
 
 - Raspberry Pi OS is based on Debian; its latest version on Debian "Trixie".
 - It is updated package by package with `apt update` and `apt full-upgrade`, which also updates the kernel and the board's firmware; a new major version is installed afresh rather than upgraded in place.
-- It is what Raspberry Pi itself supports, so the board's drivers arrive there first (unsourced).
+- It is what Raspberry Pi itself supports, so on a Raspberry Pi the board's drivers arrive there first (unsourced); Debian also runs on many other Arm boards (unsourced).
 
 ### Alpine Linux and Nura
 
@@ -87,16 +87,18 @@ The choice sets how security fixes arrive and how much work each update is.
 ### Buildroot and Yocto
 
 - Buildroot builds a small embedded Linux system from source, including the kernel and the bootloader.
-- Yocto does the same at a larger scale, and RAUC's community layers for it include a Raspberry Pi integration (unsourced).
+- Yocto does the same at a larger scale, and board makers often publish Yocto layers for their boards (unsourced).
 - Both give an exact, repeatable image, but every security fix means rebuilding and shipping the image, and the team follows security notices itself (unsourced).
 
 ### Android
 
-- Raspberry Pi offers no official Android.
+- On small boards, Android is often a developer or community build; [Alopex's board comparison](https://github.com/alopex-org/alopex/blob/main/docs/BOARDS.md#comparison) lists what each candidate has.
+- Raspberry Pi, for example, offers no official Android.
   A community build of Android 17 runs on the Pi 5 and CM5, but its security rules (SELinux) are permissive, it doesn't encrypt user data, and its added parts may not be used commercially.
-- So Android on the cyber-deck would give up the encryption and security FoxieOS is for, and it is turned down until that changes.
+- So Android on the cyber-deck would likely give up the encryption and security FoxieOS is for, and it is turned down until a board the cyber-deck uses has a complete build.
 
-**Assessment:** Debian is the closest to what Raspberry Pi supports; Alpine is smaller; Buildroot or Yocto give the most control at the most work.
+**Assessment:** Debian has the widest board support and, on a Raspberry Pi, is what the maker supports; Alpine is smaller; Buildroot or Yocto give the most control at the most work (unsourced, beyond the sources below).
+The board Alopex chooses may narrow the choice.
 Whichever is chosen, FoxieOS ships it as a whole image with A/B updates ([Updates](#updates)), not as packages updated one by one.
 
 Sources: [Raspberry Pi OS][rpi-os], [Alpine Linux][alpine-about], [Alpine downloads][alpine-downloads], [Nura][nura], [Buildroot][buildroot], [KonstaKANG AOSP 17][konstakang-aosp17].
@@ -108,19 +110,22 @@ Sources: [Raspberry Pi OS][rpi-os], [Alpine Linux][alpine-about], [Alpine downlo
 - **A/B slots:** the device has two copies of the system; the update goes into the one not running.
   A new slot counts as good only once the system marks it so after starting; otherwise, depending on the bootloader, the device switches back.
 - **Separate keys:** RAUC can trust a development key on development devices only, so release devices accept only bundles signed with the release key.
-- **On the Raspberry Pi 5:** Home Assistant OS updates with RAUC and two slots, and uses the board's "tryboot" feature through its own RAUC back end.
-  It has to restart with `systemctl reboot`: a plain `reboot` starts the old slot again.
-  ⚠ The same on a CM5 in the cyber-deck needs checking (check C1).
+- **Which bootloader switches slots** depends on the board.
+  On the Raspberry Pi 5, for example, Home Assistant OS uses the board's "tryboot" feature through its own RAUC back end, and has to restart with `systemctl reboot`: a plain `reboot` starts the old slot again.
+  ⚠ How the board Alopex chooses switches slots needs checking (check C1).
 
 Sources: [Using RAUC][rauc-using], [RAUC advanced topics][rauc-advanced], [Home Assistant OS update system][haos-update].
 
 ## Secure boot and encryption
 
+How secure boot works depends on the chip of the board Alopex chooses; Alopex compares the candidates' public secure-boot guides ([BOARDS.md](https://github.com/alopex-org/alopex/blob/main/docs/BOARDS.md#comparison)).
+A Raspberry Pi, one candidate, shows the typical case:
+
 - Raspberry Pi's Secure Boot Provisioner sets up secure boot, LUKS encryption of the storage, and a secret unique to each device, on the CM5, CM4 and Pi 5.
   It is in active development.
 - The fingerprint (hash) of the signing key is written into the chip's one-time-programmable (OTP) memory, and on the Pi 5's chip the same key also signs the bootloader.
 - Some of its steps can't be undone, and losing the private key means the device can no longer be updated or recovered with trusted start-up files.
-- **What it means for FoxieOS:** on a Raspberry Pi there is no separate owner key for the operating system, as Android phones have.
+- **What it means for FoxieOS:** on such a board there is no separate owner key for the operating system, as Android phones have.
   Whoever holds the one key written into the chip decides what the device starts, for its whole life.
   ⚠ How that key is shared between Alopex, FoxieOS and the owner needs settling before any device is fused (check C3, and FoxieOS decision D9).
 
@@ -207,7 +212,7 @@ Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilien
 
 | Risk | Impact | What reduces it |
 |---|---|---|
-| The cyber-deck takes longer to build than the software | Medium | Develop on a Raspberry Pi board and a virtual machine first |
+| The cyber-deck takes longer to build than the software | Medium | Develop on a development board and a virtual machine first |
 | A board fused with a lost or wrong key | High | Fuse only boards kept for testing; settle the key's owner first (check C3) |
 | An update leaves a device unable to start | High | A/B slots with fallback; test the fallback before every release |
 | Release keys stolen or lost | Critical | Offline, encrypted keys with backups; only the maintainer handles them |
@@ -218,7 +223,7 @@ Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilien
 ## Further reading
 
 - rauc.readthedocs.io: the RAUC documentation.
-- raspberrypi.com/documentation: the boards, Raspberry Pi OS and secure boot.
+- raspberrypi.com/documentation: Raspberry Pi's boards, Raspberry Pi OS and secure boot, for one candidate board.
 - meshtastic.org/docs: the Meshtastic Linux service and radio settings.
 - github.com/alopex-org/alopex: the cyber-deck's hardware.
 
