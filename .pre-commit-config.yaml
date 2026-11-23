@@ -1,5 +1,5 @@
 # Pre-commit hooks: the part of test layer L0 that is in place
-# (docs/TESTING.md#l0-static-checks).
+# (docs/TESTING.md#l0-file-checks).
 # Set up once per clone with `pre-commit install`; see CONTRIBUTING.md.
 # That installs both hook types listed here.
 default_install_hook_types: [pre-commit, commit-msg]
@@ -21,7 +21,7 @@ repos:
         name: Block key files
         language: fail
         entry: "Key material is never committed (CONTRIBUTING.md, \"Keys, secrets and personal details\"). Unstage these files:"
-        files: '(^|/)(keys|\.android-certs|vendor/lineage-priv)/|\.(pk8|pem|key|p12|keystore|jks)$|(^|/)avb[^/]*\.bin$'
+        files: '(^|/)keys/|\.(pk8|pem|key|p12|keystore|jks)$|(^|/)avb[^/]*\.bin$'
 
       # `*.local.md` files hold one contributor's private notes.
       - id: no-local-notes

@@ -7,16 +7,13 @@ keys/
 *.keystore
 *.jks
 avb*.bin
-avb_pkmd.bin
-vendor/lineage-priv/
-.android-certs/
 
-# Build output, downloads and logs (the Android tree lives outside this repo)
+# Build output, downloads and logs (kept outside this repo)
 out/
 logs/
-android-cts/
 *.zip
 *.img
+*.raucb
 
 # Notes for one contributor's setup, never committed (AGENTS.md)
 *.local.md

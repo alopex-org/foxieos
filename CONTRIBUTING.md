@@ -6,7 +6,7 @@ GitHub words such as branch, commit and pull request are explained in the [organ
 
 FoxieOS is still being planned.
 This repository holds the docs, and later the scripts and tests that build, check and release FoxieOS.
-The Android code itself will come from LineageOS; FoxieOS's own Android code will live in `vendor/foxie` and in a separate manifest repository (roadmap task T5).
+FoxieOS is a Linux system for the Alopex cyber-deck; most of its code comes from the base system it is built on (roadmap decision D10), and FoxieOS adds its own parts.
 
 Everyone in the `alopex-org` organization follows its [code of conduct][coc], and its [governance][governance] says who decides what.
 If you use an AI coding agent, you are responsible for its work as for your own; the agent's own rules are in [AGENTS.md](AGENTS.md).
@@ -38,8 +38,8 @@ The sections below explain each rule.
   Put anything that should be kept, such as a bug, a correction or an argument for a decision, in an issue or a pull request.
 - **Security problems** go through [SECURITY.md](SECURITY.md), never a public issue.
   Don't post them, or code-of-conduct reports, on Discord either.
-- **Asking for a new phone:** use the device-request issue form.
-  The rules for choosing phones are in [docs/DEVICES.md](docs/DEVICES.md).
+- **Asking for a new device or board:** use the device-request issue form.
+  The rules for adding a device are in [docs/DEVICES.md](docs/DEVICES.md).
 
 ## Branches
 
@@ -49,13 +49,13 @@ Put your branch in your own fork and open the pull request from there.
 Use a new branch for each change, named after what it changes:
 
 - `feat/<topic>` for something new, `fix/<topic>` for a fix, `docs/<topic>` for the docs;
-- `device/<codename>-<topic>` for one phone;
-- `rebase/lineage-<version>` for moving to a new LineageOS version;
+- `device/<device>-<topic>` for one device or board;
+- `rebase/<base>-<version>` for moving to a new major version of the base system;
 - `release/<BUILD_NUMBER>` for a release.
 
 ## Commits
 
-- **Subject line:** write `scope: description`, as a command, for example `vendor/foxie: add boot animation`.
+- **Subject line:** write `scope: description`, as a command, for example `branding: add start-up screen`.
   The scope is the part of the project the change touches.
 - **Body:** explain *why* you made the change.
 - **Sign-off:** sign off every commit with `git commit -s` ([Sign-off](#sign-off)).
@@ -95,11 +95,11 @@ Someone other than the author reviews every change.
 
 A person must read every change to these sensitive areas:
 
-- Android's security rules (SELinux policy), permissions and the Android framework;
-- the Updater and the way updates reach phones;
+- the update service and the way updates reach devices;
 - the signing scripts;
-- the manifest;
-- the kernel;
+- secure boot and disk encryption;
+- the kernel and its settings;
+- the LoRa radio's region and power settings;
 - any part of [docs/ROADMAP.md](docs/ROADMAP.md) or [docs/DESIGN.md](docs/DESIGN.md), which hold the decisions.
 
 `.github/CODEOWNERS` asks for these reviews automatically, and the rules on `main` require a code owner's approval before such a change merges.
@@ -133,19 +133,19 @@ A change in the hardware project can need a matching change here, but a change h
 - **Issue types** say what an issue is: Decision, Task, Check, Bug or Feature.
 - **Labels** say who does the work (`who:`), what it touches (`area:`) and what it is waiting for.
   The list lives in `.github/labels.sh`; change it there, not by hand on GitHub.
-  Add a `device: <codename>` label when a phone joins.
+  Add a `device: <device>` label when a device joins.
 - Until the founding meeting, only the maintainer sets labels, types and milestones.
   Suggest them in a comment.
 
-## Changes to LineageOS or Android's own code
+## Changes to the base system
 
 FoxieOS stays as close to the projects it builds on (its "upstream") as it can, so that each update from them is easy to take:
 
-- Prefer overlays and `vendor/foxie` to editing upstream files.
-- Every change to a LineageOS or AOSP repository is a *carry patch*.
+- Prefer adding FoxieOS's own files and settings to changing the base system's files.
+- Every change to a file or package of the base system is a *patch*.
   Record it in [docs/PATCHES.md](docs/PATCHES.md), with its reason and any link to the upstream discussion.
 - Offer fixes to the upstream project where they belong.
-  Once LineageOS has accepted a patch, FoxieOS drops its own copy at the next update.
+  Once the upstream project has accepted a patch, FoxieOS drops its own copy at the next update.
 
 ## Keys, secrets and personal details
 
@@ -176,11 +176,9 @@ FoxieOS stays as close to the projects it builds on (its "upstream") as it can, 
 - This repository is under the Apache License 2.0.
   `branding/` is excluded until the rights to the artwork are confirmed.
 - Every kernel FoxieOS ships has its source code published, as its GPL licence requires.
-- Keep the Apache and MIT notices in code you reuse, and credit code taken from GrapheneOS, CalyxOS or LineageOS.
-- Use "Android" only to describe FoxieOS ("an operating system based on Android"), together with the line "Android is a trademark of Google LLC."
-- Don't use GrapheneOS or LineageOS logos as FoxieOS branding.
-- Don't claim that Google has certified FoxieOS, or that it passes Play Integrity.
-  Passing Google's compatibility tests (CTS) gives neither.
+- Keep the licence notices in code you reuse, and credit the projects it comes from.
+- Use "Raspberry Pi", "Meshtastic" and "Linux" only to describe what FoxieOS runs on or with, never as part of FoxieOS's name.
+- Don't use other projects' logos as FoxieOS branding.
 
 ## Writing docs
 

@@ -1,15 +1,14 @@
-# FoxieOS carry patches
+# FoxieOS patches
 
-A carry patch is a change FoxieOS makes to the code of LineageOS or Android itself (AOSP), instead of in its own `vendor/foxie` folder.
-FoxieOS has to re-apply each one whenever it moves to a new LineageOS version, so they are kept few and all listed here ([CONTRIBUTING.md](../CONTRIBUTING.md#changes-to-lineageos-or-androids-own-code)).
+A patch, here, is a change FoxieOS makes to a file or package of the base system it builds on (roadmap decision D10), instead of adding a file of its own.
+FoxieOS has to re-apply each one whenever the base system updates, so they are kept few and all listed here ([CONTRIBUTING.md](../CONTRIBUTING.md#changes-to-the-base-system)).
 
-At every move to a new version (roadmap task T13, the rebase drill), review the whole list, and drop any patch that LineageOS has accepted into its own code.
+At every move to a new major version of the base system, review the whole list, and drop any patch that the base system has accepted into its own code.
 
 **Status: none yet.**
-The first planned entry is the small change to `vendor/lineage` that brings in `vendor/foxie` (roadmap task T4).
 
-The columns: the repository and its folder in the source tree; the commit or change; why FoxieOS needs it; whether LineageOS or AOSP has accepted it; when it was added; and when it was last checked.
+The columns: the package or file; the commit or change; why FoxieOS needs it; whether the base system's project has accepted it; when it was added; and when it was last checked.
 
-| Repository (path in the tree) | Commit or change | Reason | Upstream status | Added | Last reviewed |
+| Package or file | Commit or change | Reason | Upstream status | Added | Last reviewed |
 |---|---|---|---|---|---|
 | — | — | — | — | — | — |
