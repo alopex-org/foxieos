@@ -8,7 +8,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 ## In short
 
 - FoxieOS is proposed for one device: the Alopex cyber-deck.
-- What the cyber-deck has, and what main board it uses, are undecided.
+- Apart from a built-in LoRa mesh radio, what the cyber-deck has, and what main board it uses, are undecided.
 - Every device has a maintainer who owns one and tests each release on it.
 
 ## Supported devices
@@ -28,7 +28,7 @@ The columns:
 ## The cyber-deck
 
 The Alopex hardware project works toward the cyber-deck ([Alopex: cyber-deck](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md)).
-Its purpose, form, parts and main board are all open there, and FoxieOS adapts to what Alopex decides.
+Alopex has decided it has a built-in LoRa mesh radio; its purpose, form, other parts and main board are open there, and FoxieOS adapts to what Alopex decides.
 
 What FoxieOS has to support on it is task T12 in [ROADMAP.md](ROADMAP.md#t12-the-cyber-deck).
 The terms on which FoxieOS supports it are decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).

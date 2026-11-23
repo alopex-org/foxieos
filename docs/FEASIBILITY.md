@@ -38,7 +38,8 @@ Sources: [Wikipedia: Cyberdeck][wiki-cyberdeck], [Hackaday 2022 contest][had-202
 
 What FoxieOS must do depends on decisions that are open in both projects:
 
-- **In Alopex:** what the cyber-deck is for, its form, its screen and controls, its radios, its power, and above all its main board ([Alopex: what is undecided](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#what-is-undecided)).
+- **In Alopex:** the cyber-deck has a built-in LoRa mesh radio, decided there on 2026-11-21, but which network it runs is Alopex's decision D4.
+  Still open: what the cyber-deck is for, its form, its screen and controls, its other radios, its power, and above all its main board ([Alopex: what is undecided](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#what-is-undecided)).
   The main board decides which systems can run at all.
 - **In FoxieOS:** its own requirements (task T1), such as how it is updated, how the data on it is protected, and how long each release is supported.
 
