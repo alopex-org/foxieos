@@ -9,7 +9,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 - FoxieOS is proposed as the operating system for a cyber-deck that the Alopex hardware project works toward, and no longer as a fork of AOSP or LineageOS for phones.
 - Nothing else about the software is decided: what it is built on, how it updates, how it is secured, and what it looks like are open.
-- The cyber-deck itself is undecided too: its purpose, form, parts and main board are Alopex's open decisions, and FoxieOS adapts to them.
+- The cyber-deck itself is mostly undecided too: apart from a built-in LoRa mesh radio, which Alopex has decided, its purpose, form, parts and main board are Alopex's open decisions, and FoxieOS adapts to them.
 - The first steps are requirements, then a comparison of the options, then a choice of base (roadmap decision D10).
 - Some ways of working carry over from the earlier plan, for the maintainers to confirm: few devices, each with an owner who tests it; release keys kept offline by the maintainer; testing before every release; GitHub for the code.
 

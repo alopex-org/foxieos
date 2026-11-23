@@ -3,7 +3,7 @@
 ![FoxieOS logo](branding/foxieos-logo.png)
 
 FoxieOS is the planned operating system for a cyber-deck: a portable computer that the [Alopex](https://github.com/alopex-org/alopex) hardware project works toward.
-What the cyber-deck is and what FoxieOS is built on are both undecided.
+What FoxieOS is built on is undecided, and so, apart from a built-in LoRa mesh radio, is what the cyber-deck has.
 
 **Status: planning.**
 Nothing is built yet.
