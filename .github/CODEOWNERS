@@ -1,7 +1,7 @@
 # Code owners: GitHub requests a review from these people on pull requests that touch the paths below.
 # CONTRIBUTING.md (Review) lists the changes that need a person's review.
 # Replace @alevromitis with the @alopex-org/foxieos-release team once that team exists.
-# The build recipe and kernel settings will live in other repositories, each with its own CODEOWNERS.
+# Later FoxieOS repositories will each have their own CODEOWNERS.
 # After the founding meeting on 2026-11-24, the maintainers it chooses are added next to or in place of @alevromitis.
 # Until then, @alevromitis is the interim maintainer and owns every file (*), so no pull request is merged without their approval.
 # The meeting decides what replaces that line; the paths after it need a person's review either way.

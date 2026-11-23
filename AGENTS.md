@@ -9,10 +9,11 @@ Never copy anything from them into a commit, pull request or issue.
 
 ## The project in brief
 
-FoxieOS is a planned Linux system for one device: the Alopex cyber-deck, a hand-held computer with a slide-out keyboard and a LoRa mesh radio.
-Its main board is Alopex's choice and still open (Alopex decision D1): a Raspberry Pi compute module is one candidate among other boards, so don't write Raspberry Pi-specific steps as the only way.
-It is in the planning phase: nothing is built yet, and the base system is open (roadmap decision D10).
-It was planned as a version of Android on LineageOS; that plan is replaced, as a proposal for the maintainers to confirm.
+FoxieOS is the planned operating system for the Alopex cyber-deck, a portable computer that the separate Alopex hardware project works toward.
+It was planned as a version of Android on LineageOS; it is now proposed that it no longer be a fork of AOSP or LineageOS, for the maintainers to confirm.
+Nothing else is decided: what FoxieOS is built on (roadmap decision D10), how it updates and is secured, its interface, and the cyber-deck's own purpose, parts and main board are all open.
+Don't write any of these as decided, or assume one from earlier documents or drafts; list options instead.
+It is in the planning phase: nothing is built yet.
 
 - What it is and where things live: [README.md](README.md)
 - How it fits together and why: [docs/DESIGN.md](docs/DESIGN.md), with the research in [docs/FEASIBILITY.md](docs/FEASIBILITY.md)
@@ -27,7 +28,7 @@ Don't add a step that only one agent's own tools can perform.
 ## Commands
 
 - Build: none yet.
-  Task T2 adds `ci/build.sh`, once decision D10 has chosen the base ([docs/TESTING.md](docs/TESTING.md#commands)).
+  Task T4 adds `ci/build.sh`, once decision D10 has chosen the base ([docs/TESTING.md](docs/TESTING.md#commands)).
 - Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, blocks on key files and `*.local.md` notes, and a DCO sign-off on the commit message) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
   On pull requests, the DCO workflow checks the sign-off again.
   If pre-commit isn't installed or set up in the clone, tell the maintainer rather than committing without the hooks.
@@ -41,10 +42,9 @@ Don't add a step that only one agent's own tools can perform.
    Write the scripts and the procedure; the maintainer generates the keys and signs on the signing host.
    CI and your own tests use `test-keys` or a separate dev key set that never signs anything published.
 2. **No action on a physical device without a go-ahead for that action.**
-   This covers writing an image to a board's or the cyber-deck's storage, installing an update on one, wiping one, and above all secure-boot provisioning.
-   Secure boot writes a key's fingerprint into the chip's one-time-programmable memory, which can never be undone; do it only on a board bought for that purpose.
-   Never transmit on a LoRa radio without its antenna connected, or outside the region set for the country of use.
-   QEMU virtual machines are exempt: start, wipe and reflash them as needed.
+   This covers writing to a board's or the cyber-deck's storage, installing an update on one, wiping one, and above all setting up secure boot.
+   Secure boot often writes a key's fingerprint into the chip's one-time-programmable memory, which can never be undone; do it only on a board bought for that purpose.
+   Virtual machines are exempt: start, wipe and reinstall them as needed.
 3. **Nothing outward-facing without the maintainer.**
    That includes creating accounts, registering domains, uploading OTAs, pushing to any remote and posting announcements.
 4. **Run long jobs in the background.**
@@ -61,7 +61,7 @@ Don't add a step that only one agent's own tools can perform.
 - a roadmap decision (D2–D12) is needed and not yet recorded;
 - a change here needs a matching change in another repository, such as `alopex`: propose one pull request in each, linking the other.
   FoxieOS depends on `alopex`, not the reverse, so don't propose a change there that asks it to adapt to FoxieOS;
-- a step would write an image to, update, wipe or secure-boot provision a physical board or device;
+- a step would write to, update, wipe or set up secure boot on a physical board or device;
 - a step touches release keys or the signing host, or would publish something (an OTA upload, a domain, a new repository, an announcement);
 - a ⚠ command behaves differently from the docs (report what happened, and don't improvise on device-level steps);
 - a test layer fails and the fix needs a patch to the base system or another upstream project;
@@ -77,15 +77,15 @@ Add your own `Co-Authored-By:` trailer naming yourself as well.
 
 - You may review a change to docs, CI or branding when a member asks you to, as a second reader for them.
   The member approves the pull request and answers for the review; you never approve on your own behalf.
-- The sensitive areas in [CONTRIBUTING.md](CONTRIBUTING.md#review) (the update service and the update path, signing scripts, secure boot and encryption, the kernel and its settings, the LoRa radio settings, the roadmap and the design) need a person's review.
+- The sensitive areas in [CONTRIBUTING.md](CONTRIBUTING.md#review) (updates and the way they reach devices, signing scripts, secure boot and encryption, the kernel and its settings, the roadmap and the design) need a person's review.
   Say so in the pull request when your change touches one.
 
 ## Roadmap tasks
 
 - Each task in [docs/ROADMAP.md](docs/ROADMAP.md) ends with **Finished when** and **Share**.
   Treat **Finished when** as the acceptance test, and put what **Share** asks for in the pull request, with the commands you ran and their results (hard rule 6).
-- **Hands-on** steps on a physical board or the cyber-deck (tasks T2, T5, T8, T10 and T11, and the update scenarios in [docs/TESTING.md](docs/TESTING.md#update-tests)) need a go-ahead for each image write, update, wipe or provisioning step (hard rule 2).
-  QEMU virtual machines on the build host are exempt.
+- **Hands-on** steps on a physical board or the cyber-deck (tasks T4, T9, T11 and T12, and the update tests in [docs/TESTING.md](docs/TESTING.md#update-tests)) need a go-ahead for each write, update, wipe or secure-boot step (hard rule 2).
+  Virtual machines on the build host are exempt.
 - **Maintainer only** steps (keys, accounts, purchases, publishing) are never yours to perform (hard rules 1 and 3).
   You may write the scripts and the procedure for them.
 
@@ -101,11 +101,11 @@ The docs are written for members who aren't technical; follow [CONTRIBUTING.md](
 - Keep instructions addressed to coding agents in this file.
   The people docs mention agents only to say that the person who directs an agent is responsible for its work.
 - When you rename a heading, search all three repositories in the organization (`foxieos`, `alopex` and `.github`) and the issue forms for links to its old anchor, and update them.
-- Don't write a foundational choice as settled: until the maintainers confirm them, the move to a cyber-deck, the base system and the other key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are proposals.
+- Don't write a foundational choice as settled: until the maintainers confirm them, the move to a cyber-deck and the other key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are proposals, and the base is open.
 
 ## Don't
 
-- Commit `keys/`, `*.pem`, `*.key`, `out/`, `logs/`, system images or bundles (`*.img`, `*.raucb`); `.gitignore` already excludes them.
+- Commit `keys/`, `*.pem`, `*.key`, `out/`, `logs/` or system images (`*.img`); `.gitignore` already excludes them.
 - Skip the pre-commit hooks with `git commit --no-verify` or `SKIP=`.
   Report a finding you think is a false positive instead.
 - Put build output or downloads inside this repository.
