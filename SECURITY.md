@@ -17,5 +17,5 @@ These are part of roadmap decision D8 (the security contact):
 - Coordinated disclosure: the details of a problem are made public only after it is fixed, or after 90 days by default.
 - Security fixes come before new features.
   The targets for shipping them are in [docs/RELEASING.md](docs/RELEASING.md#security-update-targets).
-- Problems in LineageOS or Android's own code are reported to those projects first.
+- Problems in the base system, the Linux kernel, Meshtastic or other upstream code are reported to those projects first.
   FoxieOS ships the fix once they have accepted it.

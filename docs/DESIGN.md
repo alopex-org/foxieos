@@ -7,61 +7,60 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## In short
 
-- FoxieOS takes LineageOS, a free version of Android, and adds its own name, look, privacy settings and update service.
-- It supports only a few phones, so a small team can keep them safe and up to date.
-- A powerful computer, the build host, turns the source code into FoxieOS.
-- A separate offline computer, the signing host, signs each release with secret keys, so phones accept only real FoxieOS updates.
-- A website, the update server, delivers the signed updates to phones.
-- Everything is tested on a virtual phone first, and on real phones before each release.
+- FoxieOS is a small Linux system for one device: the Alopex cyber-deck, a rugged hand-held computer with a slide-out keyboard and a LoRa mesh radio.
+- Until the cyber-deck exists, it runs on the Raspberry Pi boards the cyber-deck is built around, and on a virtual machine for automatic tests.
+- A build host turns the source code into a complete system image.
+- A separate offline computer, the signing host, signs each release, so devices accept only real FoxieOS updates.
+- A website, the update server, delivers the signed updates; the device installs each one beside the running system and falls back if it fails.
+- Everything is tested on a virtual machine first, then on a board, and on the cyber-deck before each release.
 
 ## Purpose
 
-FoxieOS is a version of Android with its own branding, privacy settings, update server and release process.
-It is built on LineageOS so that a very small team can keep a few phones up to date with security fixes.
+FoxieOS is the operating system for the Alopex cyber-deck.
+It gives the device's hardware a purpose: private messaging over a LoRa mesh without any network, and over the internet when there is one, on a device its owner controls.
 
 FoxieOS does **not**:
 
-- support "any phone": phones are added one at a time, under the rules in [DEVICES.md](DEVICES.md);
-- match GrapheneOS's security on phones other than Pixels;
-- design or make hardware: for its own device it depends on a separate project ([Related repositories](#related-repositories));
-- include Google's apps, or make banking and other apps that rely on Google's Play Integrity check work.
-  It never fakes a Play Integrity result.
+- run Android, Android apps or Google's services;
+- support phones, or any device without a maintainer who owns one ([DEVICES.md](DEVICES.md));
+- design or make hardware: the cyber-deck comes from Alopex, a separate project ([Related repositories](#related-repositories));
+- write its own encryption: it uses existing, reviewed tools such as LUKS and Meshtastic's encryption.
 
 ## How the pieces fit together
 
-The picture shows the path from LineageOS's code to an update on a phone.
-The decision codes (D2, D4, D7) and task codes (T5, T6) refer to [ROADMAP.md](ROADMAP.md); the test layers (L0–L6) to [TESTING.md](TESTING.md).
+The picture shows the path from the source code to an update on a device.
+The decision codes (D2, D4, D7, D10) and task codes refer to [ROADMAP.md](ROADMAP.md); the test layers (L0–L8) to [TESTING.md](TESTING.md).
 
 ```
-LineageOS code, branch lineage-24.0
+The base Linux system (decision D10) and FoxieOS's own parts
         │
         ▼
 Build host: the computer that builds FoxieOS (decision D2)
-  - the Android source code, about 400 GB, kept outside this repository
-  - the list of FoxieOS's extra parts (.repo/local_manifests/foxie.xml),
-    from the foxieos_android_manifest repository (task T5)
-  - vendor/foxie: FoxieOS's branding, settings and apps
-  - carry patches: FoxieOS's changes to LineageOS (docs/PATCHES.md)
-  - automatic checks (task T6): test layers L0–L4 on a virtual phone
+  - builds a complete system image for 64-bit Arm (arm64)
+  - FoxieOS's own parts: branding, settings, the mesh-radio service,
+    the user interface for touchscreen and keyboard
+  - automatic checks (task T6): test layers L0–L3 on a virtual machine
         │
-        │  unsigned build files (target-files and otatools.zip)
+        │  unsigned system image
         ▼
 Signing host: a separate, offline computer (decision D7)
   - the release keys, encrypted
-  - the maintainer signs the release, makes the update packages
-    and checks them (test layer L6)
+  - the maintainer signs the update file (a RAUC bundle)
+    and checks it (test layer L6)
         │
-        │  signed update packages and their descriptions
+        │  signed update files and their descriptions
         ▼
 Update server on a secure HTTPS website (decision D4)
   - testing, beta and stable channels
         ▲
         │  "is there an update for me?"
-LineageOS Updater app on the phone
+The cyber-deck: two system slots, A and B
+  - installs the update into the slot it isn't running
+  - starts the new slot once, and keeps it only if it starts properly
 ```
 
 This repository holds the docs, scripts and test lists.
-The Android source code, the build results and Google's test downloads stay on the build host.
+Build output and downloads stay on the build host.
 The release keys exist only on the signing host and its offline backups.
 
 ## Key decisions
@@ -71,120 +70,117 @@ They are proposals: the maintainers chosen at the meeting confirm or change them
 
 Each decision says what was chosen, why, and what was turned down.
 
-### Base: LineageOS 24.0 (Android 17)
+### An operating system for a cyber-deck
 
-Open (roadmap decision [D10](ROADMAP.md#d10-base)): the maintainers decide the base after the founding meeting, depending on what it decides about hardware.
+Proposed 2026-11-23, for the founding meeting to confirm.
 
-- **What:** build FoxieOS on LineageOS 24.0, which is based on Android 17.
-- **Why:** LineageOS supports more phones than any other free version of Android, and keeps up with Google's changes to Android for its users.
-  Those changes make other routes harder: Google no longer publishes the files for its own Pixel phones, its public code is now read-only, and it publishes new code only twice a year (Q2 and Q4).
+- **What:** FoxieOS is a Linux system for the Alopex cyber-deck, no longer a version of Android built on LineageOS for phones.
+- **Why:**
+  - The cyber-deck is the device the project wants to build, and Alopex already proposes a Raspberry Pi hand-held running Linux as its first prototype.
+  - The tools it needs run on Linux today: Meshtastic's Linux service for the LoRa radio, LUKS for encrypting the storage, and messaging apps such as Session ([FEASIBILITY.md](FEASIBILITY.md#what-the-cyber-deck-needs-from-its-software)).
+  - Android on a Raspberry Pi exists only as a community build, with its security rules switched off and no encryption of user data.
+  - A Linux system for one device is far less work than an Android version: no 400 GB source tree, no build computer with 64 GB of memory or more, and no dependence on Google's release schedule (unsourced estimate; task T1 measures it).
 - **Turned down:**
-  - plain AOSP, which has no support for real phones;
-  - a copy of GrapheneOS, which runs only on Pixels and is a lot of work to keep up to date;
-  - one generic image for many phones (a Treble GSI) as the main product, which can't use verified boot and behaves differently on each phone.
+  - staying a version of Android on LineageOS for phones, which serves a different device and couldn't run on the cyber-deck;
+  - Android on the cyber-deck, until a board supports it with its security rules on and encryption working;
+  - writing an operating system from scratch.
 
-### Stay close to LineageOS (a soft fork)
+### Base: an existing Linux system
 
-- **What:** keep LineageOS's own build for each phone (`lineage_<codename>`) and add FoxieOS's `vendor/foxie` to it through one small change.
-- **Why:** LineageOS releases a new major version about every six months.
-  The fewer changes FoxieOS makes, the less work each of those updates is, and LineageOS's own build commands (`breakfast` and `brunch`) keep working.
-- **Turned down:** separate FoxieOS builds for each phone (`foxie_<codename>`), which would break LineageOS's tools and mean more changes to carry.
+Open (roadmap decision [D10](ROADMAP.md#d10-base)).
 
-### Identity
+- **What:** start from an existing Linux system and add FoxieOS's parts to it, rather than assembling every package by hand.
+- **Options:** Debian, as Raspberry Pi OS is; Alpine Linux, or Nura (formerly postmarketOS), which is built on it; or a system built entirely from source with Buildroot or Yocto ([FEASIBILITY.md](FEASIBILITY.md#choosing-a-base)).
+- **Why it matters:** the base sets how security fixes arrive, how large the system is, and how much work each update is.
 
-- **What:** FoxieOS's own branding, and two built-in values that say which FoxieOS version and channel a phone runs (`ro.foxie.version` and `ro.foxie.build.channel`).
-  The About page credits LineageOS.
-- **Why:** it is honest about what FoxieOS is built on, and it follows Google's rules for the "Android" trademark.
-- **Turned down:** presenting LineageOS's work as FoxieOS's own.
+### Few devices
 
-### Few phones
+- **What:** the Alopex cyber-deck, plus the Raspberry Pi boards it is built around while it doesn't exist yet ([DEVICES.md](DEVICES.md)).
+- **Why:** each device is ongoing work, and each needs an owner who tests every release on it.
+- **Turned down:** a general Linux system for many devices; plenty already exist.
 
-- **What:** one phone at launch, at most four.
-- **Why:** each phone is ongoing work, and each needs an owner who tests every release on it.
-- **Turned down:** a long list of phones.
+### The whole system updated in one piece
+
+- **What:** FoxieOS is a system image with two slots, A and B.
+  An update, a signed RAUC bundle, is installed into the slot that isn't running; the device starts the new slot, and goes back to the old one if the new one doesn't confirm a good start.
+  On a Raspberry Pi 5 this uses the board's "tryboot" feature, as Home Assistant OS does ([FEASIBILITY.md](FEASIBILITY.md#updates)).
+- **Why:** a device in the field must never be left unable to start, and an update installed as one piece behaves the same on every device.
+- **Turned down:** updating package by package (`apt`, `apk`), which can stop halfway and leaves each device a little different; writing a new update tool.
 
 ### Release keys offline and encrypted
 
-- **What:** the release keys are encrypted (with scrypt and AES-256), kept offline, and handled only by the maintainer.
-- **Why:** losing the keys, or having them stolen, is the worst thing that could happen to the project: whoever holds them could send fake updates to every phone.
-- **Turned down:** keeping the keys on the build host; using LineageOS's unencrypted example keys for releases.
+- **What:** the release keys are encrypted, kept offline, and handled only by the maintainer.
+  Development devices trust a separate development key, which never signs a release ([RELEASING.md](RELEASING.md#keys)).
+- **Why:** whoever holds the keys could send fake updates to every device.
+- **Turned down:** keeping the keys on the build host; one key for both development and releases.
 
-### Updates through the LineageOS Updater
+### Encrypted storage, and secure boot left to the owner
 
-- **What:** the phones use LineageOS's own Updater app, pointed at a FoxieOS update server on a secure (HTTPS) website, with `testing`, `beta` and `stable` channels.
-- **Why:** it is proven; GrapheneOS uses the same three channels.
-- **Turned down:** writing a new update app.
+- **What:** the whole storage is encrypted with LUKS.
+  Secure boot, which makes the board start only a signed system, is set up only on devices the project keeps for testing, until decision D9 settles who holds the key ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
+- **Why:** on a Raspberry Pi, turning on secure boot writes the fingerprint of one signing key into the chip for good.
+  Whoever holds that key decides what the device will ever start, so it is not a choice FoxieOS makes for an owner.
+- **Turned down:** shipping devices locked to FoxieOS's key; no encryption.
 
-### Play Integrity left alone
+### LoRa mesh radio through Meshtastic
 
-- **What:** FoxieOS never fakes the result of Google's Play Integrity check.
-- **Why:** LineageOS has the same rule, and faking it starts an endless race with Google.
-- **Turned down:** faking it.
+- **What:** FoxieOS runs Meshtastic's Linux service, `meshtasticd`, for the cyber-deck's LoRa radio, set to the band of the country it is used in (EU_868 in Greece), and shows the mesh in its own interface.
+- **Why:** Alopex recommends Meshtastic as the default mesh network, its encryption is already reviewed by its users, and its devices can talk to the many Meshtastic devices already in use ([FEASIBILITY.md](FEASIBILITY.md#the-lora-mesh-radio)).
+- **Turned down:** encryption of FoxieOS's own on top of LoRa; a separate radio connected over Bluetooth.
 
-### Virtual phone first
+### An interface for a touchscreen and a keyboard
 
-Decided 2026-11-20.
+Open (roadmap decision [D11](ROADMAP.md#d11-user-interface)).
 
-- **What:** tasks T2–T6 build and test FoxieOS on Cuttlefish, Google's virtual phone, in LineageOS's version `lineage_cf_phone_x86_64`.
-  A real phone (decision D1) is needed only from task T7.
-- **Why:** the build, branding, automatic checks, signing and compatibility tests can start before a phone is chosen.
-  Google also provides a ready-made set of compatibility tests for Cuttlefish (`cts-virtual-device-stable`).
-- **Turned down:** getting the first phone before anything else; using the other virtual phone, the goldfish emulator, for automatic tests, because Google's stable test set is made for Cuttlefish.
+- **What:** the cyber-deck is used in two ways: upright, with the touchscreen alone, and sideways with the screen slid out over the keyboard.
+  The interface has to work both ways, and with the knobs on the side.
+- **Options:** an existing mobile interface such as Phosh or Sxmo; a tiling window manager such as Sway with FoxieOS's own panels; or a single full-screen app of FoxieOS's own.
+
+### Testing on a virtual machine first
+
+- **What:** the automatic checks start FoxieOS on a virtual 64-bit Arm machine on the build host; a Raspberry Pi board is needed from task T2, the cyber-deck from task T11.
+- **Why:** the build, branding, automatic checks and signing can start before any hardware is bought.
+- **Turned down:** waiting for the cyber-deck before anything else.
 
 ### Hosting on GitHub
 
 Decided 2026-11-20 (decision D3).
 
 - **What:** the code lives in the `alopex-org` organization on GitHub, in repositories named after each project (`foxieos` and its related repositories, and `alopex` for the hardware project).
-  Automatic checks are planned on GitHub Actions, running on the project's own computer (task T6).
+  Automatic checks are planned on GitHub Actions ([ROADMAP.md](ROADMAP.md#d3-code-and-ci-hosting)).
 - **Why:** FoxieOS is a project of the Alopex student organization, which owns the GitHub organization.
 - **Turned down:** running our own code server (Gitea); Gerrit, a review tool, put off until there are three or more contributors.
 
-### Testing in layers, against a baseline
-
-- **What:** tests in layers L0–L8 ([TESTING.md](TESTING.md)).
-  Google's compatibility test results are compared with a baseline: the results of plain LineageOS.
-- **Why:** LineageOS itself doesn't pass every compatibility test (unsourced), so the useful rule is "no new failures".
-- **Turned down:** requiring every test to pass, which can't be done; skipping the compatibility tests.
-
 ## Limits FoxieOS has to live with
 
-- **The build host needs a lot of memory.**
-  One step of Android 17's build reads the whole source tree in a single program, and has been reported to use more than 55 GiB of memory.
-  That takes 64 GB of RAM plus zram (compressed memory), or 96 GB or more.
-  The build system (Soong) sets no minimum: the step fails only when it doesn't fit in RAM plus swap, so zram can cover part of it.
-  More computers can't replace that RAM; they can only take over compiling or tests ([FEASIBILITY.md](FEASIBILITY.md#spreading-the-work-over-several-machines)).
-- **The build host needs disk space and virtualisation.**
-  About 400 GB for each copy of the source code (plan for a 1 TB NVMe drive), and KVM to run virtual phones.
-- **Virtual phones can't test hardware.**
-  Relocking the bootloader, the mobile network, cameras, sensors and the battery need the first real phone (test layers L5 and L7).
-- **Upstream sets the pace:**
-  - Google publishes Android's source code only in Q2 and Q4.
-  - Google's monthly security bulletins include only the most serious fixes, and their source code isn't always published.
-  - LineageOS releases a major version about every six months.
-  - Phones on the 5.10 GKI kernel lose support at Android 17 QPR1.
-- **Phones:**
-  - Samsung (One UI 8) and Xiaomi (HyperOS) have mostly stopped letting owners unlock the bootloader.
-  - Relocking with your own key is proven only on Pixels and the Fairphone 4.
-- **Apps:** builds signed with FoxieOS's own keys fail Play Integrity's *device* and *strong* levels, so many banking apps won't work.
-- **Legal:** the kernel's source code must be published (GPL); "Android" may only be used to describe FoxieOS; the trademark search for the name "FoxieOS" isn't done yet.
+- **The hardware isn't built yet.**
+  Until Alopex has a cyber-deck, the touchscreen, keyboard, knobs, gauges, switches and battery bays can only be tried on a board with parts wired to it.
+- **A virtual machine can't test hardware.**
+  The LoRa radio, the switches, the batteries and secure boot need a real board (test layers L4 and L7).
+- **Secure boot on a Raspberry Pi is permanent.**
+  Once a key's fingerprint is written into a board's one-time-programmable memory, it can't be changed, and losing the key means the board can no longer be updated with trusted start-up files ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
+- **The LoRa band is narrow in Europe.**
+  Meshtastic's EU_868 setting uses 869.4–869.65 MHz with a 10% limit on transmitting time, so messages are short and slow ([FEASIBILITY.md](FEASIBILITY.md#the-lora-mesh-radio)).
+- **No mainstream apps.**
+  Banking apps, WhatsApp, Instagram and Google's services don't run on it.
+- **Legal:** the kernel's source code must be published (GPL); the trademark search for the name "FoxieOS" isn't done yet.
 
 ## Related repositories
 
-- [Alopex](https://github.com/alopex-org/alopex) researches building a phone, or a similar device, for an Android-based operating system.
+- [Alopex](https://github.com/alopex-org/alopex) designs the cyber-deck that FoxieOS runs on.
   Whether that stays a prototype or becomes a product is its decision D5.
-  FoxieOS depends on it for a device of its own, and only in that direction: the hardware project doesn't follow FoxieOS's rules for phones, and FoxieOS adapts to its choices.
-  Whether FoxieOS supports a device from it, and on what terms, is roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
+  FoxieOS depends on it, and only in that direction: the hardware project doesn't follow FoxieOS's rules, and FoxieOS adapts to its choices.
+  The terms on which FoxieOS supports its devices are roadmap decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
 
-Later FoxieOS repositories (the manifest in task T5, and copies of upstream repositories) will live in the same GitHub organization.
+Later FoxieOS repositories, such as one holding the build recipe for the system image, will live in the same GitHub organization.
 
 ## Running the project (planned)
 
 - **Builds and tests:** automatic checks on the build host ([TESTING.md](TESTING.md)).
 - **Releases:** signed offline and published through the update channels ([RELEASING.md](RELEASING.md)).
-- **Backups:** offline copies of the release keys (made by the maintainer), the release records, and the signed build files of the last two releases.
+- **Backups:** offline copies of the release keys (made by the maintainer), the release records, and the system images of the last two releases.
 - **Fixing a bad release:** release a newer, fixed version.
-  Going back to an older version is impossible by design (anti-rollback).
+  A device that can't start a new version goes back to the one before by itself.
 
 ## Open questions
 

@@ -1,16 +1,17 @@
 # FoxieOS releasing
 
 **Status: planned.**
-No keys exist and nothing has been released; roadmap tasks T8–T10 build this.
+No keys exist and nothing has been released; roadmap tasks T7, T8 and T12 build this.
 Sources are listed at the [end of this file](#sources), and technical words are explained in the [glossary](GLOSSARY.md).
 
 ## In short
 
-- Every release is **signed** with secret release keys, so a phone installs only genuine FoxieOS updates.
+- Every release is **signed** with a secret release key, so a device installs only genuine FoxieOS updates.
 - Only **the maintainer** creates the release keys and signs releases, on a separate offline computer, the signing host.
   Nobody else handles the release keys.
   Scripts are written and tested with practice keys (dev keys) that never sign anything published.
-- Each release is **checked** after signing, then reaches phones through an **update server** in three steps: `testing`, `beta`, then `stable`.
+- Each release is **checked** after signing, then reaches devices through an **update server** in three steps: `testing`, `beta`, then `stable`.
+- A device installs an update **beside** the running system, and goes back to the old one if the new one doesn't start properly.
 - **Security fixes** have time targets, at the end of this page.
 
 ## Release rules
@@ -18,113 +19,91 @@ Sources are listed at the [end of this file](#sources), and technical words are 
 - Never reuse a build number.
 - Never ship an older version over a newer one.
 - Never skip a test layer ([TESTING.md](TESTING.md)) for a stable release.
-- The release notes state the security patch level, the LineageOS version the release is based on, the supported phones, and the known problems.
-- Report the real security patch level (`ro.build.version.security_patch`); never make it look newer than it is.
-  Play Integrity's *strong* level depends on it.
+- The release notes state the version of the base system the release is built from, the supported devices, and the known problems.
 
 ## Keys
 
-Android checks many separate signatures, so a release needs many keys:
-
-- **platform keys:** `releasekey`, `platform`, `shared`, `media`, `networkstack`, `bluetooth`, `nfc` and `sdk_sandbox`; LineageOS also generates `cyngn-app`, `testcert` and `verity`;
-- **about 70 APEX keys** (SHA256_RSA4096), one for each separately updatable part of Android;
-- **one verified-boot (AVB) key** (RSA-4096).
-  Its public part (`avb_custom_key.bin`, also called `avb_pkmd.bin`) is what a phone stores when its bootloader is locked again with FoxieOS's key.
+An update file is a RAUC bundle, signed with an X.509 certificate and key and checked against the certificates stored on the device (its keyring).
 
 There are two sets of keys:
 
-- **Dev keys,** for automatic checks and local testing only, never for anything published.
-  The unencrypted keys from LineageOS's `lineage-priv-template/keys.sh` are acceptable for this.
-- **Release keys,** encrypted with scrypt and AES-256, with one passphrase per set (as GrapheneOS does).
-  They exist only on the signing host and its offline backups.
+- **Dev keys,** for automatic checks, development devices and local testing only, never for anything published.
+- **Release keys,** encrypted, with a passphrase, kept only on the signing host and its offline backups.
 
+Release devices carry only the release certificate in their keyring, so they refuse a bundle signed with a dev key; development devices may trust both, as Home Assistant OS's development images do.
 The `testing` channel already uses release keys, so testers follow the same update path as everyone else.
 
-Changing keys forces users to reinstall or wipe their phones.
-Treat a key change as an emergency, not a routine step.
+Secure boot, if it is set up on a device, uses a separate key whose fingerprint is written into the board's chip for good ([FEASIBILITY.md](FEASIBILITY.md#secure-boot-and-encryption)).
+Who holds that key is decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
 
-`docs/KEYS.md` (task T8) will hold the step-by-step procedure for creating, backing up and changing the keys.
+Changing the release key means devices must first trust the new certificate, through an update signed with the old key (unsourced).
+Treat a key change as planned work, never a quick fix.
+
+`docs/KEYS.md` (task T7) will hold the step-by-step procedure for creating, backing up and changing the keys.
 
 ## Signing
 
 The maintainer signs on the signing host.
 
-- **From the build host** come two unsigned files: `*-target_files-*.zip` and `otatools.zip`, made with `mka target-files-package otatools`.
+- **From the build host** comes the unsigned system image and the files that go into the bundle.
 - **`release/sign.sh --keys-dir <path>`** is given the location of the keys and never reads them itself.
   It:
-  1. unlocks (decrypts) the keys into memory only (tmpfs), with swap switched off, so they never touch a disk unencrypted;
-  2. runs `sign_target_files_apks -o -d <keys> --extra_apks …` with the full list of apps and APEX packages to sign;
+  1. unlocks (decrypts) the key into memory only (tmpfs), with swap switched off, so it never touches a disk unencrypted;
+  2. runs `rauc bundle` with the release certificate and key;
   3. wipes the memory.
-- The `--extra_apks` list changes between LineageOS versions.
-  Copy it fresh from `wiki.lineageos.org/signing_builds` for each release (roadmap check C9).
 
-## Update packages
+## Update files
 
-An update package (OTA) is what a phone downloads and installs.
-
-- **Full update,** the whole system: `ota_from_target_files signed-target_files.zip full.zip`.
-- **Incremental update,** only the changes since one earlier build: `ota_from_target_files -i PREV-signed-target_files.zip signed-target_files.zip incr.zip`.
-  It installs only on the exact build it was made from.
-- Ship a full update at least once every 3–4 incremental ones.
-- Keep the signed build files (target-files) of the last two releases; incremental updates and the update tests need them.
+- A **bundle** holds the whole system image for one slot, and is signed as a whole.
+- A **full image** is also published, for installing FoxieOS on a new device or starting over.
+- Keep the images and bundles of the last two releases; the update tests need them.
 
 ## Checking a signed release
 
 `release/verify.sh` is test layer L6 in [TESTING.md](TESTING.md).
 It checks:
 
-- the keys, with LineageOS's `check_keys.py` or a similar tool;
-- the system images, with `avbtool info_image` and `verify_image` against the public verified-boot key (unsourced);
-- a sample of the built-in apps, with `apksigner verify --print-certs` (unsourced);
-- that the build is marked as signed with release keys (`ro.build.tags` is `release-keys`);
-- that the build number (`ro.build.version.incremental`) and the build date in the update's description match the release record.
+- that the bundle's signature is valid against the release certificate, and fails against the dev one (`rauc info` with each keyring) (unsourced);
+- that the version and build number inside the bundle match the release record.
 
 ## Release record
 
 Each release gets a folder, `release/<BUILD_NUMBER>/`, in the release storage, holding:
 
-- the exact list of source versions used (the pinned manifest, from `repo manifest -r -o manifest.xml`);
-- `BUILD_DATETIME` and `BUILD_NUMBER`, so the unsigned build can be made again identically;
+- the exact list of packages and sources used, with their versions;
+- the build date and build number, so the image can be built again;
 - `SHA256SUMS`, a list of fingerprints of every file, and its signature;
 - the release notes ([Release rules](#release-rules)).
 
 Release tags in git are signed.
-GrapheneOS signs its tags with SSH keys and an `allowed_signers` file.
 
 Publishing a release on GitHub announces it in the Alopex Discord's announcements channel (`.github/workflows/discord-release.yml`), once the maintainer has set the `DISCORD_WEBHOOK_RELEASES` secret.
 
 ## Update server and channels
 
-- **Where phones look for updates.**
-  The LineageOS Updater app reads the update server's address from `updater_server_url` (a resource) or `lineage.updater.uri` (a property).
-  The address takes `{device}`, `{type}` and `{incr}` placeholders and must use HTTPS.
-- ⚠ Take the exact format of the server's answers (its JSON schema) from the README of LineageOS's `android_packages_apps_Updater` (roadmap check C10).
+- **Where devices look for updates:** a small service on the device asks the update server, over HTTPS, for the newest bundle on its channel (task T8).
 - **Channels:** at least 48 hours on `testing`, then at least 7 days on `beta`, then `stable`.
   A security emergency fix may shorten this to 24 hours on testing and 48 hours on beta, with a note in the release notes.
-- **Never publish a build older than the one already on a channel:** phones refuse it (anti-rollback), and the release rules forbid it.
+- **Never publish a build older than the one already on a channel.**
 
 ## Security update targets
 
-How fast FoxieOS aims to ship security fixes, counted from the day the fix is accepted upstream:
+How fast FoxieOS aims to ship security fixes, counted from the day the base system publishes the fix:
 
-| Upstream event | FoxieOS target |
+| Event | FoxieOS target |
 |---|---|
-| LineageOS adds a serious fix from Google's monthly security bulletin | testing within 7 days, stable within 14 days |
-| Google's quarterly bundle of fixes (March, June, September, December) | stable within 30 days |
-| A new LineageOS major version (after Google's Q2 and Q4 code releases, about every 6 months) | beta within 60 days of LineageOS's release; the old version gets security fixes until then |
-| A phone's maker stops updating its firmware | announce it at least 90 days before dropping the phone, and record it in [DEVICES.md](DEVICES.md) |
+| A serious fix in the base system or the kernel | testing within 7 days, stable within 14 days |
+| Other fixes | in the next regular release |
+| A new major version of the base system | beta within 60 days; the old version gets security fixes until then |
+| A board's maker stops supporting it | announce it at least 90 days before dropping the device, and record it in [DEVICES.md](DEVICES.md) |
 
 ## Sources
 
-- LineageOS: [signing builds][lineage-signing].
-- AOSP: [signing builds][aosp-sign], [OTA tools][aosp-ota-tools].
-- GrapheneOS: [build guide][graphene-build] (encrypted keys, reproducible builds, signed tags, channels).
-- LineageOS Updater: [README of the /e/OS copy][updater-readme].
-- Google's risk-based security updates: [heise][heise-rbus].
+- RAUC: [using RAUC][rauc-using], [advanced topics][rauc-advanced] (bundles, signatures, keyrings, separate dev and release keys).
+- Home Assistant OS: [update system][haos-update] (which images trust which keys).
+- Raspberry Pi: [Secure Boot Provisioner][rpi-provisioner].
 
-[aosp-ota-tools]: https://source.android.com/docs/core/ota/tools
-[aosp-sign]: https://source.android.com/docs/core/ota/sign_builds
-[graphene-build]: https://grapheneos.org/build
-[heise-rbus]: https://www.heise.de/en/news/Bad-news-for-custom-ROMs-Google-changes-Android-security-patch-strategy-10645674.html
-[lineage-signing]: https://wiki.lineageos.org/signing_builds
-[updater-readme]: https://gitlab.e.foundation/e/os/android_packages_apps_Updater/-/raw/a14/README.md
+[haos-update]: https://contributors.home-assistant.io/os/operating-system/update-system/
+[rauc-advanced]: https://rauc.readthedocs.io/en/latest/advanced.html
+[rauc-using]: https://rauc.readthedocs.io/en/latest/using.html
+[rpi-provisioner]: https://www.raspberrypi.com/documentation/security/secure-boot-provisioner.html

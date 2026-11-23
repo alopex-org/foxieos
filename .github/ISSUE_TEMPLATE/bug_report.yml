@@ -11,14 +11,14 @@ body:
     id: build
     attributes:
       label: FoxieOS version and build
-      description: Settings → About phone, or `adb shell getprop ro.foxie.version`.
+      description: Settings → About, or the output of `cat /etc/os-release`.
     validations:
       required: true
   - type: input
     id: device
     attributes:
-      label: Device and codename
-      placeholder: "Pixel 9a (tegu), or Cuttlefish (cf_x86_64)"
+      label: Device or board
+      placeholder: "Alopex cyber-deck, Raspberry Pi CM5 on the IO board, or a QEMU virtual machine"
     validations:
       required: true
   - type: dropdown
@@ -35,11 +35,11 @@ body:
   - type: dropdown
     id: upstream
     attributes:
-      label: Does plain LineageOS 24.0 have the same problem?
-      description: Problems that LineageOS has too are reported to LineageOS first. "Not checked" is a fine answer.
+      label: Does the plain base system have the same problem?
+      description: Problems that the base system or another upstream project has too are reported there first. "Not checked" is a fine answer.
       options:
         - Not checked
-        - Yes, LineageOS has it too
+        - Yes, the base system has it too
         - No, only FoxieOS
     validations:
       required: true
@@ -67,5 +67,5 @@ body:
     id: logs
     attributes:
       label: Logs
-      description: Output from logcat or another tool, if you have it. Remove personal data first.
+      description: Output from `journalctl` or another tool, if you have it. Remove personal data first.
       render: shell

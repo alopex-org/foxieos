@@ -1,38 +1,34 @@
 name: Device request
-description: Ask for a phone to be supported. Read the rules for choosing a phone first.
+description: Ask for a device or board to be supported. Read the rules for adding a device first.
 labels: ["enhancement"]
 body:
   - type: markdown
     attributes:
       value: |
-        A phone is added only if it meets every one of the [rules for choosing a phone](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#rules-for-choosing-a-phone), and someone on the team owns one and will look after it.
+        FoxieOS supports the Alopex cyber-deck and the Raspberry Pi boards it is built around.
+        A device is added only if it meets every one of the [rules for adding a device](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#rules-for-adding-a-device), and someone on the team owns one and will look after it.
         If a question below is unclear, the [glossary](https://github.com/alopex-org/foxieos/blob/main/docs/GLOSSARY.md) explains the words, and "Not sure" is a fine answer.
   - type: input
     id: device
     attributes:
-      label: Device and codename
-      placeholder: "Pixel 9a (tegu)"
+      label: Device or board
+      placeholder: "Raspberry Pi Compute Module 5 on the CM5 IO board"
     validations:
       required: true
   - type: dropdown
-    id: lineage
+    id: cyberdeck
     attributes:
-      label: Is it officially supported by LineageOS 24.0?
+      label: Is it the Alopex cyber-deck, or a board it is built around?
       options:
         - "Yes"
         - "No"
         - Not sure
     validations:
       required: true
-  - type: input
-    id: wiki
-    attributes:
-      label: LineageOS wiki page
-      placeholder: "https://wiki.lineageos.org/devices/<codename>/"
   - type: dropdown
-    id: unlock
+    id: drivers
     attributes:
-      label: Can the bootloader be unlocked officially?
+      label: Do all its parts have Linux drivers that may be shipped?
       options:
         - "Yes"
         - "No"
@@ -42,8 +38,8 @@ body:
   - type: input
     id: kernel
     attributes:
-      label: Kernel version
-      placeholder: "6.1 GKI"
+      label: Kernel
+      placeholder: "Raspberry Pi kernel 6.12"
   - type: dropdown
     id: maintainer
     attributes:

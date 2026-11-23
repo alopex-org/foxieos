@@ -2,41 +2,40 @@
 
 ![FoxieOS logo](branding/foxieos-logo.png)
 
-FoxieOS is a planned operating system for phones, based on Android.
-The current proposal is to build it on LineageOS 24.0, an existing free version of Android 17, and to add FoxieOS's own look, privacy settings and update service, for a short list of phones.
+FoxieOS is a planned operating system for a cyber-deck: a rugged, hand-held computer with a physical keyboard and a LoRa radio for messaging without a mobile network.
+It is built on Linux, for the cyber-deck that the [Alopex](https://github.com/alopex-org/alopex) hardware project designs, and for the Raspberry Pi boards that the cyber-deck is built around.
 
 **Status: planning.**
-Nothing is built yet, and the Android source code hasn't been downloaded.
+Nothing is built yet.
 This repository holds the plan; the scripts and tests will follow as the roadmap's tasks are done.
-The members choose the project's maintainers at a founding meeting on 2026-11-24.
-The maintainers then decide the foundations together, including whether FoxieOS is built on LineageOS ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
+The plan was for a version of Android built on LineageOS; the proposal in these docs replaces it with a Linux system for a cyber-deck.
+The members choose the project's maintainers at a founding meeting on 2026-11-24, and the maintainers confirm or change that direction together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 
-Unfamiliar words are explained in two glossaries: [Android and phones](docs/GLOSSARY.md), and [GitHub and how we work](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
+Unfamiliar words are explained in two glossaries: [Linux and the cyber-deck](docs/GLOSSARY.md), and [GitHub and how we work](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
 
 ## What FoxieOS will be
 
-- **Built on LineageOS.**
-  FoxieOS stays close to LineageOS and takes its support for phones and its security fixes.
-  FoxieOS's own additions live in one place, the `vendor/foxie` folder.
-- **For few phones.**
-  One phone at launch and at most four, each owned by a maintainer who tests every release on it.
+- **Linux for one device.**
+  FoxieOS is a small Linux system made for the Alopex cyber-deck: its touchscreen and slide-out keyboard, its knobs and signal gauges, its two swappable batteries and its hardware switches.
+  Which existing Linux system it starts from is open (roadmap decision D10).
+- **Messaging without a network.**
+  A LoRa mesh radio, running Meshtastic, is built in and works with no mobile network or Wi-Fi.
+- **Private by default.**
+  The whole storage is encrypted, and the hardware switches that cut the radios and the microphone are shown to the user.
 - **Updated safely.**
-  Every update is signed, so phones only install real FoxieOS updates.
+  The whole system is updated in one piece, from signed update files, and falls back to the previous version if an update doesn't start.
   Updates reach testers first (`testing`), then more people (`beta`), then everyone (`stable`).
 
 What it won't do:
 
-- include Google's apps;
-- make apps work that rely on Google's Play Integrity check, such as many banking apps;
-- match GrapheneOS's security on phones other than Pixels.
+- run Android apps, Google's apps or banking apps;
+- support phones, or a long list of devices;
+- make the cyber-deck's hardware: that is Alopex's work.
 
 [docs/DESIGN.md](docs/DESIGN.md) explains why.
 
-FoxieOS doesn't make hardware.
-A separate project, [Alopex](https://github.com/alopex-org/alopex), researches building a device.
-Whether that stays a prototype or becomes a product is that project's own open decision (its D5).
-FoxieOS depends on it, not the other way round: the hardware project doesn't follow FoxieOS's wishes, and FoxieOS adapts to its choices.
-Roadmap decision D9 covers whether, and on what terms, FoxieOS supports a device from it.
+FoxieOS depends on Alopex, not the other way round: the hardware project doesn't follow FoxieOS's wishes, and FoxieOS adapts to its choices.
+Roadmap decision D9 covers the terms on which FoxieOS supports a device from it.
 
 ## Where to start
 
@@ -47,24 +46,24 @@ Roadmap decision D9 covers whether, and on what terms, FoxieOS supports a device
 The other docs:
 
 - [docs/GLOSSARY.md](docs/GLOSSARY.md): the technical words, explained.
+- [docs/DEVICES.md](docs/DEVICES.md): the cyber-deck, the boards used until it exists, and the rules for adding a device.
 - [docs/TESTING.md](docs/TESTING.md): how every change and every release is tested.
-- [docs/RELEASING.md](docs/RELEASING.md): how releases are signed and delivered to phones.
-- [docs/DEVICES.md](docs/DEVICES.md): which phones FoxieOS will support, the rules for choosing them, and the candidates for the first one.
-- [docs/PATCHES.md](docs/PATCHES.md): the list of changes FoxieOS makes to LineageOS and Android's own code.
+- [docs/RELEASING.md](docs/RELEASING.md): how releases are signed and delivered.
+- [docs/PATCHES.md](docs/PATCHES.md): the list of changes FoxieOS makes to the software it builds on.
 
 ## What's in this repository
 
 - `docs/`: the documents listed above.
-- `branding/`: the logo; later the start-up animation and wallpapers.
+- `branding/`: the logo; later the start-up screen and wallpapers.
 - `ci/`: scripts that check the build computer and run builds and automatic checks (planned).
-- `tests/`: quick checks, test lists, update tests and a checklist for each phone (planned).
+- `tests/`: quick checks, update tests and a checklist for each device (planned).
 - `release/`: scripts that sign and check releases and describe updates (planned).
 - `ota-server/`: the tool that writes the update server's files (planned).
 - `.github/`: GitHub settings: who reviews what, issue forms, the pull-request template, the automatic checks for sign-offs and the Discord release announcements, Dependabot, and the list of labels (`labels.sh`).
 - `.pre-commit-config.yaml`: the checks that run on your computer before every commit ([CONTRIBUTING.md](CONTRIBUTING.md#before-you-start)).
 
 Each planned folder has a short README that names the roadmap task that fills it.
-The Android source code needs about 400 GB, so it is kept outside this repository.
+Build output and downloads are kept outside this repository.
 
 ## Releases
 
@@ -82,5 +81,6 @@ AI coding agents also follow [AGENTS.md](AGENTS.md).
 Apache License 2.0; see [LICENSE](LICENSE).
 The artwork in `branding/` isn't covered until the rights to it are confirmed, and the license gives no rights to the FoxieOS name or logo.
 
-Android is a trademark of Google LLC.
-FoxieOS is not affiliated with Google or the LineageOS project.
+Linux is a registered trademark of Linus Torvalds.
+Raspberry Pi is a trademark of Raspberry Pi Ltd.
+FoxieOS is not affiliated with Raspberry Pi Ltd, the Meshtastic project or any other project named in these documents.
