@@ -5,20 +5,20 @@ body:
   - type: markdown
     attributes:
       value: |
-        FoxieOS supports the Alopex cyber-deck and the Raspberry Pi boards it is built around.
+        FoxieOS supports the Alopex cyber-deck and, until it exists, a development board like the one Alopex chooses for it.
         A device is added only if it meets every one of the [rules for adding a device](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#rules-for-adding-a-device), and someone on the team owns one and will look after it.
         If a question below is unclear, the [glossary](https://github.com/alopex-org/foxieos/blob/main/docs/GLOSSARY.md) explains the words, and "Not sure" is a fine answer.
   - type: input
     id: device
     attributes:
       label: Device or board
-      placeholder: "Raspberry Pi Compute Module 5 on the CM5 IO board"
+      placeholder: "A candidate main board for the cyber-deck, such as a Raspberry Pi Compute Module 5 on its IO board"
     validations:
       required: true
   - type: dropdown
     id: cyberdeck
     attributes:
-      label: Is it the Alopex cyber-deck, or a board it is built around?
+      label: Is it the Alopex cyber-deck, its main board, or a candidate for it?
       options:
         - "Yes"
         - "No"
@@ -39,7 +39,7 @@ body:
     id: kernel
     attributes:
       label: Kernel
-      placeholder: "Raspberry Pi kernel 6.12"
+      placeholder: "Mainline Linux 6.12, or the board maker's kernel"
   - type: dropdown
     id: maintainer
     attributes:

@@ -3,7 +3,7 @@
 ![FoxieOS logo](branding/foxieos-logo.png)
 
 FoxieOS is a planned operating system for a cyber-deck: a rugged, hand-held computer with a physical keyboard and a LoRa radio for messaging without a mobile network.
-It is built on Linux, for the cyber-deck that the [Alopex](https://github.com/alopex-org/alopex) hardware project designs, and for the Raspberry Pi boards that the cyber-deck is built around.
+It is built on Linux, for the cyber-deck that the [Alopex](https://github.com/alopex-org/alopex) hardware project designs, and, until that exists, for a development board like the one Alopex chooses for it.
 
 **Status: planning.**
 Nothing is built yet.

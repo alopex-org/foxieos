@@ -2,7 +2,7 @@
 
 **Status: planned.**
 None of the scripts below exist yet; roadmap tasks T3, T6, T8 and T11 build them.
-Until the cyber-deck exists, layers L1–L3 run on a virtual machine ([Virtual machine](#virtual-machine)), and layers L4, L5 and L7 on a Raspberry Pi development board.
+Until the cyber-deck exists, layers L1–L3 run on a virtual machine ([Virtual machine](#virtual-machine)), and layers L4, L5 and L7 on a development board.
 
 How builds are signed and shipped is in [RELEASING.md](RELEASING.md).
 Sources are listed at the [end of this file](#sources) and in [FEASIBILITY.md](FEASIBILITY.md#sources).
