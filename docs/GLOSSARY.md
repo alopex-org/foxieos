@@ -10,7 +10,7 @@ Words about the hardware and its rules are in [Alopex's glossary](https://github
 
 - **Cyber-deck:** a custom-built, portable computer, often made for one purpose, nominally with a keyboard and a screen.
   The word comes from William Gibson's 1984 novel *Neuromancer*.
-- **The Alopex cyber-deck:** the cyber-deck that the Alopex hardware project works toward, and that FoxieOS is proposed for: user-serviceable, with LoRa and Wi-Fi, pocket-sized if possible.
+- **The Alopex cyber-deck:** the cyber-deck that the Alopex hardware project works toward, and that FoxieOS is for: user-serviceable, with LoRa and Wi-Fi, pocket-sized if possible.
 - **LoRa:** a radio technique that sends small amounts of data over long distances with little power, used for messaging without a mobile network.
 - **User-serviceable:** built so its owner can open it, repair it and replace parts themselves; the cyber-deck's primary purpose.
 - **Main board:** the computer inside the cyber-deck; Alopex hasn't chosen it.

@@ -3,15 +3,14 @@
 ![FoxieOS logo](branding/foxieos-logo.png)
 
 FoxieOS is the planned operating system for the Alopex cyber-deck: a user-serviceable, portable computer with LoRa and Wi-Fi, pocket-sized if possible, that the [Alopex](https://github.com/alopex-org/alopex) hardware project works toward.
-For now, FoxieOS is proposed to be built on a Linux distribution; which one is undecided.
+For now, FoxieOS is built on a Linux distribution; which one is undecided.
 
 **Status: planning.**
 Nothing is built yet.
 This repository holds the plan; the scripts and tests will follow as the roadmap's tasks are done.
 The plan was for a version of Android built on LineageOS, for phones.
-It is now proposed that FoxieOS be made for the cyber-deck instead, on a Linux distribution for now, and no longer be a fork of AOSP or LineageOS.
+At their founding meeting on 2026-11-24, the members confirmed that FoxieOS is made for the cyber-deck instead, on a Linux distribution for now, and is no longer a fork of AOSP or LineageOS ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#the-founding-meeting)).
 Everything else about the software is open, starting with which distribution.
-The members choose the project's maintainers at a founding meeting on 2026-11-24, and the maintainers confirm or change that direction together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 
 Unfamiliar words are explained in two glossaries: [operating systems and the cyber-deck](docs/GLOSSARY.md), and [GitHub and how we work](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
 
@@ -28,7 +27,7 @@ Roadmap decision D9 covers the terms on which FoxieOS supports a device from it.
 ## Where to start
 
 1. [docs/ROADMAP.md](docs/ROADMAP.md): the open decisions and the next piece of work.
-2. [docs/DESIGN.md](docs/DESIGN.md): what is proposed, what is open, and why.
+2. [docs/DESIGN.md](docs/DESIGN.md): what is decided, what is proposed, what is open, and why.
 3. [docs/FEASIBILITY.md](docs/FEASIBILITY.md): research into the options, with sources.
 
 The other docs:

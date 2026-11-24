@@ -1,13 +1,13 @@
 # FoxieOS devices
 
 **Status: no supported devices yet.**
-FoxieOS is proposed for one device, the Alopex cyber-deck, which isn't designed yet: a user-serviceable, portable computer with LoRa and Wi-Fi, pocket-sized if possible.
+FoxieOS is for one device, the Alopex cyber-deck, which isn't designed yet: a user-serviceable, portable computer with LoRa and Wi-Fi, pocket-sized if possible.
 Until it exists, FoxieOS is developed on a development board (roadmap decision D12).
 Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## In short
 
-- FoxieOS is proposed for one device: the Alopex cyber-deck.
+- FoxieOS is for one device: the Alopex cyber-deck.
 - Its main board and most of its parts are undecided.
 - Every device has a maintainer who owns one and tests each release on it.
 
@@ -28,7 +28,7 @@ The columns:
 ## The cyber-deck
 
 The Alopex hardware project works toward the cyber-deck ([Alopex: cyber-deck](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md)).
-It is proposed there as user-serviceable and portable, with LoRa and Wi-Fi, pocket-sized if possible; its main board and other parts are open, and FoxieOS adapts to what Alopex decides.
+The founding meeting on 2026-11-24 confirmed it as user-serviceable and portable, with LoRa and Wi-Fi, pocket-sized if possible; its main board and other parts are open, and FoxieOS adapts to what Alopex decides.
 
 What FoxieOS has to support on it is task T12 in [ROADMAP.md](ROADMAP.md#t12-the-cyber-deck).
 The terms on which FoxieOS supports it are decision [D9](ROADMAP.md#d9-devices-from-the-hardware-project).
