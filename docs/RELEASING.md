@@ -5,7 +5,7 @@ No keys exist and nothing has been released.
 What a release is, and how it is signed and delivered, depends on what FoxieOS is built on (roadmap decision D10); tasks T8, T9 and T13 write the details once it is chosen.
 Technical words are explained in the [glossary](GLOSSARY.md).
 
-This page holds the rules proposed to apply whatever the base, carried over from the earlier plan for the maintainers to confirm.
+This page holds the rules proposed to apply whatever the base, carried over from the earlier plan; they are still proposals for the maintainers to decide.
 
 ## In short
 
