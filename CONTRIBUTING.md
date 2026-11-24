@@ -157,7 +157,7 @@ FoxieOS stays as close to the projects it builds on (its "upstream") as it can, 
 - **If a check stops a real secret,** take the secret out of the change.
   If a secret ever reached GitHub, deleting it isn't enough: cancel or replace it, and tell the maintainer.
 - The checks only run in a clone where `pre-commit install` was run.
-  Automatic checks on GitHub will repeat them from roadmap task T6 (planned).
+  Automatic checks on GitHub will repeat them from roadmap task T7 (CI, planned).
 - Settings files are committed only as `*.example` templates, or encrypted with SOPS.
 - Release keys live only on the signing computer and only the maintainer handles them ([docs/RELEASING.md](docs/RELEASING.md)).
 - **Describe computers by their role** (build host, signing host, test host).
