@@ -1,6 +1,6 @@
 # Dependabot opens pull requests that bump the pinned hook versions in
 # .pre-commit-config.yaml.
-# Add the github-actions ecosystem once a workflow uses an action (task T6).
+# Add the github-actions ecosystem once a workflow uses an action (task T7).
 version: 2
 updates:
   - package-ecosystem: pre-commit

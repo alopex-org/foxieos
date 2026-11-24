@@ -33,7 +33,7 @@ Don't add a step that only one agent's own tools can perform.
 - Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, blocks on key files and `*.local.md` notes, and a DCO sign-off on the commit message) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
   On pull requests, the DCO workflow checks the sign-off again.
   If pre-commit isn't installed or set up in the clone, tell the maintainer rather than committing without the hooks.
-  From task T6 on, `ci/presubmit.sh`.
+  From task T7 (CI) on, `ci/presubmit.sh`.
 - Release: done by hand by the maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
 
 ## Hard rules
