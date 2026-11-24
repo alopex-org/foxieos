@@ -7,8 +7,8 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 ## Where things stand
 
 - **Done:** task T0, setting up this repository and its docs, on 2026-11-20.
-- **Proposed:** FoxieOS becomes the operating system for the Alopex cyber-deck, and is no longer a fork of AOSP or LineageOS for phones ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
-  Nothing else about the software is decided, and the cyber-deck's own purpose and parts are open in Alopex.
+- **Proposed:** FoxieOS becomes the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, built on a Linux distribution for now, and is no longer a fork of AOSP or LineageOS for phones ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
+  Which distribution is open, and so is the rest of the software; the cyber-deck's main board and most parts are open in Alopex.
   Decisions D1, D5 and D6 applied only to Android, and are withdrawn; the tasks and checks are numbered afresh, and the maintainer closes the GitHub issues of the old ones.
 - **Founding meeting, 2026-11-24:** the members choose the maintainers, who confirm or change the direction above and everything else marked decided here, which the interim maintainer decided alone ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 - **Next:** task T1, FoxieOS's requirements.
@@ -34,7 +34,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Phases
 
-1. **Requirements and choices:** what FoxieOS must do, the options compared, and the base chosen (T1, T2, decision D10).
+1. **Requirements and choices:** what FoxieOS must do, the distributions compared, and one chosen (T1, T2, decision D10).
 2. **Setup:** the build computer, a first image on a development board, tests, branding and automatic checks (T3–T7).
 3. **Releases and security:** signing, updates, and security on a test board (T8, T9, T11).
 4. **The cyber-deck:** the interface, and FoxieOS on the Alopex prototype (T10, T12).
@@ -53,7 +53,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 | [D7](#d7-signing-host) | Which computer signs releases? | Open | T8 |
 | [D8](#d8-security-contact) | How do people report security problems privately? | Open | T13 |
 | [D9](#d9-devices-from-the-hardware-project) | On what terms does FoxieOS support a device from the hardware project? | Open | T11, T12 |
-| [D10](#d10-base) | What is FoxieOS built on? | Open | T3 |
+| [D10](#d10-base) | Which Linux distribution is FoxieOS built on? | Open | T3 |
 | [D11](#d11-user-interface) | What interface does FoxieOS have? | Open | T10 |
 | [D12](#d12-development-board) | Which board does FoxieOS develop on until the cyber-deck exists? | Open | T4 |
 
@@ -126,19 +126,19 @@ The conditions below are FoxieOS's own terms, not requirements on the hardware p
 
 ### D10: base
 
-What FoxieOS is built on.
+Which Linux distribution FoxieOS is built on.
 Open; needed by task T3.
 
 Earlier, this decision was between LineageOS, plain AOSP and a base of FoxieOS's own.
-It is now proposed that FoxieOS is no longer a fork of AOSP or LineageOS; everything else is open.
-[FEASIBILITY.md](FEASIBILITY.md#possible-bases) lists the options found so far, with what is known about each.
+It is now proposed that FoxieOS is no longer a fork of AOSP or LineageOS, and is built on a Linux distribution for now; which one is this decision.
+[FEASIBILITY.md](FEASIBILITY.md#possible-bases) lists what is known about each.
 
-- **Options,** none of them preferred yet:
-  - an existing Linux distribution, with FoxieOS's own parts added;
-  - a system built from source for one device, with tools such as Buildroot or Yocto;
-  - firmware for a microcontroller, if Alopex builds the cyber-deck around one;
-  - something else that task T2 finds.
-- **Recommendation:** decide after task T2 has compared the options against the requirements from task T1, and once Alopex has chosen the cyber-deck's main board (its decision D1).
+- **Options found so far,** none of them preferred yet:
+  - Debian, or a distribution based on it, such as Raspberry Pi OS;
+  - Alpine Linux;
+  - Nura (formerly postmarketOS), built on Alpine;
+  - another distribution that task T2 finds.
+- **Recommendation:** decide after task T2 has compared them against the requirements from task T1, and once Alopex has chosen the cyber-deck's main board (its decision D1), since the board's Linux support may narrow the choice.
 
 ### D11: user interface
 
@@ -178,7 +178,10 @@ What FoxieOS must do.
 
 - Write `docs/REQUIREMENTS.md` as a draft for the maintainers: what FoxieOS must do, each requirement with its reason and source.
   Where the members disagree, list the options instead of choosing one.
+- Start from what is proposed: a user-serviceable cyber-deck, with LoRa and Wi-Fi, on a Linux distribution.
 - Work from Alopex's requirements for the cyber-deck ([its task T1](https://github.com/alopex-org/alopex/blob/main/docs/ROADMAP.md#t1-hardware-requirements)), and ask the questions Alopex leaves to the software, for example:
+  - what user-serviceable means for the software: how the owner can reinstall, repair or change it;
+  - what FoxieOS offers for the LoRa radio and Wi-Fi;
   - what people do with the cyber-deck, and which programs they need;
   - how updates reach it, and what happens if one fails;
   - how the data on it is protected, and who controls what it starts;
@@ -190,10 +193,10 @@ What FoxieOS must do.
 
 ### T2: comparing the options
 
-Comparing what FoxieOS could be built on.
+Comparing the Linux distributions FoxieOS could be built on.
 **Code.** Needs task T1; Alopex's decision D1 narrows it.
 
-- For each option in [FEASIBILITY.md](FEASIBILITY.md#possible-bases), and any other task T1 suggests, write down against each requirement:
+- For each distribution in [FEASIBILITY.md](FEASIBILITY.md#possible-bases), and any other task T1 suggests, write down against each requirement:
   - whether it runs on the candidate boards;
   - how it is updated, and how security fixes arrive;
   - what it offers for encryption and secure boot;

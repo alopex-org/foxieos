@@ -1,8 +1,8 @@
 # FoxieOS feasibility study
 
 This is the research behind the plan.
-It asks what FoxieOS, as the operating system of a cyber-deck, could be built on, and what each option would take.
-Nothing here chooses an option: what FoxieOS is built on is roadmap decision D10, taken after FoxieOS's requirements (task T1) and a comparison of the options (task T2).
+It asks which Linux distribution FoxieOS, as the operating system of the Alopex cyber-deck, could be built on, and what each option would take.
+Nothing here chooses one: that is roadmap decision D10, taken after FoxieOS's requirements (task T1) and a comparison of the distributions (task T2).
 The plan is in [ROADMAP.md](ROADMAP.md) and [DESIGN.md](DESIGN.md).
 Technical words are explained in the [glossary](GLOSSARY.md).
 
@@ -15,11 +15,11 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Summary
 
-- **The device is undecided.**
-  Alopex hasn't decided what the cyber-deck is for, what it has or what main board it uses, so no option can be ruled in or out yet ([What FoxieOS has to fit](#what-foxieos-has-to-fit)).
-- **The options found so far** are an existing Linux distribution, a system built from source for one device, or firmware for a microcontroller ([Possible bases](#possible-bases)).
+- **The device is partly proposed:** a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, on a Linux distribution for now.
+  Its main board is undecided, and it decides which distributions run well ([What FoxieOS has to fit](#what-foxieos-has-to-fit)).
+- **The distributions found so far** are Debian (and Raspberry Pi OS), Alpine Linux and Nura ([Possible bases](#possible-bases)).
   Task T2 compares them once the requirements exist.
-- **Updates, security and the interface** all follow from the base: each option updates, encrypts and starts securely in its own way ([Updates](#updates), [Secure boot](#secure-boot)).
+- **Updates, security and the interface** partly follow from the distribution, and partly are FoxieOS's own choices ([Updates](#updates), [Secure boot](#secure-boot)).
 - **Earning money** is an open question for the maintainers ([Business model](#business-model)).
 
 ## What a cyber-deck is
@@ -38,19 +38,19 @@ Sources: [Wikipedia: Cyberdeck][wiki-cyberdeck], [Hackaday 2022 contest][had-202
 
 What FoxieOS must do depends on decisions that are open in both projects:
 
-- **In Alopex:** the cyber-deck has a built-in LoRa mesh radio, decided there on 2026-11-21, but which network it runs is Alopex's decision D4.
-  Still open: what the cyber-deck is for, its form, its screen and controls, its other radios, its power, and above all its main board ([Alopex: what is undecided](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#what-is-undecided)).
-  The main board decides which systems can run at all.
+- **In Alopex:** the cyber-deck is proposed as user-serviceable and portable, with LoRa and Wi-Fi, pocket-sized if possible; the LoRa radio was decided there on 2026-11-21, and which network it runs is Alopex's decision D4.
+  Still open: its screen and controls, its other radios, its power, its case, and above all its main board ([Alopex: what is undecided](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#what-is-undecided)).
+  The main board decides which distributions run well on it.
 - **In FoxieOS:** its own requirements (task T1), such as how it is updated, how the data on it is protected, and how long each release is supported.
 
-So this study lists options and what is known about them, and leaves the choice to decision D10.
+So this study lists the distributions and what is known about them, and leaves the choice to decision D10.
 
 ## Possible bases
 
-None of these is preferred.
-Each line says what its own project says about it.
+FoxieOS is proposed to be built on a Linux distribution, for now.
+None of these is preferred, and each line says what its own project says about it.
 
-### An existing Linux distribution
+### Linux distributions
 
 FoxieOS would add its own parts to a distribution that already runs on the chosen board.
 
@@ -60,18 +60,15 @@ FoxieOS would add its own parts to a distribution that already runs on the chose
 
 Sources: [Raspberry Pi OS][rpi-os], [Alpine Linux][alpine-about], [Alpine downloads][alpine-downloads], [Nura][nura].
 
-### A system built from source for one device
+### Set aside for now: a system built from source
+
+These build a Linux system for one device, but aren't distributions, so they are set aside while FoxieOS is proposed to use one.
 
 - **Buildroot** builds a small embedded Linux system from source, including the kernel and the bootloader.
 - **Yocto** does the same at a larger scale (unsourced).
 - Both give an exact, repeatable image, but every security fix means rebuilding and shipping the image, and the team follows security notices itself (unsourced).
 
 Sources: [Buildroot][buildroot].
-
-### Firmware for a microcontroller
-
-- If Alopex builds the cyber-deck around a microcontroller, there is no full operating system: the device runs firmware, as the cyber-decks built on an ESP32-S3 do ([Alopex: cyber-decks that already exist](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#cyber-decks-that-already-exist)).
-- FoxieOS would then be that firmware, or a part of it.
 
 ### Not an option: a fork of AOSP or LineageOS
 
@@ -172,7 +169,7 @@ Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilien
 
 | Risk | Impact | What reduces it |
 |---|---|---|
-| Choosing a base before the cyber-deck's purpose and parts are known | High | Requirements first (task T1), then a comparison (task T2) |
+| Choosing a distribution before the cyber-deck's main board and parts are known | High | Requirements first (task T1), then a comparison (task T2) |
 | The cyber-deck takes longer to build than the software | Medium | Develop on a development board first |
 | A board fused with a lost or wrong key | High | Fuse only boards kept for testing; settle the key's owner first (check C2) |
 | Release keys stolen or lost | Critical | Offline, encrypted keys with backups; only the maintainer handles them |
