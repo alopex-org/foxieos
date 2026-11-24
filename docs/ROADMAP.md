@@ -1,16 +1,16 @@
 # FoxieOS roadmap
 
 This page lists what is decided, what is still open, and the work in the order it should happen.
-Background: [DESIGN.md](DESIGN.md) for what is proposed and why, [FEASIBILITY.md](FEASIBILITY.md) for the research.
+Background: [DESIGN.md](DESIGN.md) for what is decided or proposed, and why, [FEASIBILITY.md](FEASIBILITY.md) for the research.
 Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Where things stand
 
 - **Done:** task T0, setting up this repository and its docs, on 2026-11-20.
-- **Proposed:** FoxieOS becomes the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, built on a Linux distribution for now, and is no longer a fork of AOSP or LineageOS for phones ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
+- **Decided at the founding meeting, 2026-11-24:** FoxieOS is the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, built on a Linux distribution for now, and is no longer a fork of AOSP or LineageOS for phones ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
   Which distribution is open, and so is the rest of the software; the cyber-deck's main board and most parts are open in Alopex.
   Decisions D1, D5 and D6 applied only to Android, and are withdrawn; the tasks and checks are numbered afresh, and the maintainer closes the GitHub issues of the old ones.
-- **Founding meeting, 2026-11-24:** the members choose the maintainers, who confirm or change the direction above and everything else marked decided here, which the interim maintainer decided alone ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
+- **Founding meeting, 2026-11-24:** the members chose the maintainer, and confirmed the direction above and decision D3 (GitHub); the other proposals in [DESIGN.md](DESIGN.md#key-decisions) stay proposals ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#the-founding-meeting)).
 - **Next:** task T1, FoxieOS's requirements.
   It needs no decision and no money.
 
@@ -46,7 +46,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 |---|---|---|---|
 | D1 | Which phone comes first? | Withdrawn: Android only | — |
 | [D2](#d2-build-host) | Which computer builds FoxieOS? | Open | T3 |
-| [D3](#d3-code-and-ci-hosting) | Where do the code and automatic checks live? | Decided: GitHub | T7 |
+| [D3](#d3-code-and-ci-hosting) | Where do the code and automatic checks live? | Decided: GitHub (confirmed 2026-11-24) | T7 |
 | [D4](#d4-update-server-hosting) | Where is the update server hosted? | Open | T9 |
 | D5 | Does FoxieOS include microG? | Withdrawn: Android only | — |
 | D6 | Are releases `userdebug` or `user` builds? | Withdrawn: Android only | — |
@@ -70,7 +70,7 @@ A rented computer needs an account, which the maintainer creates, and is never u
 ### D3: code and CI hosting
 
 Where the code and the automatic checks live.
-**Decided 2026-11-20: GitHub.**
+**Decided 2026-11-20: GitHub; confirmed at the founding meeting on 2026-11-24.**
 
 - The code lives in the [`alopex-org`](https://github.com/alopex-org) organization.
   This repository is `alopex-org/foxieos`, and FoxieOS's other repositories there start with `foxieos` too.
@@ -111,8 +111,8 @@ Open; needed before the first public release (task T13).
 On what terms FoxieOS supports a device from the hardware project.
 Open; needed before secure boot is set up on any board (task T11) and before the cyber-deck joins (task T12).
 
-[Alopex](https://github.com/alopex-org/alopex) works toward the cyber-deck, the device FoxieOS is now proposed for.
-Whether it stays a prototype or becomes a product is its own decision D5, and its parts are still open.
+[Alopex](https://github.com/alopex-org/alopex) works toward the cyber-deck, the device FoxieOS is for.
+It builds a prototype first, then a product (its decision D5, decided 2026-11-24), and its parts are still open.
 FoxieOS depends on it, and only in that direction: FoxieOS adapts to the hardware project's choices.
 The conditions below are FoxieOS's own terms, not requirements on the hardware project.
 
@@ -130,7 +130,7 @@ Which Linux distribution FoxieOS is built on.
 Open; needed by task T3.
 
 Earlier, this decision was between LineageOS, plain AOSP and a base of FoxieOS's own.
-It is now proposed that FoxieOS is no longer a fork of AOSP or LineageOS, and is built on a Linux distribution for now; which one is this decision.
+Since the founding meeting on 2026-11-24, FoxieOS is no longer a fork of AOSP or LineageOS, and is built on a Linux distribution for now; which one is this decision.
 [FEASIBILITY.md](FEASIBILITY.md#possible-bases) lists what is known about each.
 
 - **Options found so far,** none of them preferred yet:
@@ -178,7 +178,7 @@ What FoxieOS must do.
 
 - Write `docs/REQUIREMENTS.md` as a draft for the maintainers: what FoxieOS must do, each requirement with its reason and source.
   Where the members disagree, list the options instead of choosing one.
-- Start from what is proposed: a user-serviceable cyber-deck, with LoRa and Wi-Fi, on a Linux distribution.
+- Start from what is decided: a user-serviceable cyber-deck, with LoRa and Wi-Fi, on a Linux distribution.
 - Work from Alopex's requirements for the cyber-deck ([its task T1](https://github.com/alopex-org/alopex/blob/main/docs/ROADMAP.md#t1-hardware-requirements)), and ask the questions Alopex leaves to the software, for example:
   - what user-serviceable means for the software: how the owner can reinstall, repair or change it;
   - what FoxieOS offers for the LoRa radio and Wi-Fi;
@@ -325,7 +325,7 @@ T1 → T2 → D10 → D2 → T3 → T4 → T5 → T7 → T8 → T9 → T13.
 
 ## Not planned
 
-- **A fork of AOSP or LineageOS** (proposed; [DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
+- **A fork of AOSP or LineageOS** (decided 2026-11-24; [DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
 - **Devices other than the cyber-deck** and its development boards ([DEVICES.md](DEVICES.md)).
 - **Designing or making hardware.**
   That is the work of the separate hardware project, [Alopex](https://github.com/alopex-org/alopex), which FoxieOS depends on; decision D9 sets the terms.

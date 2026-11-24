@@ -15,7 +15,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## Summary
 
-- **The device is partly proposed:** a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, on a Linux distribution for now.
+- **The device is partly decided:** a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, on a Linux distribution for now (confirmed at the founding meeting on 2026-11-24).
   Its main board is undecided, and it decides which distributions run well ([What FoxieOS has to fit](#what-foxieos-has-to-fit)).
 - **The distributions found so far** are Debian (and Raspberry Pi OS), Alpine Linux and Nura ([Possible bases](#possible-bases)).
   Task T2 compares them once the requirements exist.
@@ -38,7 +38,7 @@ Sources: [Wikipedia: Cyberdeck][wiki-cyberdeck], [Hackaday 2022 contest][had-202
 
 What FoxieOS must do depends on decisions that are open in both projects:
 
-- **In Alopex:** the cyber-deck is proposed as user-serviceable and portable, with LoRa and Wi-Fi, pocket-sized if possible; the LoRa radio was decided there on 2026-11-21, and which network it runs is Alopex's decision D4.
+- **In Alopex:** the cyber-deck is user-serviceable and portable (confirmed 2026-11-24), with LoRa and Wi-Fi, pocket-sized if possible; the LoRa radio was decided there on 2026-11-21, and which network it runs is Alopex's decision D4.
   Still open: its screen and controls, its other radios, its power, its case, and above all its main board ([Alopex: what is undecided](https://github.com/alopex-org/alopex/blob/main/docs/CYBERDECK.md#what-is-undecided)).
   The main board decides which distributions run well on it.
 - **In FoxieOS:** its own requirements (task T1), such as how it is updated, how the data on it is protected, and how long each release is supported.
@@ -47,7 +47,7 @@ So this study lists the distributions and what is known about them, and leaves t
 
 ## Possible bases
 
-FoxieOS is proposed to be built on a Linux distribution, for now.
+FoxieOS is built on a Linux distribution, for now (confirmed 2026-11-24).
 None of these is preferred, and each line says what its own project says about it.
 
 ### Linux distributions
@@ -62,7 +62,7 @@ Sources: [Raspberry Pi OS][rpi-os], [Alpine Linux][alpine-about], [Alpine downlo
 
 ### Set aside for now: a system built from source
 
-These build a Linux system for one device, but aren't distributions, so they are set aside while FoxieOS is proposed to use one.
+These build a Linux system for one device, but aren't distributions, so they are set aside while FoxieOS uses one.
 
 - **Buildroot** builds a small embedded Linux system from source, including the kernel and the bootloader.
 - **Yocto** does the same at a larger scale (unsourced).
@@ -72,7 +72,7 @@ Sources: [Buildroot][buildroot].
 
 ### Not an option: a fork of AOSP or LineageOS
 
-FoxieOS was planned as a version of Android built on LineageOS; it is proposed that it no longer be a fork of AOSP or LineageOS ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
+FoxieOS was planned as a version of Android built on LineageOS; since the founding meeting on 2026-11-24 it is no longer a fork of AOSP or LineageOS ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
 
 ## Updates
 
@@ -122,7 +122,7 @@ This section is research for that decision, not the decision.
 ### Starting point
 
 - **The device is the product.**
-  FoxieOS has value as the system of the Alopex cyber-deck; whether Alopex sells devices is its own decision D5.
+  FoxieOS has value as the system of the Alopex cyber-deck; Alopex builds a prototype first, then a product (its decision D5, decided 2026-11-24).
 - **A small audience** of people who build or buy cyber-decks (unsourced).
 - **The cost is mostly people's time:** taking in security fixes and testing every release on the device (unsourced).
 
@@ -132,7 +132,7 @@ This section is research for that decision, not the decision.
 |---|---|---|
 | Donations and sponsors | GrapheneOS | Covers costs at best |
 | Grants | NLnet | Pays for set pieces of work, not upkeep |
-| Selling devices with FoxieOS installed | Alopex decision D5 | Needs stock, a warranty and EU compliance |
+| Selling devices with FoxieOS installed | Alopex's product, after its prototype (D5) | Needs stock, a warranty and EU compliance |
 | Paid services alongside a free system | (unsourced) | Needs users first |
 
 - **Donations and sponsors:** GrapheneOS is funded by donations from people, companies and other organisations ([GrapheneOS donations][graphene-donate]).

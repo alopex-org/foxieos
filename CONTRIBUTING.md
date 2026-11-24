@@ -6,7 +6,7 @@ GitHub words such as branch, commit and pull request are explained in the [organ
 
 FoxieOS is still being planned.
 This repository holds the docs, and later the scripts and tests that build, check and release FoxieOS.
-FoxieOS is proposed as the operating system for the Alopex cyber-deck; what it is built on is open (roadmap decision D10).
+FoxieOS is the operating system for the Alopex cyber-deck; what it is built on is open (roadmap decision D10).
 
 Everyone in the `alopex-org` organization follows its [code of conduct][coc], and its [governance][governance] says who decides what.
 If you use an AI coding agent, you are responsible for its work as for your own; the agent's own rules are in [AGENTS.md](AGENTS.md).
@@ -15,7 +15,7 @@ If you use an AI coding agent, you are responsible for its work as for your own;
 
 1. Read [README.md](README.md) and [docs/DESIGN.md](docs/DESIGN.md).
 2. Pick something from [docs/ROADMAP.md](docs/ROADMAP.md) or its issues, or open an issue about what you want to change.
-3. Fork the repository (until the founding meeting, members work from forks), then make a new branch for your change.
+3. Fork the repository (members work from forks), then make a new branch for your change.
 4. Make the change, and commit it with a sign-off (`git commit -s`).
 5. Open a pull request and say what you changed, why, and what you checked.
 6. Someone else reviews it; answer their comments.
@@ -43,7 +43,7 @@ The sections below explain each rule.
 
 ## Branches
 
-Until the founding meeting on 2026-11-24 ([governance][governance]), members can read this repository but not change it directly, like everyone else.
+Members can read this repository but not change it directly, like everyone else, as the founding meeting decided ([governance][governance]).
 Put your branch in your own fork and open the pull request from there.
 
 Use a new branch for each change, named after what it changes:
@@ -88,8 +88,8 @@ If an AI coding agent writes a commit for you, you sign it off with your own nam
 
 Someone other than the author reviews every change.
 
-- **Until the founding meeting** on 2026-11-24 ([governance][governance]), only the interim maintainer's approval lets a pull request merge.
-  `.github/CODEOWNERS` names them as the owner of every file.
+- **One maintainer's approval** lets a pull request merge, as the founding meeting decided ([governance][governance]).
+  `.github/CODEOWNERS` names the maintainers as owners of every file.
 - **Members still review** each other's changes and the maintainer's own, and their comments are answered before merging.
   A member's approval doesn't count toward merging while members only have read access, but GitHub still records it on the pull request.
 - **Docs, automatic checks and branding** may be reviewed by the reviewer with the help of a coding agent; the reviewer answers for that review as for their own.
@@ -107,7 +107,7 @@ A person must read every change to these sensitive areas:
 These rules, called a ruleset, protect `main`:
 
 - every change arrives through a pull request; nobody pushes to `main` directly;
-- someone with write access, other than the author, approves the pull request (until the founding meeting, only the interim maintainer has write access);
+- someone with write access, other than the author, approves the pull request (only the maintainers have write access);
 - pushing new commits cancels earlier approvals;
 - every review comment thread is resolved before merging;
 - the DCO check passes;
@@ -134,7 +134,7 @@ A change in the hardware project can need a matching change here, but a change h
 - **Labels** say who does the work (`who:`), what it touches (`area:`) and what it is waiting for.
   The list lives in `.github/labels.sh`; change it there, not by hand on GitHub.
   Add a `device: <device>` label when a device joins.
-- Until the founding meeting, only the maintainer sets labels, types and milestones.
+- Only the maintainers set labels, types and milestones.
   Suggest them in a comment.
 
 ## Changes to the base system

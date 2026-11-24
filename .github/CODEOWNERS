@@ -2,9 +2,9 @@
 # CONTRIBUTING.md (Review) lists the changes that need a person's review.
 # Replace @alevromitis with the @alopex-org/foxieos-release team once that team exists.
 # Later FoxieOS repositories will each have their own CODEOWNERS.
-# After the founding meeting on 2026-11-24, the maintainers it chooses are added next to or in place of @alevromitis.
-# Until then, @alevromitis is the interim maintainer and owns every file (*), so no pull request is merged without their approval.
-# The meeting decides what replaces that line; the paths after it need a person's review either way.
+# The founding meeting on 2026-11-24 kept @alevromitis as the only maintainer for now; a second maintainer is added next to them once appointed.
+# The maintainers own every file (*), so no pull request is merged without a maintainer's approval.
+# The paths after that line need a person's review whatever replaces it.
 
 *                    @alevromitis
 /release/            @alevromitis

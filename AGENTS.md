@@ -10,8 +10,8 @@ Never copy anything from them into a commit, pull request or issue.
 ## The project in brief
 
 FoxieOS is the planned operating system for the Alopex cyber-deck, a portable computer that the separate Alopex hardware project works toward.
-It was planned as a version of Android on LineageOS; it is now proposed, for the maintainers to confirm, that it no longer be a fork of AOSP or LineageOS, and that it be built on a Linux distribution for now.
-The cyber-deck is proposed as a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible.
+It was planned as a version of Android on LineageOS; the founding meeting on 2026-11-24 decided that it is no longer a fork of AOSP or LineageOS, and that it is built on a Linux distribution for now.
+The meeting also confirmed the cyber-deck: user-serviceable and portable, with LoRa and Wi-Fi, pocket-sized if possible.
 Nothing else is decided: which distribution (roadmap decision D10), how FoxieOS updates and is secured, its interface, and the cyber-deck's main board and other parts are all open.
 Don't write any of these as decided, or assume one from earlier documents or drafts; list options instead.
 It is in the planning phase: nothing is built yet.
@@ -102,7 +102,7 @@ The docs are written for members who aren't technical; follow [CONTRIBUTING.md](
 - Keep instructions addressed to coding agents in this file.
   The people docs mention agents only to say that the person who directs an agent is responsible for its work.
 - When you rename a heading, search all three repositories in the organization (`foxieos`, `alopex` and `.github`) and the issue forms for links to its old anchor, and update them.
-- Don't write a foundational choice as settled: until the maintainers confirm them, the move to a cyber-deck and the other key decisions in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are proposals, and the base is open.
+- Don't write a foundational choice as settled unless the maintainers decided it: the move to a cyber-deck on a Linux distribution and decision D3 are decided, the key decisions marked proposed in [docs/DESIGN.md](docs/DESIGN.md#key-decisions) are still proposals, and the base distribution is open.
 
 ## Don't
 

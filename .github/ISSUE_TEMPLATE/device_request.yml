@@ -5,7 +5,7 @@ body:
   - type: markdown
     attributes:
       value: |
-        FoxieOS is proposed for the Alopex cyber-deck and, until it exists, a development board.
+        FoxieOS is for the Alopex cyber-deck and, until it exists, a development board.
         A device is added only if it meets every one of the [rules for adding a device](https://github.com/alopex-org/foxieos/blob/main/docs/DEVICES.md#rules-for-adding-a-device), and someone on the team owns one and will look after it.
         If a question below is unclear, the [glossary](https://github.com/alopex-org/foxieos/blob/main/docs/GLOSSARY.md) explains the words, and "Not sure" is a fine answer.
   - type: input
