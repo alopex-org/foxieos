@@ -75,7 +75,8 @@ By adding a `Signed-off-by:` line to a commit, you state that you wrote the chan
   On GitHub, the DCO workflow (`.github/workflows/dco.yml`) checks every commit in a pull request, and `main` accepts a pull request only once it passes.
 - **Forgot the sign-off?**
   Run `git rebase --signoff main`, then push the branch again with `git push --force-with-lease`.
-- **Updating your branch:** the check also covers merge commits, so a plain `git merge`, or a `git pull` that creates a merge commit, is refused.
+- **Updating your branch:** the commit check on your computer also covers merge commits, so a plain `git merge`, or a `git pull` that creates a merge commit, is refused.
+  The DCO workflow on GitHub skips merge commits and checks only the others.
   Bring a branch up to date with `git pull --rebase` or `git rebase main` instead.
   If you really need a merge commit, use `git merge --signoff`.
 - Commits from bots, such as Dependabot, don't need a sign-off.
