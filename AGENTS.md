@@ -10,8 +10,9 @@ Never copy anything from them into a commit, pull request or issue.
 ## The project in brief
 
 FoxieOS is the planned operating system for the Alopex cyber-deck, a portable computer that the separate Alopex hardware project works toward.
-It was planned as a version of Android on LineageOS; it is now proposed that it no longer be a fork of AOSP or LineageOS, for the maintainers to confirm.
-Nothing else is decided: what FoxieOS is built on (roadmap decision D10), how it updates and is secured, its interface, and the cyber-deck's own purpose, parts and main board are all open, except its built-in LoRa mesh radio, which Alopex has decided.
+It was planned as a version of Android on LineageOS; it is now proposed, for the maintainers to confirm, that it no longer be a fork of AOSP or LineageOS, and that it be built on a Linux distribution for now.
+The cyber-deck is proposed as a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible.
+Nothing else is decided: which distribution (roadmap decision D10), how FoxieOS updates and is secured, its interface, and the cyber-deck's main board and other parts are all open.
 Don't write any of these as decided, or assume one from earlier documents or drafts; list options instead.
 It is in the planning phase: nothing is built yet.
 

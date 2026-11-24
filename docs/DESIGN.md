@@ -7,16 +7,16 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 
 ## In short
 
-- FoxieOS is proposed as the operating system for a cyber-deck that the Alopex hardware project works toward, and no longer as a fork of AOSP or LineageOS for phones.
-- Nothing else about the software is decided: what it is built on, how it updates, how it is secured, and what it looks like are open.
-- The cyber-deck itself is mostly undecided too: apart from a built-in LoRa mesh radio, which Alopex has decided, its purpose, form, parts and main board are Alopex's open decisions, and FoxieOS adapts to them.
-- The first steps are requirements, then a comparison of the options, then a choice of base (roadmap decision D10).
+- FoxieOS is proposed as the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, and no longer as a fork of AOSP or LineageOS for phones.
+- For now, it is proposed to be built on a Linux distribution; which one is open (roadmap decision D10), and so are how it updates, how it is secured, and what it looks like.
+- The cyber-deck's main board, screen and controls, power and case are Alopex's open decisions, and FoxieOS adapts to them.
+- The first steps are requirements, then a comparison of the distributions, then a choice (decision D10).
 - Some ways of working carry over from the earlier plan, for the maintainers to confirm: few devices, each with an owner who tests it; release keys kept offline by the maintainer; testing before every release; GitHub for the code.
 
 ## Purpose
 
-FoxieOS is the operating system for the Alopex cyber-deck.
-What it has to do depends on what the cyber-deck is for, which is still open in both projects.
+FoxieOS is the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible.
+Whatever else it does, it runs the cyber-deck's LoRa radio and Wi-Fi, and lets the owner service the device, software included; what that means in detail is task T1.
 
 FoxieOS does **not**:
 
@@ -31,7 +31,8 @@ FoxieOS does **not**:
 | Which device is FoxieOS for? | Proposed: the Alopex cyber-deck | [Below](#a-cyber-deck-not-an-android-fork) |
 | Is FoxieOS a fork of AOSP or LineageOS? | Proposed: no | [Below](#a-cyber-deck-not-an-android-fork) |
 | What must FoxieOS do? | Open | Task T1 |
-| What is FoxieOS built on? | Open | Decision D10 |
+| What is FoxieOS built on? | Proposed: a Linux distribution, for now | [Below](#a-cyber-deck-not-an-android-fork) |
+| Which Linux distribution? | Open | Decision D10 |
 | How does it update, and how are updates delivered? | Open | Decision D10, then D4 |
 | How is it secured: encryption, secure boot and who holds the keys? | Open | Task T1, decisions D9 and D10 |
 | What interface does it have? | Open | Decision D11 |
@@ -49,8 +50,9 @@ Each decision says what was chosen, why, and what was turned down.
 
 Proposed, for the founding meeting to confirm.
 
-- **What:** FoxieOS is the operating system for the Alopex cyber-deck, and is no longer a fork of AOSP or LineageOS for phones.
-  What it is built on instead is open (decision [D10](ROADMAP.md#d10-base)).
+- **What:** FoxieOS is the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, and is no longer a fork of AOSP or LineageOS for phones.
+  For now, it is built on a Linux distribution; which one is open (decision [D10](ROADMAP.md#d10-base)).
+  "For now" leaves room to revisit the choice of Linux later.
 - **Why:** the direction proposed for the maintainers; the meeting records its reasons when it decides.
 - **Turned down:** staying a version of Android built on LineageOS, for phones.
 
@@ -58,10 +60,10 @@ Proposed, for the founding meeting to confirm.
 
 Proposed.
 
-- **What:** write down what FoxieOS must do (task T1), alongside Alopex's requirements for the cyber-deck, and compare the options against them (task T2) before choosing a base.
-- **Why:** the base decides almost everything else: how FoxieOS updates, how it is secured, what interface it can have, and how much work it is to keep going.
-  Choosing it before the cyber-deck's purpose and parts are known would be a guess.
-- **Turned down:** choosing a base first.
+- **What:** write down what FoxieOS must do (task T1), alongside Alopex's requirements for the cyber-deck, and compare the distributions against them (task T2) before choosing one.
+- **Why:** the distribution decides much of the rest: how FoxieOS updates, how it is secured, what interface it can have, and how much work it is to keep going.
+  Choosing it before the cyber-deck's main board and parts are known would be a guess.
+- **Turned down:** choosing a distribution first.
 
 ### Few devices
 

@@ -2,24 +2,24 @@
 
 ![FoxieOS logo](branding/foxieos-logo.png)
 
-FoxieOS is the planned operating system for a cyber-deck: a portable computer that the [Alopex](https://github.com/alopex-org/alopex) hardware project works toward.
-What FoxieOS is built on is undecided, and so, apart from a built-in LoRa mesh radio, is what the cyber-deck has.
+FoxieOS is the planned operating system for the Alopex cyber-deck: a user-serviceable, portable computer with LoRa and Wi-Fi, pocket-sized if possible, that the [Alopex](https://github.com/alopex-org/alopex) hardware project works toward.
+For now, FoxieOS is proposed to be built on a Linux distribution; which one is undecided.
 
 **Status: planning.**
 Nothing is built yet.
 This repository holds the plan; the scripts and tests will follow as the roadmap's tasks are done.
 The plan was for a version of Android built on LineageOS, for phones.
-It is now proposed that FoxieOS be made for the cyber-deck instead, and no longer be a fork of AOSP or LineageOS.
-That is the only change proposed: everything else about the software is open.
+It is now proposed that FoxieOS be made for the cyber-deck instead, on a Linux distribution for now, and no longer be a fork of AOSP or LineageOS.
+Everything else about the software is open, starting with which distribution.
 The members choose the project's maintainers at a founding meeting on 2026-11-24, and the maintainers confirm or change that direction together ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#founding-maintainers)).
 
 Unfamiliar words are explained in two glossaries: [operating systems and the cyber-deck](docs/GLOSSARY.md), and [GitHub and how we work](https://github.com/alopex-org/.github/blob/main/GLOSSARY.md).
 
 ## What is open
 
-- **What FoxieOS is built on** (roadmap decision D10), and so how it is updated, secured and used.
-- **What it must do:** that follows from what the cyber-deck is for, which Alopex works out in its requirements (Alopex task T1), and from FoxieOS's own requirements (task T1 here).
-- **Which devices it runs on:** the cyber-deck, whose parts are undecided, and a development board until the cyber-deck exists (decision D12).
+- **Which Linux distribution FoxieOS is built on** (roadmap decision D10), and so how it is updated, secured and used.
+- **What it must do:** beyond running the cyber-deck's LoRa and Wi-Fi, and letting its owner service it, that follows from Alopex's requirements for the cyber-deck (Alopex task T1) and FoxieOS's own (task T1 here).
+- **Which devices it runs on:** the cyber-deck, whose main board and most parts are undecided, and a development board until the cyber-deck exists (decision D12).
 
 FoxieOS doesn't make hardware: that is Alopex's work.
 FoxieOS depends on Alopex, not the other way round: the hardware project doesn't follow FoxieOS's wishes, and FoxieOS adapts to its choices.
