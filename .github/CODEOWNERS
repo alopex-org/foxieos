@@ -1,20 +1,20 @@
 # Code owners: GitHub requests a review from these people on pull requests that touch the paths below.
 # CONTRIBUTING.md (Review) lists the changes that need a person's review.
-# Replace @alevromitis with the @alopex-org/foxieos-release team once that team exists.
+# Replace the maintainers with the @alopex-org/foxieos-release team once that team exists.
 # Later FoxieOS repositories will each have their own CODEOWNERS.
-# The founding meeting on 2026-11-24 kept @alevromitis as the only maintainer for now; a second maintainer is added next to them once appointed.
+# The maintainers (GOVERNANCE.md, Maintainers): @alevromitis, and since 2026-11-26 @evansyrsiris and @Leandros64.
 # The maintainers own every file (*), so no pull request is merged without a maintainer's approval.
 # The paths after that line need a person's review whatever replaces it.
 
-*                    @alevromitis
-/release/            @alevromitis
-/ota-server/         @alevromitis
-/docs/RELEASING.md   @alevromitis
-/docs/KEYS.md        @alevromitis
-/docs/ROADMAP.md     @alevromitis
-/docs/DESIGN.md      @alevromitis
-/SECURITY.md         @alevromitis
-/.pre-commit-config.yaml  @alevromitis
-/CONTRIBUTING.md     @alevromitis
-/AGENTS.md           @alevromitis
-/.github/            @alevromitis
+*                    @alevromitis @evansyrsiris @Leandros64
+/release/            @alevromitis @evansyrsiris @Leandros64
+/ota-server/         @alevromitis @evansyrsiris @Leandros64
+/docs/RELEASING.md   @alevromitis @evansyrsiris @Leandros64
+/docs/KEYS.md        @alevromitis @evansyrsiris @Leandros64
+/docs/ROADMAP.md     @alevromitis @evansyrsiris @Leandros64
+/docs/DESIGN.md      @alevromitis @evansyrsiris @Leandros64
+/SECURITY.md         @alevromitis @evansyrsiris @Leandros64
+/.pre-commit-config.yaml  @alevromitis @evansyrsiris @Leandros64
+/CONTRIBUTING.md     @alevromitis @evansyrsiris @Leandros64
+/AGENTS.md           @alevromitis @evansyrsiris @Leandros64
+/.github/            @alevromitis @evansyrsiris @Leandros64

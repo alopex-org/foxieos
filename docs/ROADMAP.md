@@ -9,8 +9,9 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 - **Done:** task T0, setting up this repository and its docs, on 2026-11-20.
 - **Decided at the founding meeting, 2026-11-24:** FoxieOS is the operating system for the Alopex cyber-deck, a user-serviceable, portable cyber-deck with LoRa and Wi-Fi, pocket-sized if possible, built on a Linux distribution for now, and is no longer a fork of AOSP or LineageOS for phones ([DESIGN.md](DESIGN.md#a-cyber-deck-not-an-android-fork)).
   Which distribution is open, and so is the rest of the software; the cyber-deck's main board and most parts are open in Alopex.
-  Decisions D1, D5 and D6 applied only to Android, and are withdrawn; the tasks and checks are numbered afresh, and the maintainer closes the GitHub issues of the old ones.
+  Decisions D1, D5 and D6 applied only to Android, and are withdrawn; the tasks and checks are numbered afresh, and a maintainer closes the GitHub issues of the old ones.
 - **Founding meeting, 2026-11-24:** the members chose the maintainer, and confirmed the direction above and decision D3 (GitHub); the other proposals in [DESIGN.md](DESIGN.md#key-decisions) stay proposals ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#the-founding-meeting)).
+- **Maintainers, 2026-11-26:** the maintainer chosen at the meeting appointed two more, @evansyrsiris and @Leandros64, as the meeting foresaw ([governance](https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md#maintainers)).
 - **Next:** task T1, FoxieOS's requirements.
   It needs no decision and no money.
 
@@ -29,7 +30,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
   - **Code:** a change to files, made in a pull request.
     Anyone can do it.
   - **Hands-on:** runs on the build computer, a board or the cyber-deck.
-    The maintainer runs it, or approves each step.
+    A maintainer runs it, or approves each step.
   - **Maintainer only:** keys, accounts, purchases and publishing.
 
 ## Phases
@@ -65,7 +66,7 @@ Open; needed by task T3.
 What it needs (disk, memory, processor) depends on the base chosen in decision D10.
 
 **Recommendation:** decide after D10; start with a computer the project already has access to, and measure the build (check C1) before buying or renting anything.
-A rented computer needs an account, which the maintainer creates, and is never used to sign releases.
+A rented computer needs an account, which a maintainer creates, and is never used to sign releases.
 
 ### D3: code and CI hosting
 
@@ -161,7 +162,7 @@ FoxieOS adapts to that choice.
   - the board Alopex chooses, or its maker's development kit, once Alopex has chosen;
   - until then, one of the candidates Alopex tries on the bench (its task T2).
 - **Recommendation:** the board Alopex chooses, so the work carries over to the cyber-deck.
-  One board per maintainer who tests releases, bought by the maintainer.
+  One board per maintainer who tests releases, bought by the maintainers.
 
 ## Tasks
 
@@ -213,9 +214,9 @@ Getting the build computer ready.
 **Code and hands-on.** Needs decisions D2 and D10.
 
 - Write `ci/check-host.sh`, which prints PASS or FAIL for each thing the chosen base's build needs.
-- The maintainer runs the script on the build host.
+- A maintainer runs the script on the build host.
 
-**Finished when** the script passes on the build host, or the maintainer accepts the gaps it lists.
+**Finished when** the script passes on the build host, or the maintainers accept the gaps it lists.
 **Share** the script's output.
 
 ### T4: a first image
@@ -240,7 +241,7 @@ Writing the first automatic checks ([TESTING.md](TESTING.md)).
 
 ### T6: branding and identity
 
-Adding FoxieOS's name, version and look, once the maintainer has confirmed the rights to the artwork.
+Adding FoxieOS's name, version and look, once the maintainers have confirmed the rights to the artwork.
 **Code.** Needs task T4.
 
 **Finished when** the board shows FoxieOS's name and version, and the checks pass.
@@ -262,10 +263,10 @@ Setting up automatic checks on every change.
 Writing the signing scripts and the procedure for the keys.
 **Code and maintainer only.** Needs task T4 and decisions D7 and D10.
 
-- Write `release/sign.sh` and `release/verify.sh` for whatever the base's releases are, and `docs/KEYS.md`, the procedure the maintainer follows.
+- Write `release/sign.sh` and `release/verify.sh` for whatever the base's releases are, and `docs/KEYS.md`, the procedure the maintainers follow.
 - Practise the whole process with dev keys.
 
-**Finished when** a release signed with dev keys passes `verify.sh`, and the maintainer has reviewed `docs/KEYS.md`.
+**Finished when** a release signed with dev keys passes `verify.sh`, and the maintainers have reviewed `docs/KEYS.md`.
 **Share** the output of `verify.sh`.
 
 ### T9: updates
@@ -287,7 +288,7 @@ Setting up the interface chosen in decision D11.
 ### T11: security on a test board
 
 Practising the security features the requirements ask for, such as storage encryption and secure boot.
-**Hands-on and maintainer only.** Needs task T9, decision D9, check C2, and the maintainer's go-ahead for each permanent step.
+**Hands-on and maintainer only.** Needs task T9, decision D9, check C2, and a maintainer's go-ahead for each permanent step.
 
 - Set up secure boot, if the board has it, only on a board bought for this, with a dev key.
 - Record in `docs/SECURE-BOOT.md` which steps were permanent and what the owner of a device can still change.
@@ -298,7 +299,7 @@ Practising the security features the requirements ask for, such as storage encry
 ### T12: the cyber-deck
 
 Getting FoxieOS running on the Alopex cyber-deck prototype.
-**Hands-on.** Needs tasks T10 and T11, decision D9, a cyber-deck from Alopex, and the maintainer's go-ahead for each install.
+**Hands-on.** Needs tasks T10 and T11, decision D9, a cyber-deck from Alopex, and a maintainer's go-ahead for each install.
 
 - Support each of its parts that the requirements cover.
 - Write `tests/qa/cyberdeck.md`, the device checklist ([TESTING.md](TESTING.md#device-checklist)).
@@ -309,7 +310,7 @@ Getting FoxieOS running on the Alopex cyber-deck prototype.
 ### T13: the first alpha
 
 The first test release.
-**Maintainer only, and hands-on.** Needs tasks T7–T9, decision D8, check C3, and the maintainer's approval to publish.
+**Maintainer only, and hands-on.** Needs tasks T7–T9, decision D8, check C3, and the maintainers' approval to publish.
 
 **Finished when** the release is on the testing channel and its release record is complete.
 **Share** the output of every test.

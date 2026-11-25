@@ -10,7 +10,7 @@ This page holds the rules proposed to apply whatever the base, carried over from
 ## In short
 
 - Every release is **signed** with a secret release key, so a device installs only genuine FoxieOS releases.
-- Only **the maintainer** creates the release keys and signs releases, on a separate offline computer, the signing host.
+- Only **the maintainers** create the release keys and signs releases, on a separate offline computer, the signing host.
   Nobody else handles the release keys.
   Scripts are written and tested with practice keys (dev keys) that never sign anything published.
 - Each release is **checked** after signing, then reaches people in three steps: `testing`, `beta`, then `stable`.
@@ -39,7 +39,7 @@ Who holds that key is decision [D9](ROADMAP.md#d9-devices-from-the-hardware-proj
 
 ## Signing
 
-The maintainer signs on the signing host (decision D7).
+A maintainer signs on the signing host (decision D7).
 `release/sign.sh` (task T8) is given the location of the keys and never reads them itself; it unlocks them into memory only, and wipes the memory afterwards.
 `release/verify.sh` checks the signature against the release key, and that a dev-key signature is refused.
 
@@ -54,7 +54,7 @@ Each release gets a record holding:
 
 Release tags in git are signed.
 
-Publishing a release on GitHub announces it in the Alopex Discord's announcements channel (`.github/workflows/discord-release.yml`), once the maintainer has set the `DISCORD_WEBHOOK_RELEASES` secret.
+Publishing a release on GitHub announces it in the Alopex Discord's announcements channel (`.github/workflows/discord-release.yml`), once the organization's owner has set the `DISCORD_WEBHOOK_RELEASES` secret.
 
 ## Channels
 

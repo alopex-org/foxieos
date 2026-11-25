@@ -46,7 +46,7 @@ Words about the hardware and its rules are in [Alopex's glossary](https://github
 - **A/B slots:** two copies of the system on one device; an update goes into the copy not running, so a failed update leaves the working one in place.
 - **Signing:** adding a digital signature that proves a file came from FoxieOS and wasn't changed.
 - **Release keys, dev keys:** the secret keys that sign real releases, and practice keys that never sign anything published.
-- **Signing host:** the separate, offline computer where the maintainer signs releases (roadmap decision D7).
+- **Signing host:** the separate, offline computer where the maintainers sign releases (roadmap decision D7).
 - **Channels (`testing`, `beta`, `stable`):** the steps a release goes through, from testers to everyone.
 - **Update server:** the website devices download updates from (roadmap decision D4).
 

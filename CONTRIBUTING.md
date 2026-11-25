@@ -19,7 +19,7 @@ If you use an AI coding agent, you are responsible for its work as for your own;
 4. Make the change, and commit it with a sign-off (`git commit -s`).
 5. Open a pull request and say what you changed, why, and what you checked.
 6. Someone else reviews it; answer their comments.
-7. The maintainer merges it.
+7. A maintainer merges it.
 
 The sections below explain each rule.
 
@@ -90,7 +90,7 @@ Someone other than the author reviews every change.
 
 - **One maintainer's approval** lets a pull request merge, as the founding meeting decided ([governance][governance]).
   `.github/CODEOWNERS` names the maintainers as owners of every file.
-- **Members still review** each other's changes and the maintainer's own, and their comments are answered before merging.
+- **Members still review** each other's changes and the maintainers' own, and their comments are answered before merging.
   A member's approval doesn't count toward merging while members only have read access, but GitHub still records it on the pull request.
 - **Docs, automatic checks and branding** may be reviewed by the reviewer with the help of a coding agent; the reviewer answers for that review as for their own.
 
@@ -112,10 +112,10 @@ These rules, called a ruleset, protect `main`:
 - every review comment thread is resolved before merging;
 - the DCO check passes;
 - the history stays one straight line: pull requests are merged by rebasing, so each commit lands on `main` as written, and rewriting or deleting `main` is blocked;
-- the maintainer can override these rules on a pull request, for example to merge their own change, which no other code owner can approve, once another member has approved it.
+- the organization's owner can override these rules on a pull request, for example to merge a change that no code owner other than its author can approve, once another member has approved it.
   Every override is recorded in the ruleset's history.
 
-A second ruleset covers tags: only the maintainer creates, moves or deletes a tag, so only the maintainer publishes a release.
+A second ruleset covers tags: only the organization's owner creates, moves or deletes a tag, so only the owner publishes a release.
 
 In the pull request, list the commands you ran and what happened: what passed, what failed (with a short excerpt of the output) and what you skipped.
 
@@ -156,11 +156,11 @@ FoxieOS stays as close to the projects it builds on (its "upstream") as it can, 
 - **Don't skip the checks** with `git commit --no-verify` or `SKIP=`.
   If gitleaks flags something that isn't a secret, say so in the pull request, and add a `gitleaks:allow` comment to the line, or the finding's fingerprint to `.gitleaksignore`.
 - **If a check stops a real secret,** take the secret out of the change.
-  If a secret ever reached GitHub, deleting it isn't enough: cancel or replace it, and tell the maintainer.
+  If a secret ever reached GitHub, deleting it isn't enough: cancel or replace it, and tell the maintainers.
 - The checks only run in a clone where `pre-commit install` was run.
   Automatic checks on GitHub will repeat them from roadmap task T7 (CI, planned).
 - Settings files are committed only as `*.example` templates, or encrypted with SOPS.
-- Release keys live only on the signing computer and only the maintainer handles them ([docs/RELEASING.md](docs/RELEASING.md)).
+- Release keys live only on the signing computer and only the maintainers handle them ([docs/RELEASING.md](docs/RELEASING.md)).
 - **Describe computers by their role** (build host, signing host, test host).
   Computer names, addresses, folder paths on your computer, account details and other personal information stay out of commits, pull requests and issues.
   Keep such notes in a `*.local.md` file, which git ignores.
@@ -200,7 +200,7 @@ The docs are read by people first, many of them not technical, and reviewed as c
   Check a ⚠ claim before acting on it, then update the doc.
   Mark a statement from general knowledge, with no source checked, as "(unsourced)".
 - **Label anything not built yet as planned.**
-- **Call the project's owner "the maintainer".**
+- **Call the people who run the project "the maintainers"** ([governance][governance]).
 - **Keep instructions for coding agents in [AGENTS.md](AGENTS.md),** not in the docs people read.
 
 ## Security fixes
