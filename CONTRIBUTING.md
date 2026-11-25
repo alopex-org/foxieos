@@ -89,10 +89,11 @@ If an AI coding agent writes a commit for you, you sign it off with your own nam
 
 Someone other than the author reviews every change.
 
-- **One maintainer's approval** lets a pull request merge, as the founding meeting decided ([governance][governance]).
+- **Only maintainers approve pull requests, never their own** ([governance][governance]).
+  One approval from a maintainer other than the author lets a pull request merge.
   `.github/CODEOWNERS` names the maintainers as owners of every file.
 - **Members still review** each other's changes and the maintainers' own, and their comments are answered before merging.
-  A member's approval doesn't count toward merging while members only have read access, but GitHub still records it on the pull request.
+  A member's approval doesn't count toward merging, but GitHub still records it on the pull request.
 - **Docs, automatic checks and branding** may be reviewed by the reviewer with the help of a coding agent; the reviewer answers for that review as for their own.
 
 A person must read every change to these sensitive areas:
@@ -108,12 +109,12 @@ A person must read every change to these sensitive areas:
 These rules, called a ruleset, protect `main`:
 
 - every change arrives through a pull request; nobody pushes to `main` directly;
-- someone with write access, other than the author, approves the pull request (only the maintainers have write access);
+- a maintainer other than the author approves the pull request (only the maintainers have write access);
 - pushing new commits cancels earlier approvals;
 - every review comment thread is resolved before merging;
 - the DCO check passes;
 - the history stays one straight line: pull requests are merged by rebasing, so each commit lands on `main` as written, and rewriting or deleting `main` is blocked;
-- the organization's owner can override these rules on a pull request, for example to merge a change that no code owner other than its author can approve, once another member has approved it.
+- the organization's owner can override these rules on a pull request, but not to approve or merge their own pull request without another maintainer's approval.
   Every override is recorded in the ruleset's history.
 
 A second ruleset covers tags: only the organization's owner creates, moves or deletes a tag, so only the owner publishes a release.
