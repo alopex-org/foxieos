@@ -11,7 +11,7 @@ Technical words are explained in the [glossary](GLOSSARY.md).
 - For now, it is built on a Linux distribution; which one is open (roadmap decision D10), and so are how it updates, how it is secured, and what it looks like.
 - The cyber-deck's main board, screen and controls, power and case are Alopex's open decisions, and FoxieOS adapts to them.
 - The first steps are requirements, then a comparison of the distributions, then a choice (decision D10).
-- Some ways of working carry over from the earlier plan as proposals, for the maintainers to decide: few devices, each with an owner who tests it; release keys kept offline by the maintainer; testing before every release.
+- Some ways of working carry over from the earlier plan as proposals, for the maintainers to decide: few devices, each with an owner who tests it; release keys kept offline by the maintainers; testing before every release.
   GitHub for the code is decided (decision D3).
 
 ## Purpose
@@ -78,7 +78,7 @@ Proposed, carried over from the earlier plan.
 
 Proposed, carried over from the earlier plan.
 
-- **What:** whatever FoxieOS is built on, its releases are signed; the release keys are encrypted, kept offline, and handled only by the maintainer.
+- **What:** whatever FoxieOS is built on, its releases are signed; the release keys are encrypted, kept offline, and handled only by the maintainers.
   Development uses separate keys that never sign a release ([RELEASING.md](RELEASING.md#keys)).
 - **Why:** whoever holds the keys could send fake updates to every device.
 - **Turned down:** keeping the keys on the build host; one key for both development and releases.
@@ -112,8 +112,8 @@ Later FoxieOS repositories will live in the same GitHub organization.
 ## Running the project (planned)
 
 - **Builds and tests:** automatic checks on a build computer ([TESTING.md](TESTING.md)).
-- **Releases:** signed offline by the maintainer ([RELEASING.md](RELEASING.md)).
-- **Backups:** offline copies of the release keys (made by the maintainer), and the release records.
+- **Releases:** signed offline by the maintainers ([RELEASING.md](RELEASING.md)).
+- **Backups:** offline copies of the release keys (made by the maintainers), and the release records.
 
 How releases reach devices, and how a bad release is undone, depend on the base (decision D10).
 

@@ -1,7 +1,7 @@
 # Announces each published GitHub release in the Alopex Discord's
 # announcements channel (CONTRIBUTING.md, "Before you start").
 # The webhook URL is the repository secret DISCORD_WEBHOOK_RELEASES, which
-# only the maintainer sets; without it the job skips. Anyone who has the URL
+# only the organization's owner sets; without it the job skips. Anyone who has the URL
 # can post in the channel, so it never appears in a file or a log.
 # Release events never come from forks, so the secret isn't exposed to them.
 # It uses no third-party actions, and the release fields reach the script

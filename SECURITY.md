@@ -6,7 +6,7 @@ If you find a security problem in this repository or its plans, report it as des
 ## Reporting
 
 Report a security problem privately, through GitHub's [private vulnerability reporting](https://github.com/alopex-org/foxieos/security/advisories/new): open the repository's Security tab, then "Report a vulnerability".
-Only the maintainer sees the report.
+Only the organization's owner sees the report, for now.
 Never report a security problem in a public issue or on Discord.
 
 ## Planned before the first public release

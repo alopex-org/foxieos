@@ -32,21 +32,21 @@ Don't add a step that only one agent's own tools can perform.
   Task T4 adds `ci/build.sh`, once decision D10 has chosen the base ([docs/TESTING.md](docs/TESTING.md#commands)).
 - Checks: the pre-commit hooks in `.pre-commit-config.yaml` (gitleaks, blocks on key files and `*.local.md` notes, and a DCO sign-off on the commit message) run on every commit once `pre-commit install` has been run in the clone ([CONTRIBUTING.md](CONTRIBUTING.md#keys-secrets-and-personal-details)).
   On pull requests, the DCO workflow checks the sign-off again.
-  If pre-commit isn't installed or set up in the clone, tell the maintainer rather than committing without the hooks.
+  If pre-commit isn't installed or set up in the clone, tell a maintainer rather than committing without the hooks.
   From task T7 (CI) on, `ci/presubmit.sh`.
-- Release: done by hand by the maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
+- Release: done by hand by a maintainer ([docs/RELEASING.md](docs/RELEASING.md)).
 
 ## Hard rules
 
 1. **Release keys are off-limits.**
    Never generate, read, print, copy, hash, upload or move release keys.
-   Write the scripts and the procedure; the maintainer generates the keys and signs on the signing host.
+   Write the scripts and the procedure; a maintainer generates the keys and signs on the signing host.
    CI and your own tests use `test-keys` or a separate dev key set that never signs anything published.
 2. **No action on a physical device without a go-ahead for that action.**
    This covers writing to a board's or the cyber-deck's storage, installing an update on one, wiping one, and above all setting up secure boot.
    Secure boot often writes a key's fingerprint into the chip's one-time-programmable memory, which can never be undone; do it only on a board bought for that purpose.
    Virtual machines are exempt: start, wipe and reinstall them as needed.
-3. **Nothing outward-facing without the maintainer.**
+3. **Nothing outward-facing without a maintainer.**
    That includes creating accounts, registering domains, uploading OTAs, pushing to any remote and posting announcements.
 4. **Run long jobs in the background.**
    Full builds can take hours.

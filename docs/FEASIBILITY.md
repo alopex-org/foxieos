@@ -110,7 +110,7 @@ What the build computer needs depends on the base; task T4 measures it (check C1
 
 - [ ] **Name:** a web search found no existing "FoxieOS".
   The EU (EUIPO) and US (USPTO) trademark searches are still to do before a public launch (roadmap check C3).
-- [ ] **Logo:** confirm that the maintainer holds the rights to the fox artwork, then make a scalable (SVG) master plus a start-up screen version.
+- [ ] **Logo:** confirm that the maintainers hold the rights to the fox artwork, then make a scalable (SVG) master plus a start-up screen version.
 - [ ] **Licences:** follow the licence of everything FoxieOS ships, for example publishing the source code of any GPL program, and keep the notices of the other licences (unsourced).
 - [ ] **Trademarks of others:** use other projects' and companies' names only to describe what FoxieOS runs on or with, never as part of its name (unsourced).
 
@@ -172,7 +172,7 @@ Sources: [Cyber Resilience Act][cra], [Commission guidance on the Cyber Resilien
 | Choosing a distribution before the cyber-deck's main board and parts are known | High | Requirements first (task T1), then a comparison (task T2) |
 | The cyber-deck takes longer to build than the software | Medium | Develop on a development board first |
 | A board fused with a lost or wrong key | High | Fuse only boards kept for testing; settle the key's owner first (check C2) |
-| Release keys stolen or lost | Critical | Offline, encrypted keys with backups; only the maintainer handles them |
+| Release keys stolen or lost | Critical | Offline, encrypted keys with backups; only the maintainers handle them |
 | Maintainers burning out, fixes missed | High | Few devices; automatic builds and tests; published end-of-life dates |
 | Selling before meeting the EU's rules | High | Decide the [business model](#business-model) first; legal advice before any sale (check C4) |
 

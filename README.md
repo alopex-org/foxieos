@@ -55,7 +55,7 @@ Build output and downloads are kept outside this repository.
 ## Releases
 
 None yet.
-When there are releases, the maintainer will sign them on an offline computer ([docs/RELEASING.md](docs/RELEASING.md)).
+When there are releases, the maintainers will sign them on an offline computer ([docs/RELEASING.md](docs/RELEASING.md)).
 
 ## Contributing
 
