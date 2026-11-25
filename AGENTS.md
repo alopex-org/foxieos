@@ -77,7 +77,7 @@ Add your own `Co-Authored-By:` trailer naming yourself as well.
 ## Review
 
 - You may review a change to docs, CI or branding when a member asks you to, as a second reader for them.
-  The member approves the pull request and answers for the review; you never approve on your own behalf.
+  The person who asked answers for the review, and only a maintainer other than the author approves the pull request; you never approve on your own behalf.
 - The sensitive areas in [CONTRIBUTING.md](CONTRIBUTING.md#review) (updates and the way they reach devices, signing scripts, secure boot and encryption, the kernel and its settings, the roadmap and the design) need a person's review.
   Say so in the pull request when your change touches one.
 
