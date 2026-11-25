@@ -9,6 +9,7 @@ This repository holds the docs, and later the scripts and tests that build, chec
 FoxieOS is the operating system for the Alopex cyber-deck; what it is built on is open (roadmap decision D10).
 
 Everyone in the `alopex-org` organization follows its [code of conduct][coc], and its [governance][governance] says who decides what.
+Members and maintainers have their own how-to guides: the [member guide][members] and the [maintainer guide][maintaining].
 If you use an AI coding agent, you are responsible for its work as for your own; the agent's own rules are in [AGENTS.md](AGENTS.md).
 
 ## In short
@@ -168,6 +169,8 @@ FoxieOS stays as close to the projects it builds on (its "upstream") as it can, 
 [gitleaks]: https://github.com/gitleaks/gitleaks
 [coc]: https://github.com/alopex-org/.github/blob/main/CODE_OF_CONDUCT.md
 [governance]: https://github.com/alopex-org/.github/blob/main/GOVERNANCE.md
+[members]: https://github.com/alopex-org/.github/blob/main/MEMBERS.md
+[maintaining]: https://github.com/alopex-org/.github/blob/main/MAINTAINING.md
 [glossary]: https://github.com/alopex-org/.github/blob/main/GLOSSARY.md
 [dco]: https://developercertificate.org/
 
